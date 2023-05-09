@@ -1,0 +1,265 @@
+.show-nav {
+	display: show;
+}
+.project-size {
+	margin-left: 30px;
+}
+.form-control.title {
+	width: 20% !important;
+	min-width: 250px;
+}
+.custom-textarea {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 150px;
+    border: 1px solid gray;
+    padding: 10px;
+    box-sizing: border-box;
+    overflow: auto;
+    border-radius: 8px;
+    /* transition: box-shadow 0.3s ease; */
+}
+.tag {
+    display: flex;
+    align-items: center;
+    background-color: #e2e2e2; 
+    padding: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border-radius: 3px;
+    font-size: 14px;
+    border: 1px solid gray;
+    border-radius: 6px;
+}
+
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.tag span {
+    margin-right: 5px;
+}
+  
+.tag button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    border: none;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    font-size: 13px;
+    cursor: pointer;
+}
+input[type='text'] {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    padding: 0;
+    margin-left: 5px;
+}
+.my-input::placeholder {
+    color: gray;
+}
+.tag-x-close {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+    cursor: pointer;
+    background-color: red;
+}
+
+.px-20-gap {
+    height: 20px;
+}
+
+.px-30-gap {
+    height: 30px;
+}
+
+.px-50-gap {
+    height: 50px;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.dropdown-toggle {
+    width: 200px;
+}
+
+.loading-spinner-view {
+    text-align:center; 
+    padding-top:100px;
+}
+
+.poll-details img {
+    height: 30%;
+    width: 30%;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.poll-page-background {
+    margin-left: 5%;
+    margin-right: 5%;
+    padding-top: 30px;
+}
+
+.styling-link {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.polls-in-page {
+    margin-left: 5%;
+}
+
+.parent-background {
+    height: 100%;
+    width: 100%;
+    min-height: 900px;
+    background-color: #F0F2F5;
+}
+
+.poll-title {
+    font-size: 36px;
+    margin-bottom: -1px;
+}
+
+.poll-date {
+    color: #707070;
+    font-size: 16px;
+}
+
+.font-selected {
+    font-family: "Segoe UI Historic", "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.distance-between-two {
+    width: 30px;
+}
+
+.custom-card {
+    max-width: 400px;
+}
+
+.custom-card-body {
+    border: 7px solid burlywood;
+    border-radius: 5px;
+}
+
+.total-votes {
+    height: 40px;
+    width: 100%;
+    max-width: 300px;
+    background-color: rgba(222, 184, 135, 0.4);
+    border-radius: 4px;
+    position: relative;
+    bottom: 8px;
+}
+
+.form-check-label {
+    position: absolute;
+    top: 25%;
+    bottom: 25%;
+    left: 10px;
+    padding-right: 10px;
+    right: 0;
+}
+
+.votes-received-here {
+    height: 40px;
+    background-color: rgba(222, 184, 135, 0.5);
+    max-width: 300px;
+    border-radius: 4px;
+    position: absolute;
+}
+
+.custom-align {
+    text-align: center;
+}
+
+.custom-align button,
+.custom-align button:hover {
+    background-color: burlywood;
+}
+
+.form-check-input:checked {
+    background-color: burlywood !important;
+    border-color: burlywood !important;
+}
+
+.styling-link .navigator-link {
+    text-decoration: none;
+    color: #707070;
+    font-size: 16px;
+}
+
+.styling-link .fas {
+    margin-left: 3px;
+    margin-right: 3px;
+    margin-top: 10px;
+}
+
+.custom-card-title {
+    font-family: "Segoe UI Historic", "Segoe UI", Helvetica, Arial, sans-serif; 
+    color: #007bff; 
+    font-size: 16px;
+}
+
+.which-industry {
+    font-family: "Segoe UI Historic", "Segoe UI", Helvetica, Arial, sans-serif; 
+    text-transform: uppercase;
+    margin-top: 10px;
+    margin-left: 15px;
+    color: #A9AAAC;
+}
+
+.custom-card-title span {
+    color:red;
+}
+
+.card-name-n-votes {
+    display: inline-block;
+}
+
+.card-name-n-votes span {
+    font-family: "Segoe UI Historic", "Segoe UI", Helvetica, Arial, sans-serif; 
+    /* color: #65676B;  */
+    color: #A9AAAC;
+    font-size: 13px;
+}
+
+.custom-card-border {
+    border: 1px solid #FFFFFF !important;
+    cursor: pointer;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.custom-card-border:hover {
+    border: 2px solid #FFFFFF !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.custom-card-border:hover .card-name-n-votes span,
+.custom-card-border:hover .which-industry {
+    color: #65676B;
+}
+
