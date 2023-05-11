@@ -127,6 +127,7 @@ class PollController extends Controller
 		        $allTables->which_industry = $whichIndustry;
 		        $allTables->starting_date = now();
 		        $allTables->ending_date = $endingDate;
+		        $allTables->winner_added = "no";
 		        $allTables->save();
 
 		        // ...........before poll ends..........
@@ -249,8 +250,9 @@ class PollController extends Controller
     }
 
     public function getAllPoll(){
-
+    	$currentDate = date('Y-m-d');
     	$allPolls = DB::table('all_tables')->select('which_industry','poll_title','table_name_starts_with','before_poll_description','starting_date','ending_date')
+    		->where('ending_date','>',$currentDate)
     		->orderBy('ending_date')
     		->skip(0)
     		->take(10)
@@ -279,6 +281,73 @@ class PollController extends Controller
 				'message' => 'Something went wrong',
     			'success' => false]);
     	}
+    }
+
+    public function getAllPollIndustryWise(Request $request){
+    	$industryName = $request->input("industryName");
+    	$currentDate = date('Y-m-d');
+    	$allPolls = DB::table('all_tables')->select('which_industry','poll_title','table_name_starts_with','before_poll_description','starting_date','ending_date')
+    		->where('which_industry', $industryName)
+    		->where('ending_date','>',$currentDate)
+    		->orderBy('ending_date')
+    		->get();
+    	
+
+    	if($allPolls->count() > 0){
+    		foreach($allPolls as $value){
+    			$pollTags = DB::table($value->table_name_starts_with."_polls")
+    				->select('id','polls','votes',DB::raw("'".$value->table_name_starts_with."' as table_name_starts_with"))
+    				->get();
+    			$value->poll_tags = $pollTags;
+    		}
+    		return response()->json([
+				'all_polls' => $allPolls,
+				'message' => 'Data received',
+    			'success' => true]);
+    	}
+    	else if($allPolls->count() == 0){
+    		return response()->json([
+				'message' => 'No polls uploaded yet',
+    			'success' => false]);
+    	}
+    	else{
+    		return response()->json([
+				'message' => 'Something went wrong',
+    			'success' => false]);
+    	}
+    }
+
+    public function getPollForWinningList(){
+    	$currentDate = date('Y-m-d');
+    	$data = DB::table("all_tables")->select("id","poll_title","table_name_starts_with","which_industry","ending_date")
+    	->where("ending_date", "<=", $currentDate)
+    	->where("winner_added", "=", "no")
+    	->orderBy("ending_date")
+    	->get();
+
+    	if($data->count() > 0){
+    		foreach($data as $value){
+    			$pollsFound = DB::table($value->table_name_starts_with."_polls")
+    			->select("id","polls","votes")
+    			->get();
+
+    			$value->poll_tags = $pollsFound;
+    			$value->percent = 0;
+    		}
+    	}
+
+    	if($data->count() > 0){
+    		return response()->json([
+    			'polls_finished' => $data,
+				'message' => 'Data found',
+    			'success' => true]);
+    	}
+    	else{
+    		return response()->json([
+				'message' => 'Data not found',
+    			'success' => false]);
+    	}
+
     }
 
 }

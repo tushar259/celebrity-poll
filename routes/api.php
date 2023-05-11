@@ -24,6 +24,10 @@ Route::post('/check-if-headline-used', 'App\Http\Controllers\PollController@chec
 Route::post('/upload-newly-added-poll', 'App\Http\Controllers\PollController@uploadNewlyAddedPoll');
 Route::post('/get-poll-info', 'App\Http\Controllers\PollController@getPollInfo');
 Route::get('/get-all-poll', 'App\Http\Controllers\PollController@getAllPoll');
+Route::post('/get-all-poll-industry-wise', 'App\Http\Controllers\PollController@getAllPollIndustryWise');
+Route::get('/get-poll-with-winning-list', 'App\Http\Controllers\PollController@getPollForWinningList');
+
+
 
 
 

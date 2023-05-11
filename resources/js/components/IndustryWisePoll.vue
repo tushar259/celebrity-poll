@@ -8,7 +8,7 @@
         </div>
     </div>
     <div v-else-if="pollFound == true" class="parent-background">
-        <div class="row poll-page-background">
+        <div class="poll-page-background">
             <!-- <div class="card my-3" v-for="(poll, index) in allPolls" :key="index">
                 <div class="card-body">
                 <span class="card-title">{{poll.poll_title}} (Closing at {{poll.ending_date}})</span>
@@ -18,48 +18,30 @@
                     </div>
                 </div>
             </div> -->
-            <div class="col-md-6">
-                <div>
-                    <span>Polls ending</span>
-                    <hr>
-                </div>
-            
-                <div v-for="(poll, index) in allPolls" :key="index">
-                    <div class="card my-3 custom-card-border">
-                        <div class="which-industry">{{poll.which_industry}}</div>
-                        <div class="card-body">
-                            <h4 class="card-title custom-card-title">
-                            {{poll.poll_title}} (Closing at <span>{{poll.ending_date}}</span>)
-                            </h4>
-                            <div v-for="(tag, indexT) in poll.poll_tags" :key="indexT" class="card-name-n-votes">
-                                <span v-if="indexT !== poll.poll_tags.length - 1">
-                                    <b>{{tag.polls}}</b>({{tag.votes}} votes),&nbsp;
-                                </span>
-                                <span v-else>
-                                    <b>{{tag.polls}}</b>({{tag.votes}} votes)
-                                </span>
-                                <!-- <span v-if="indexT !== poll.poll_tags.length - 1" style="font-family: 'Lato', sans-serif; color: #6c757d; font-size: 14px;">,&nbsp;</span> -->
-                            </div>
+
+            <div v-for="(poll, index) in allPolls" :key="index">
+                <div class="card my-3 custom-card-border">
+                    <div class="which-industry">{{poll.which_industry}}</div>
+                    <div class="card-body">
+                        <h4 class="card-title custom-card-title">
+                        {{poll.poll_title}} (Closing at <span>{{poll.ending_date}}</span>)
+                        </h4>
+                        <div v-for="(tag, indexT) in poll.poll_tags" :key="indexT" class="card-name-n-votes">
+                            <span v-if="indexT !== poll.poll_tags.length - 1">
+                                <b>{{tag.polls}}</b>({{tag.votes}} votes),&nbsp;
+                            </span>
+                            <span v-else>
+                                <b>{{tag.polls}}</b>({{tag.votes}} votes)
+                            </span>
+                            <!-- <span v-if="indexT !== poll.poll_tags.length - 1" style="font-family: 'Lato', sans-serif; color: #6c757d; font-size: 14px;">,&nbsp;</span> -->
                         </div>
                     </div>
-                    <div v-if="index%4==0">
-                        ad
-                    </div>
                 </div>
+                <div v-if="index%4==0">
+                    ad
+                </div>
+            </div>
             
-            </div>
-            <div class="col-md-6">
-                <div>
-                    <span>Results</span>
-                    <hr>
-                </div>
-                <div class="card my-3 custom-card-border">
-                    <div class="which-industry"></div>
-                    <div class="card-body">
-
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </template>
@@ -67,11 +49,12 @@
 <script>
     export default {
         data() {
-            return{
+            return {
+                industryName: this.$route.params.industry,
                 allPolls: [],
                 pollFound: null,
 
-            }
+            }   
         },
 
         created() {
@@ -80,7 +63,10 @@
 
         methods: {
             getAllPolls(){
-                axios.get('/api/get-all-poll')
+                const formData = new FormData();
+                this.industryName = this.industryName.replace(":", "");
+                formData.append('industryName', this.industryName);
+                axios.post('/api/get-all-poll-industry-wise', formData)
 			        .then(response => {
 			          	if(response.data.success == true){
                             this.pollFound = true;

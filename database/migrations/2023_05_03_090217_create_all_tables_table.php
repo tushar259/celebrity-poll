@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('which_industry')->nullable();
             $table->string('starting_date');
             $table->string('ending_date');
+            $table->string('winner_added');
             $table->timestamps();
         });
     }

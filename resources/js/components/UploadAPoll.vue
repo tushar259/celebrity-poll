@@ -139,7 +139,51 @@
 		<hr>
     	<div class="px-30-gap"></div>
 
-	    
+	    **Polls finished** ({{numberOfNewFinishedPolls}})
+		<div>
+			<div class="dropdown">
+				<button class="btn btn-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					{{selectAWinningPoll}}
+				</button>
+				
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" >
+					<a class="dropdown-item cursor-pointer" @click="selectedWinningPoll(null,'Select a Poll',null)">Deselect Poll</a>
+					<a class="dropdown-item cursor-pointer" v-for="(winningPoll, index) in getPollsWinningList" :key="index" :value="winningPoll.id" @click="selectedWinningPoll(winningPoll.id,winningPoll.poll_title,index)">({{index}}){{winningPoll.poll_title}} ({{winningPoll.ending_date}})</a>
+					
+				</div>
+			</div>
+			<!-- <select v-for="(winningPoll, index) in getPollsWinningList" :key="index">
+				
+				<option @click="selectedWinningPoll(winningPoll.id,winningPoll.poll_title,index)">{{winningPoll.poll_title}}</option>
+				
+			</select> -->
+			<div class="px-50-gap"></div>
+			
+			<div v-if="selectAWinningPoll != 'Select a Poll'">
+				Poll Results
+				<div>
+
+					<div  v-for="(poll, index) in getPollsWinningList[selectedPollIndex].poll_tags" :key="index" class="polls-in-page">
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadio1" :value="poll.id">
+							
+							<div class="total-votes">
+								<div class="votes-received-here" :style="{'width': poll.percent + '%'}"></div>
+								<label class="form-check-label d-flex justify-content-between align-items-center" for="exampleRadio1">
+									{{poll.polls}}
+									<div></div>
+									~{{poll.percent}}%({{poll.votes}} votes)
+									
+								</label>
+								
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="px-50-gap"></div>
     </div>
 </template>
 
@@ -169,6 +213,10 @@
 				uploadPollMessage: '',
 				whichIndustry: 'Select industry',
 				whichIndustryMessage: '',
+				selectAWinningPoll: 'Select a Poll',
+				getPollsWinningList: [],
+				selectedPollIndex: null,
+				numberOfNewFinishedPolls: 0,
         	}
         },
         created() {
@@ -176,6 +224,7 @@
 		  	let value = window.location.href.split('uploadapoll/');
 		  	console.log(value[1]);
 		  	console.log(this.$route.params);
+			this.getPollsWinning();
 			
 		},
         methods: {
@@ -390,7 +439,45 @@
 				this.whichIndustry = event.target.innerHTML;
 			},
 
-		    
+		    getPollsWinning(){
+                axios.get('/api/get-poll-with-winning-list')
+                .then(response => {
+                    console.log("all polls");
+					this.numberOfNewFinishedPolls = response.data.polls_finished.length;
+					response.data.polls_finished.forEach(item => {
+						this.getPollsWinningList.push(item);
+					});
+					console.log(this.getPollsWinningList);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+            },
+
+			selectedWinningPoll(id, pollTitle, index){
+				console.log("id: "+id);
+				if(id != null){
+					this.selectAWinningPoll = "("+index +") "+pollTitle;
+					this.selectedPollIndex = index;
+					// console.log(this.getPollsWinningList[index].poll_tags);
+					let totalVotes = 0;
+					this.getPollsWinningList[index].poll_tags.forEach(item => {
+						totalVotes += item.votes;
+					});
+					this.getPollsWinningList[index].poll_tags.forEach(item => {
+						
+						if(((item.votes / totalVotes) * 100).toFixed(2) > 0){
+							item.percent = ((item.votes / totalVotes) * 100).toFixed(2);
+						}
+						else{
+							item.percent = 0;
+						}
+					});
+				}
+				else{
+					this.selectAWinningPoll = pollTitle;
+				}
+			}
         }
     }
 </script>

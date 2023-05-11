@@ -8,6 +8,8 @@ export const router = createRouter({
         {path: '/polls', component: () => import('./components/AllPollsComponent.vue')},
         {path: '/uploadapoll/do-upload/new-poll', component: () => import('./components/UploadAPoll.vue')},
         {path: '/poll/:pollid', component: () => import('./components/PollWithId.vue')},
+        {path: '/polls/:industry', component: () => import('./components/IndustryWisePoll.vue')},
+
 
         // {path: '/Test', component: () => import('./pages/Test.vue')},
         // {path: '/tashur', component: () => import('./pages/tashur.vue')},
