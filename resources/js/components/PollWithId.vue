@@ -29,50 +29,74 @@
             <router-link to="" class="navigator-link">{{whichIndustry}}</router-link><i class='fas fa-angle-right'></i>
             <router-link :to="'/poll/'+pollId" class="navigator-link">{{pollId}}</router-link>
         </div>
-        <div class="custom-details-n-poll-card-area">
+        <!-- <div class="custom-details-n-poll-card-area">
             <div class="custom-details-n-poll-card">
                 <div class="custom-details-n-poll-card-body">
                     <div v-html="beforePollDescription" class="poll-details"></div>
                     <div class="card my-3 custom-card poll-details">
                         <div class="card-body custom-card-body">
-                        <h5 class="card-title">{{ pollTitle }}</h5>
-                        <div class="px-20-gap"></div>
-                        <div  v-for="(poll, index) in pollsVoted" :key="index" class="polls-in-page">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadio1" :value="poll.id">
-                                
-                                <div class="total-votes">
-                                    <div class="votes-received-here" :style="{'width': poll.percent + '%'}"></div>
-                                    <label class="form-check-label d-flex justify-content-between align-items-center" for="exampleRadio1">
-                                        {{poll.polls}}
-                                        <div></div>
-                                        ~{{poll.percent}}%({{poll.votes}} votes)
-                                        
-                                    </label>
+                            <h5 class="card-title">{{ pollTitle }}</h5>
+                            <div class="px-20-gap"></div>
+                            <div  v-for="(poll, index) in pollsVoted" :key="index" class="polls-in-page">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadio1" :value="poll.id">
                                     
+                                    <div class="total-votes">
+                                        <div class="votes-received-here" :style="{'width': poll.percent + '%'}"></div>
+                                        <label class="form-check-label d-flex justify-content-between align-items-center" for="exampleRadio1">
+                                            {{poll.polls}}
+                                            <div></div>
+                                            ~{{poll.percent}}%({{poll.votes}} votes)
+                                            
+                                        </label>
+                                        
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="px-20-gap"></div>
-                        <div class="custom-align">
-                            <div>Total votes: {{totalVotes}}</div>
-                            <button type="button" class="btn mt-3">Vote</button>
-                        </div>
+                            <div class="px-20-gap"></div>
+                            <div class="custom-align">
+                                <div>Total votes: {{totalVotes}}</div>
+                                <button type="button" class="btn mt-3">Vote</button>
+                            </div>
                         </div>
                     </div>
                     <div v-html="afterPollDescription" class="poll-details"></div>
                 </div>
             </div>
-        </div>
-        <div class="row" style="margin-left: 5%;margin-right: 5%;">
+        </div> -->
+        <div class="row poll-page-row">
             <div class="col-md-5 custom-column">
-                <div style="height: 50px;width: 100%;border: 1px solid red;">
-                    poll
+                <div class="poll-page-custom-card">
+                    <h5>{{ pollTitle }}</h5>
+                    <div class="px-30-gap"></div>
+                    <div  v-for="(poll, index) in pollsVoted" :key="index" class="polls-in-page">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadio1" :value="poll.id">
+                            
+                            <div class="total-votes">
+                                <div class="votes-received-here" :style="{'width': poll.percent + '%'}"></div>
+                                <label class="form-check-label d-flex justify-content-between align-items-center" for="exampleRadio1">
+                                    {{poll.polls}}
+                                    <div></div>
+                                    ~{{poll.percent}}%({{poll.votes}} votes)
+                                    
+                                </label>
+                                
+                            </div>
+                            <div class="px-10-gap"></div>
+                        </div>
+                    </div>
+                    <div class="px-20-gap"></div>
+                    <div class="custom-align">
+                        <div>Total votes: {{totalVotes}}</div>
+                        <button type="button" class="btn mt-3">Vote</button>
+                    </div>
                 </div>
             </div>
             <div class="col-md-7 custom-column">
-                <div style="height: 50px;width: 100%;border: 1px solid black;">
-                    details
+                <div class="poll-page-custom-card">
+                    <div v-html="beforePollDescription" class="poll-details"></div>
+                    <!-- <div v-html="afterPollDescription" class="poll-details"></div> -->
                 </div>
             </div>
         </div>

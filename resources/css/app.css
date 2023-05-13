@@ -192,6 +192,10 @@ input[type='text'] {
     height: 5px;
 }
 
+.px-10-gap {
+    height: 10px;
+}
+
 .texts-under-thumbnail {
     text-align: left;
     padding-left: 20px;
@@ -228,11 +232,11 @@ input[type='text'] {
 .total-votes {
     height: 60px;
     width: 100%;
-    max-width: 300px;
-    background-color: rgba(222, 184, 135, 0.4);
+    max-width: 350px;
+    background-color: rgba(179, 179, 179, 0.4);
     border-radius: 4px;
     position: relative;
-    bottom: 19px;
+    bottom: 18px;
 }
 
 .form-check-label {
@@ -246,8 +250,8 @@ input[type='text'] {
 
 .votes-received-here {
     height: 60px;
-    background-color: rgba(222, 184, 135, 0.5);
-    max-width: 300px;
+    background-color: rgba(0, 204, 255, 0.3);
+    max-width: 350px;
     border-radius: 4px;
     position: absolute;
 }
@@ -262,8 +266,8 @@ input[type='text'] {
 }
 
 .form-check-input:checked {
-    background-color: burlywood !important;
-    border-color: burlywood !important;
+    /* background-color: burlywood !important;
+    border-color: burlywood !important; */
 }
 
 .styling-link .navigator-link {
@@ -292,7 +296,7 @@ input[type='text'] {
     color: #A9AAAC;
 }
 
-.custom-card-title span {
+.custom-card-ending-date {
     color:red;
 }
 
@@ -332,5 +336,31 @@ input[type='text'] {
 .custom-column {
     padding-left: 0px !important;
     padding-right: 0px !important;
+    border: 4px solid #FFFFFF;
 }
 
+.poll-page-row {
+    margin-left: 5% !important;
+    margin-right: 5% !important;
+}
+
+.poll-page-custom-card {
+    min-height: 50px;
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0px 6px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.thumbnail-images-in-list-of-polls {
+    height: 100px;
+    width: 100px;
+    border-radius: 8px;
+}
+
+.thumbnail-texts-in-list-of-polls {
+    margin-left: 20px;
+}

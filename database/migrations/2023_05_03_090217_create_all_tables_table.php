@@ -21,6 +21,9 @@ return new class extends Migration
             $table->string('starting_date');
             $table->string('ending_date');
             $table->string('winner_added');
+            $table->string('winners_name');
+            $table->string('winners_votes');
+            $table->string('total_votes');
             $table->timestamps();
         });
     }
