@@ -30,6 +30,9 @@ Route::post('/upload-newly-winner-poll', 'App\Http\Controllers\PollController@up
 // Route::get('/test-delete', 'App\Http\Controllers\PollController@testDelete');
 Route::get('/get-result-list-poll', 'App\Http\Controllers\PollController@getResultListPoll');
 Route::post('/get-result-list-poll-industry-wise', 'App\Http\Controllers\PollController@getResultListPollIndustryWise');
+Route::post('/get-poll-winner-info', 'App\Http\Controllers\PollController@getPollWinnerInfo');
+Route::post('/vote-selected-candidate', 'App\Http\Controllers\PollController@voteSelectedCandidate');
+
 
 
 

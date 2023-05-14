@@ -205,7 +205,7 @@ class PollController extends Controller
     			
 
 
-    			$i = 1;
+    			$i = 2;
     			foreach ($imagesFromTable as $key) {
     				++$i;
     				if(strpos($tableNameStartsWith["before_poll_description"], "<pic$i>") >= 0){
@@ -272,7 +272,7 @@ class PollController extends Controller
     			if(Schema::hasTable($value->table_name_starts_with."_images")){
 	    			$pollThumbnail = DB::table($value->table_name_starts_with."_images")
 	    				->select('placeholder')
-	    				->where('id', '>', 0)
+	    				->where('id', '>', 1)
 	    				->first();
 	    			if($pollThumbnail !== null){
 	    				$value->thumbnail_image = $pollThumbnail->placeholder;
@@ -322,7 +322,7 @@ class PollController extends Controller
     			if(Schema::hasTable($value->table_name_starts_with."_images")){
     				$dataFromImageTable = DB::table($value->table_name_starts_with."_images")
     					->select("placeholder")
-    					->where("id", ">", 0)
+    					->where("id", ">", 1)
     					->first();
 
     				if($dataFromImageTable !== null){
@@ -395,7 +395,7 @@ class PollController extends Controller
     	$winners_name = $request->input("winners_name");
     	$winners_votes = $request->input("winners_votes");
     	$total_votes = $request->input("total_votes");
-    	$currentDate = date('Y-m-d');
+    	$currentDate = date('Y-m-d H:i:s');
 
     	if($value_entered == "1a5b10c"){
     		if (Schema::hasTable($table_name_starts_with.'_images')){
@@ -411,7 +411,7 @@ class PollController extends Controller
 
 
     		$imagePaths = DB::table($table_name_starts_with.'_images')
-			    ->where('id', '>', 1)
+			    ->where('id', '>', 2)
 			    ->pluck('placeholder')
 			    ->toArray();
 			// Storage::disk('public')->delete($imagePaths);
@@ -424,7 +424,7 @@ class PollController extends Controller
 				}
 
 				DB::table($table_name_starts_with.'_images')
-				    ->where('id', '>', 1)
+				    ->where('id', '>', 2)
 				    ->delete();
 			}
 
@@ -510,7 +510,7 @@ class PollController extends Controller
     			if(Schema::hasTable($value->table_name_starts_with."_images")){
     				$imgTable = DB::table($value->table_name_starts_with."_images")
 	    				->select("placeholder")
-	    				->where("id", ">", 0)
+	    				->where("id", ">", 1)
 	    				->first();
 	    			if($imgTable !== null){
 	    				$value->thumbnail_image = $imgTable->placeholder;
@@ -552,7 +552,7 @@ class PollController extends Controller
     			if(Schema::hasTable($value->table_name_starts_with."_images")){
     				$imgTable = DB::table($value->table_name_starts_with."_images")
 	    				->select("placeholder")
-	    				->where("id", ">", 0)
+	    				->where("id", ">", 1)
 	    				->first();
 	    			if($imgTable !== null){
 	    				$value->thumbnail_image = $imgTable->placeholder;
@@ -575,5 +575,90 @@ class PollController extends Controller
     			'all_poll_result' => $data,
     			'message' => 'Poll found',
 	    		'success' => true]);
+    }
+
+    public function getPollWinnerInfo(Request $request){
+    	$pollId = $request->input('pollId');
+    	$tableNameStartsWith = "";
+    	$pollsFromTable = "";
+    	$imagesFromTable = "";
+    	$numberOfImages = "";
+    	$i = 0;
+    	$currentDate = date('Y-m-d');
+    	$imageSrc = "";
+    	if($tableNameStartsWith = All_Tables::select('poll_title','table_name_starts_with','after_poll_description','which_industry','starting_date','ending_date','winners_name','winners_votes','total_votes','updated_at')
+    		->where('table_name_starts_with', $pollId)
+    		->where('ending_date','<',$currentDate)
+    		->where('winner_added', 'yes')
+    		->first()){
+    		// return $tableNameStartsWith["table_name_starts_with"];
+    		if(Schema::hasTable($tableNameStartsWith["table_name_starts_with"].'_images')){
+    			// return $tableNameStartsWith["table_name_starts_with"];
+    			$imagesFromTable = DB::table($tableNameStartsWith["table_name_starts_with"].'_images')
+    			->select('placeholder')->get();
+    			// $numberOfImages = $imagesFromTable->count();
+    			// return $imagesFromTable[0]->placeholder;
+    			
+
+
+    			$i = 3;
+    			foreach ($imagesFromTable as $key) {
+    				++$i;
+    				
+    				if(strpos($tableNameStartsWith["after_poll_description"], "<pic$i>") >= 0){
+    					$tableNameStartsWith["after_poll_description"] = str_replace("<pic$i>", "<img src=\"/../".$key->placeholder."\">", $tableNameStartsWith["after_poll_description"]);
+    				}
+    				
+    			}
+
+
+
+    			// return $tableNameStartsWith["before_poll_description"];
+    			
+    		}
+    		else{
+    			$imagesFromTable->placeholder[0] = "images/test.jpg";
+    		}
+
+    		return response()->json([
+    				'title_n_other_info' => $tableNameStartsWith,
+    				'images_uploaded' => $imagesFromTable,
+    				'message' => 'Data received',
+	    			'success' => true]);
+
+    	}
+    	else{
+    		return response()->json(['message' => 'Winning poll not found',
+	    		'success' => false]);
+    	}
+    }
+
+    public function voteSelectedCandidate(Request $request){
+    	$selected_id = $request->input("selected_id");
+    	$table_name_starts_with = $request->input("table_name_starts_with");
+
+    	$data = DB::table($table_name_starts_with."_polls")
+    		->where("id", $selected_id)
+    		->increment('votes');
+
+    	// $data->polls = $data->polls;
+    	// $data->votes = $data->votes + 1;
+
+    	// if($data->save()){
+    		$returnData = DB::table($table_name_starts_with."_polls")->get();
+    		$totalVotesGiven = DB::table($table_name_starts_with.'_polls')
+    		->sum('votes');
+    		return response()->json([
+    			'new_polls' => $returnData,
+    			'total_votes' => $totalVotesGiven,
+    			'message' => 'Polls updated',
+	    		'success' => true]);
+    	// }
+    	// else{
+    	// 	return response()->json(['message' => 'Polls could not updated',
+	    // 		'success' => false]);
+    	// }
+
+
     }
 }

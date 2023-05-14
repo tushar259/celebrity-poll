@@ -1,11 +1,11 @@
 <template>
     <div class="project-size">
     	
-        <label for="exampleInputTitle">Title/Headline</label>
+        <label for="exampleInputTitle">Title/Headline*</label>
 	    <input class="form-control title" id="exampleInputTitle" v-model="headline" placeholder="Enter a headline" :disabled="disabled" @focus="focusedHeadline()" @blur="checkIfUsed()">
 	    <small class="form-text text-muted" v-html="headlineMessage" style="color: red !important;"></small>
 	    <div class="px-20-gap"></div>
-		<label for="exampleFormControlTextarea1">Before details</label>
+		<label for="exampleFormControlTextarea1">Before details*</label>
     	<textarea class="form-control" id="exampleFormControlTextarea1" rows="5" v-model="beforeDetails" @keyup.enter="beforeDetailsEnterPressed()" :disabled="disabled"></textarea>
 
 
@@ -16,7 +16,7 @@
     	<div class="container my-3">
   			<div class="row">
 			    <div class="col-12 text-center">
-			      	<h1 class="mb-3">Upload Image</h1>
+			      	<h1 class="mb-3">Upload Image*</h1>
 			    </div>
 			    
 
@@ -46,7 +46,7 @@
 
 
 			    <div class="col-md-5">
-			      	<h5>2. multiple file</h5>
+			      	<h5>multiple file (upload atleast 2 pics, 1st one for cover page, 2nd for thumbnails)</h5>
 			      	<!-- <form> -->
 			        	<div class="form-group">
 			          		<label for="my-file">Select Image</label>
@@ -83,7 +83,7 @@
 
 
 		<div>
-			<span>Add polls</span>
+			<span>Add polls*</span>
 		</div>
 		<div class="custom-textarea">
 	        <div class="tags-container">
@@ -100,7 +100,7 @@
     	<textarea class="form-control" id="exampleFormControlTextarea1" rows="5" v-model="afterDetails" @keyup.enter="afterDetailsEnterPressed()" :disabled="disabled"></textarea> -->
 
     	<div class="px-20-gap"></div>
-    	<span>Ending date</span>
+    	<span>Ending date*</span>
     	<input type="date" v-model="endingDate">
     	<small class="form-text text-muted" v-html="endingDateMessage" style="color: red !important;"></small>
     	
@@ -139,7 +139,7 @@
 		<hr>
     	<div class="px-30-gap"></div>
 
-	    **Polls finished** ({{numberOfNewFinishedPolls}})
+	    ######## Polls finished ######## ({{numberOfNewFinishedPolls}})
 		<div>
 			<div class="dropdown">
 				<button class="btn btn-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -183,19 +183,20 @@
 
 				</div>
 			</div>
-			<label for="exampleFormControlTextarea1">After details</label>
+			<label for="exampleFormControlTextarea1">After details*</label>
     		<textarea class="form-control" id="exampleFormControlTextarea1" rows="5" v-model="afterDetailsSecond" @keyup.enter="afterDetailsSecondEnterPressed()" :disabled="disabled"></textarea>
 			<div class="px-20-gap"></div>
-			<div>Winner's name</div>
+			<div>Winner's name*</div>
 			<input class="form-control title" v-model="winnersName" placeholder="Enter winner's name" autocomplete="off" autofill="off">
 			<div class="px-20-gap"></div>
-			<div>Winner's votes</div>
+			<div>Winner's votes*</div>
 			<input class="form-control title" v-model="winnersVotes" placeholder="Winner received votes" autocomplete="off" autofill="off">
 			<div class="px-20-gap"></div>
-			<div>Total votes</div>
+			<div>Total votes*</div>
 			<input class="form-control title" v-model="totalVotesInAPoll" placeholder="Total votes in poll" autocomplete="off" autofill="off" disabled>
+			<div class="px-30-gap"></div>
 			<div class="col-md-5">
-				<h5>multiple file</h5>
+				<h5>multiple file* (upload atleast 1 pic, 1st pic for winner photo)</h5>
 				<!-- <form> -->
 					<div class="form-group">
 						<label for="my-file">Select Image</label>

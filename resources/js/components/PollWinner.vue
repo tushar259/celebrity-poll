@@ -16,12 +16,12 @@
                     <p class="texts-under-thumbnail">image courtesy</p>
                     <h1 class="poll-title texts-under-thumbnail">{{pollTitle}}?</h1>
                     <div class="d-flex align-items-center texts-under-thumbnail">
-                        <div class="poll-date">Uploaded {{startingDate}}</div>
-                        <div class="distance-between-two custom-align">|</div>
-                        <div class="poll-date">Closing {{endingDate}}</div>
+                        <div class="poll-date">Voting started {{startingDate}}</div>
+                        <div class="distance-between-two"></div>
+                        <div class="poll-date">Winner published {{publishedDate}}</div>
                     </div>
                 </div>
-                <div class="px-15-gap"></div>
+                <div class="px-10-gap"></div>
             </div>
         </div>
         <div class="px-10-gap"></div>
@@ -68,36 +68,22 @@
         </div> -->
         <div class="row poll-page-row">
             <div class="col-md-5 custom-column">
-                <div class="poll-page-custom-card">
-                    <h5>{{ pollTitle }}?</h5>
+                <div class="poll-page-custom-card winner-animation">
+                    <h5 class="text-color-in-winner">{{ pollTitle }}?</h5>
                     <div class="px-30-gap"></div>
-                    <div  v-for="(poll, index) in pollsVoted" :key="index" class="polls-in-page">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadio1" @change="selectedOptionToVote(poll.id)" :value="poll.id">
-                            
-                            <div class="total-votes">
-                                <div class="votes-received-here" :style="{'width': poll.percent + '%'}"></div>
-                                <label class="form-check-label d-flex justify-content-between align-items-center" for="exampleRadio1">
-                                    {{poll.polls}}
-                                    <div></div>
-                                    ~{{poll.percent}}%({{poll.votes}} votes)
-                                    
-                                </label>
-                                
-                            </div>
-                            <div class="px-10-gap"></div>
-                        </div>
+                    <div class="custom-align">
+                        <h5 class="flashing text-color-in-winner">W I N N E R</h5>
+                        <img :src="'/../'+winnersThumbnail" class="winners-picture">
+                        <br>
+                        <h5 class="text-color-in-winner">{{winnersName}}</h5>
                     </div>
                     <div class="px-20-gap"></div>
-                    <div class="custom-align">
-                        <div>Total votes: {{totalVotes}}</div>
-                        <button type="button" class="btn mt-3" @click="voteNow()" :disabled="disableVote">Vote</button>
-                    </div>
+                    
                 </div>
             </div>
-            <div class="col-md-7 custom-column" v-if="beforePollDescription !== ''">
+            <div class="col-md-7 custom-column" v-if="afterPollDescription !== ''">
                 <div class="poll-page-custom-card">
-                    <div v-html="beforePollDescription" class="poll-details"></div>
+                    <div v-html="afterPollDescription" class="poll-details"></div>
                     <!-- <div v-html="afterPollDescription" class="poll-details"></div> -->
                 </div>
             </div>
@@ -166,18 +152,16 @@
                 pollId: this.$route.params.pollid,
                 pollFound: null,
                 pollTitle: '',
-                beforePollDescription: '',
-                afterPollDescription: '',
                 whichIndustry: '',
                 startingDate: '',
                 endingDate: '',
-                pollsVoted: [],
+                publishedDate: '',
                 imagesFound: [],
                 totalVotes: '',
                 thumbnail: '',
-                idSelectedToVote: '',
-                tableNameStartsWith: '',
-                disableVote: false,
+                winnersThumbnail: '',
+                winnersName: '',
+                afterPollDescription: '',
             }
         },
 
@@ -191,58 +175,25 @@
                 const formData = new FormData();
                 this.pollId = this.pollId.replace(":", "");
                 formData.append('pollId', this.pollId);
-                axios.post('/api/get-poll-info', formData)
+                axios.post('/api/get-poll-winner-info', formData)
                 .then(response => {
                     if(response.data.success == true){
                         this.pollFound = true;
                         this.pollTitle = response.data.title_n_other_info.poll_title;
-                        this.beforePollDescription = response.data.title_n_other_info.before_poll_description;
                         this.afterPollDescription = response.data.title_n_other_info.after_poll_description;
                         this.whichIndustry = response.data.title_n_other_info.which_industry;
                         this.startingDate = moment(response.data.title_n_other_info.starting_date).format('MMM D, YYYY h:mm A');
-                        this.endingDate = moment(response.data.title_n_other_info.ending_date).format('MMM D, YYYY');
-                        this.tableNameStartsWith = response.data.title_n_other_info.table_name_starts_with;
-
+                        this.endingDate = response.data.title_n_other_info.ending_date;
+                        this.publishedDate = moment(response.data.title_n_other_info.updated_at).format('MMM D, YYYY h:mm A');
+                        // this.publishedDate = this.beautifyTime(response.data.title_n_other_info.updated_at);
+                        this.winnersName = response.data.title_n_other_info.winners_name;
                         console.log(response.data );
-                        // let pollObject = {
-                        //     "polls": "",
-                        //     "votes": 0,
-                        //     "percent": 0
-                        // };
-                        console.log(this.beforePollDescription);
-                        response.data.polls_n_counts.forEach(item => {
-                            // pollObject.polls = item.polls;
-                            // pollObject.votes = item.votes;
-                            // if(((item.votes / response.data.total_votes) * 100).toFixed(2) > 0){
-                            //     pollObject.percent = ((item.votes / response.data.total_votes) * 100).toFixed(2);
-                            // }
-                            // else{
-                            //     pollObject.percent = 0;
-                            // }
-
-                            if(((item.votes / response.data.total_votes) * 100).toFixed(2) > 0){
-                                item.percent = ((item.votes / response.data.total_votes) * 100).toFixed(2);
-                            }
-                            else{
-                                item.percent = 0;
-                            }
-                            this.pollsVoted.push(item);
-                        });
+                        
                         
                         this.totalVotes = response.data.total_votes;
                         this.thumbnail = response.data.images_uploaded[0].placeholder;
-                        // response.data.images_uploaded.forEach(item => {
-                        //     this.imagesFound.push(item);
-                        // });
-                        // let blob = "";
-                        // response.data.images_uploaded.forEach(item => {
-                        //     // blob = new Blob([item.placeholder]);
-                        //     // blob = new Blob([new Uint8Array(item.placeholder)]);
-                        //     console.log(item.placeholder);
-                        //     this.imagesFound.push("/../"+item.placeholder);
-                        // });
-
-                        // console.log(this.imagesFound);
+                        this.winnersThumbnail = response.data.images_uploaded[2].placeholder;
+                        
                     }
                     if(response.data.success == false && response.data.message == "Found error while fetching data"){
 
@@ -258,43 +209,25 @@
                 });
             },
 
-            selectedOptionToVote(id){
-                console.log(id);
-                this.idSelectedToVote = id;
-            },
-
-            voteNow(){
-                this.disableVote = true;
-                if(this.idSelectedToVote == "" || this.idSelectedToVote == null){
-                    this.disableVote = false;
-                }
-                else{
-                    const formData = new FormData();
-                    formData.append("selected_id", this.idSelectedToVote);
-                    formData.append("table_name_starts_with", this.tableNameStartsWith);
-                    axios.post('/api/vote-selected-candidate', formData)
-                    .then(response => {
-                        console.log(response);
-                        this.pollsVoted = [];
-                        response.data.new_polls.forEach(item => {
-                            
-                            if(((item.votes / response.data.total_votes) * 100).toFixed(2) > 0){
-                                item.percent = ((item.votes / response.data.total_votes) * 100).toFixed(2);
-                            }
-                            else{
-                                item.percent = 0;
-                            }
-                            this.pollsVoted.push(item);
-                        });
-                        this.totalVotes = response.data.total_votes;
-                        this.disableVote = false;
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        this.disableVote = false;
-                    });
+            beautifyTime(timestamp) {
+                timestamp = Date.parse(timestamp) / 1000;
+                const now = Date.now() / 1000;
+                const diff = Math.floor(now - timestamp);
+                if (diff < 60) {
+                    return 'published now';
+                } else if (diff < 3600) {
+                    const minutes = Math.floor(diff / 60);
+                    return `published ${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+                } else if (diff < 86400) {
+                    const hours = Math.floor(diff / 3600);
+                    return `published ${hours} hour${hours > 1 ? 's' : ''} ago`;
+                } else {
+                    const days = Math.floor(diff / 86400);
+                    return `published ${days} day${days > 1 ? 's' : ''} ago`;
                 }
             }
+
+            
             
         }
     }

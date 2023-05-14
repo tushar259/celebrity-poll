@@ -25,7 +25,7 @@
                 </div>
                 <div v-if="allPollFound == true">
                     <div v-for="(poll, index) in allPolls" :key="index">
-                        <div class="card my-3 custom-card-border">
+                        <div class="card my-3 custom-card-border" @click="endingPollClicked($event, poll.table_name_starts_with)">
                             <div class="which-industry">{{poll.which_industry}}</div>
                             <div class="card-body d-flex">
                                 <div>
@@ -60,20 +60,20 @@
             </div>
             <div class="col-md-6" >
                 <div>
-                    <span>Results</span>
+                    <span>Recent results</span>
                     <hr>
                 </div>
                 <div v-if="resultPollsFound == true">
                     <div v-for="(poll, index) in resultAllPolls" :key="index">
-                        <div class="card my-3 custom-card-border">
-                            <div class="which-industry"></div>
+                        <div class="card my-3 custom-card-border" @click="resultPollsClicked($event, poll.table_name_starts_with)">
+                            <div class="which-industry">{{poll.which_industry}}</div>
                             <div class="card-body d-flex">
                                 <div>
                                     <img :src="'/../'+poll.thumbnail_image" class="thumbnail-images-in-list-of-polls">
                                 </div>
                                 <div class="thumbnail-texts-in-list-of-polls">
                                     <h4 class="card-title custom-card-title">
-                                    {{poll.poll_title}} (Published at <span>{{poll.updated_at}}</span>)
+                                    {{poll.poll_title}} <span class="custom-card-winning-date">(Published {{poll.updated_at}})</span>
                                     </h4>
                                     
                                     ..See more
@@ -88,6 +88,7 @@
 </template>
 
 <script>
+    import moment from 'moment';
     export default {
         data() {
             return {
@@ -118,6 +119,7 @@
                         
                         response.data.all_polls.forEach(item => {
                             // item.all_tags = response.data.all_tags;
+                            item.ending_date = moment(item.ending_date).format('MMM D, YYYY');
                             this.allPolls.push(item);
                         });
                         console.log(this.allPolls);
@@ -147,6 +149,7 @@
                         this.resultPollsFound = true;
                             
                         response.data.all_poll_result.forEach(item => {
+                            item.updated_at = this.beautifyTime(item.updated_at);
                             this.resultAllPolls.push(item);
                         });
                     }
@@ -158,6 +161,44 @@
                 .catch(error => {
                     console.log(error);
                 });
+            },
+
+            endingPollClicked(event, table_name_starts_with){
+                if (event.ctrlKey){
+                    window.open('/poll/'+table_name_starts_with, '_blank');
+                }
+                else{
+                    window.location.href = '/poll/'+table_name_starts_with;
+                }
+                // this.$router.push(`/poll/${table_name_starts_with}`);
+            },
+
+            resultPollsClicked(event, table_name_starts_with){
+                if (event.ctrlKey){
+                    window.open('/poll-winner/'+table_name_starts_with, '_blank');
+                }
+                else{
+                    window.location.href = '/poll-winner/'+table_name_starts_with;
+                }
+                // this.$router.push(`/poll/${table_name_starts_with}`);
+            },
+
+            beautifyTime(timestamp) {
+                timestamp = Date.parse(timestamp) / 1000;
+                const now = Date.now() / 1000;
+                const diff = Math.floor(now - timestamp);
+                if (diff < 60) {
+                    return 'now';
+                } else if (diff < 3600) {
+                    const minutes = Math.floor(diff / 60);
+                    return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+                } else if (diff < 86400) {
+                    const hours = Math.floor(diff / 3600);
+                    return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+                } else {
+                    const days = Math.floor(diff / 86400);
+                    return `${days} day${days > 1 ? 's' : ''} ago`;
+                }
             }
         }
     }
