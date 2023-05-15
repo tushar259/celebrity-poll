@@ -10,6 +10,8 @@ export const router = createRouter({
         {path: '/poll/:pollid', component: () => import('./components/PollWithId.vue')},
         {path: '/polls/:industry', component: () => import('./components/IndustryWisePoll.vue')},
         {path: '/poll-winner/:pollid', component: () => import('./components/PollWinner.vue')},
+        {path: '/login', component: () => import('./components/Login.vue')},
+        {path: '/create-account', component: () => import('./components/CreateAccount.vue')},
 
 
         // {path: '/Test', component: () => import('./pages/Test.vue')},

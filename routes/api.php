@@ -33,6 +33,8 @@ Route::post('/get-result-list-poll-industry-wise', 'App\Http\Controllers\PollCon
 Route::post('/get-poll-winner-info', 'App\Http\Controllers\PollController@getPollWinnerInfo');
 Route::post('/vote-selected-candidate', 'App\Http\Controllers\PollController@voteSelectedCandidate');
 
+Route::post('/create-custom-account', 'App\Http\Controllers\UserController@createCustomAccount');
+
 
 
 
