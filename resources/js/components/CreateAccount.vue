@@ -64,7 +64,7 @@
                     formData.append('selectedQuestion', this.selectedQuestion);
                     formData.append('selectedAnswer', this.selectedAnswer);
                     formData.append('isChecked', this.isChecked);
-                    axios.post('/api/create-custom-account', formData)
+                    axios.post('/api/auth/create-account', formData)
                     .then(response => {
                         console.log(response.data);
                     })

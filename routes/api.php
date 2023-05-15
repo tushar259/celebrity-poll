@@ -34,9 +34,13 @@ Route::post('/get-poll-winner-info', 'App\Http\Controllers\PollController@getPol
 Route::post('/vote-selected-candidate', 'App\Http\Controllers\PollController@voteSelectedCandidate');
 
 Route::post('/create-custom-account', 'App\Http\Controllers\UserController@createCustomAccount');
+Route::post('/login-custom-user', 'App\Http\Controllers\UserController@loginCustomUser');
 
 
-
+Route::group(['middleware'=>'api','prefix'=>'auth'], function($router){
+	Route::post('/create-account', 'App\Http\Controllers\UserController@createAccount');
+	Route::post('/login', 'App\Http\Controllers\UserController@loginAccount');
+});
 
 
 
