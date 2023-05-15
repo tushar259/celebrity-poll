@@ -27,7 +27,14 @@
             return {
                 email: '',
                 password: '',
+                token: localStorage.getItem('token'),
+                userEmail: '',
             }
+        },
+
+        created(){
+            // console.log(this.token);
+            this.checkIfUserLoggedin();
         },
 
         methods: {
@@ -41,12 +48,31 @@
                     formData.append('password', this.password);
                     axios.post('/api/auth/login', formData)
                     .then(response => {
-                        console.log(response);
+                        localStorage.setItem('token', response.data.token);
+                        this.userEmail = response.data.userEmail;
                     })
                     .catch(error => {
 
                     });
                 }
+            },
+
+            checkIfUserLoggedin(){
+                const formData = new FormData();
+                formData.append("token", this.token);
+                axios.post('/api/auth/check-if-user-logged-in', {
+                    // other data you want to send
+                }, {
+                    headers: {
+                        'Authorization': `Bearer ${this.token}`
+                    }
+                })
+                .then(response =>{
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
             }
         }
     }

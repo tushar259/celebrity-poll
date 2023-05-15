@@ -10,11 +10,12 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use App\Models\CustomUser;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class UserController extends Controller
 {
 	public function _construct(){
-		$this->middleware('auth:api', ['except'=>['createAccount', 'loginAccount']]);
+		$this->middleware('auth:api', ['except'=>['createAccount', 'loginAccount', 'checkIfUserLoggedIn']]);
 	}
 
     public function createCustomAccount(Request $request){
@@ -133,5 +134,22 @@ class UserController extends Controller
     		'message' => 'User verified',
     		// 'expires_in' => auth()->factory()->getTTL()*60,
     		'success' => true]);
+	}
+
+	public function checkIfUserLoggedIn(Request $request){
+		$token = $request->header('Authorization');
+		$user = JWTAuth::parseToken()->authenticate();
+		
+		if($user){
+			return response()->json([
+				'userInfoFromTk' => $user,
+	    		'message' => 'User logged in',
+	    		'success' => true]);
+		}
+		else{
+			return response()->json([
+	    		'message' => 'User is not logged in',
+	    		'success' => false]);
+		}
 	}
 }

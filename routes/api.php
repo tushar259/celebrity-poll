@@ -40,6 +40,7 @@ Route::post('/login-custom-user', 'App\Http\Controllers\UserController@loginCust
 Route::group(['middleware'=>'api','prefix'=>'auth'], function($router){
 	Route::post('/create-account', 'App\Http\Controllers\UserController@createAccount');
 	Route::post('/login', 'App\Http\Controllers\UserController@loginAccount');
+	Route::post('/check-if-user-logged-in', 'App\Http\Controllers\UserController@checkIfUserLoggedIn');
 });
 
 
