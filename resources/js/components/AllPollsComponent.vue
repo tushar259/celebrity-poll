@@ -97,6 +97,8 @@
                 allPollFound: null,
                 resultAllPolls: [],
                 resultPollsFound: null,
+                token: localStorage.getItem('token'),
+                userEmail: '',
             }
         },
 
@@ -190,6 +192,34 @@
                 } else {
                     const days = Math.floor(diff / 86400);
                     return `${days} day${days > 1 ? 's' : ''} ago`;
+                }
+            },
+
+            checkIfUserLoggedin(){
+                const formData = new FormData();
+                formData.append("token", this.token);
+                if(localStorage.getItem('token')){
+                    axios.post('/api/auth/check-if-user-logged-in', {
+                        // other data you want to send
+                    }, {
+                        headers: {
+                            'Authorization': `Bearer ${this.token}`
+                        }
+                    })
+                    .then(response =>{
+                        console.log(response.data);
+                        if(response.data.success == true && response.data.message == "User logged in"){
+                            this.userEmail = response.data.userInfoFromTk.email;
+                            // this.userId = response.data.userInfoFromTk.id;
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+                }
+                else{
+                    //no token means no user logged in
+                    console.log("no token in storage");
                 }
             }
         }

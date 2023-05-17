@@ -162,6 +162,8 @@
                 winnersThumbnail: '',
                 winnersName: '',
                 afterPollDescription: '',
+                token: localStorage.getItem('token'),
+                userEmail: '',
             }
         },
 

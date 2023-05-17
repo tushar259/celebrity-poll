@@ -12,6 +12,8 @@ export const router = createRouter({
         {path: '/poll-winner/:pollid', component: () => import('./components/PollWinner.vue')},
         {path: '/login', component: () => import('./components/Login.vue')},
         {path: '/create-account', component: () => import('./components/CreateAccount.vue')},
+        {path: '/forgot-password', component: () => import('./components/ForgotPassword.vue')},
+        
 
 
         // {path: '/Test', component: () => import('./pages/Test.vue')},

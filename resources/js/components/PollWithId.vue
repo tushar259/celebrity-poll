@@ -178,6 +178,8 @@
                 idSelectedToVote: '',
                 tableNameStartsWith: '',
                 disableVote: false,
+                token: localStorage.getItem('token'),
+                userEmail: '',
             }
         },
 

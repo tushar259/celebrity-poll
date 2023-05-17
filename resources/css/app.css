@@ -321,12 +321,12 @@ input[type='text'] {
     border: 1px solid #FFFFFF !important;
     cursor: pointer;
     border-radius: 8px !important;
-    box-shadow: 0 0px 6px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .custom-card-border:hover {
     /* border: 2px solid #FFFFFF !important; */
-    box-shadow: 0 0px 6px rgba(0, 0, 0, 0.8), 0 1px 3px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 0px 6px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 
 .custom-card-border:hover .card-name-n-votes span,
@@ -439,3 +439,27 @@ input[type='text'] {
 .custom-card-winning-date {
     color: black;
 }
+
+.nav-link {
+    position: relative; /* create a stacking context for tooltip */
+  }
+  
+  .nav-link:hover::after {
+    content: attr(data-tooltip); /* set the tooltip text */
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.25rem 0.5rem;
+    background-color: #000;
+    color: #fff;
+    font-size: 0.8rem;
+    border-radius: 0.25rem;
+    white-space: nowrap;
+  }
+  
+  /* hide the tooltip by default */
+  .nav-link::after {
+    content: "";
+    display: none;
+  }

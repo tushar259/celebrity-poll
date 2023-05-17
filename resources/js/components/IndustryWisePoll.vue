@@ -98,7 +98,8 @@
                 allPollFound: null,
                 resultAllPolls: [],
                 resultPollsFound: null,
-
+                token: localStorage.getItem('token'),
+                userEmail: '',
             }   
         },
 

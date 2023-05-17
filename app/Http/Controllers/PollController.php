@@ -205,15 +205,17 @@ class PollController extends Controller
     			
 
 
-    			$i = 2;
+    			$i = 0;
     			foreach ($imagesFromTable as $key) {
     				++$i;
-    				if(strpos($tableNameStartsWith["before_poll_description"], "<pic$i>") >= 0){
-    					$tableNameStartsWith["before_poll_description"] = str_replace("<pic$i>", "<img src=\"/../".$key->placeholder."\">", $tableNameStartsWith["before_poll_description"]);
-    				}
-    				if(strpos($tableNameStartsWith["after_poll_description"], "<pic$i>") >= 0){
-    					$tableNameStartsWith["after_poll_description"] = str_replace("<pic$i>", "<img src=\"/../".$key->placeholder."\">", $tableNameStartsWith["after_poll_description"]);
-    				}
+                    if($i >= 3){
+        				if(strpos($tableNameStartsWith["before_poll_description"], "<pic$i>") >= 0){
+        					$tableNameStartsWith["before_poll_description"] = str_replace("<pic$i>", "<img src=\"/../".$key->placeholder."\">", $tableNameStartsWith["before_poll_description"]);
+        				}
+        				if(strpos($tableNameStartsWith["after_poll_description"], "<pic$i>") >= 0){
+        					$tableNameStartsWith["after_poll_description"] = str_replace("<pic$i>", "<img src=\"/../".$key->placeholder."\">", $tableNameStartsWith["after_poll_description"]);
+        				}
+                    }
     				
     			}
 

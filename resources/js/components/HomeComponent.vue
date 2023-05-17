@@ -6,8 +6,15 @@
 
 <script>
     export default {
+        data(){
+            return {
+                token: localStorage.getItem('token'),
+                userEmail: '',
+            }
+        },
+
         created(){
-            this.$router.push(`/polls/`);
+            this.$router.push(`/polls`);
         }
     }
 </script>

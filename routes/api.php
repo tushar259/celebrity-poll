@@ -43,5 +43,9 @@ Route::group(['middleware'=>'api','prefix'=>'auth'], function($router){
 	Route::post('/check-if-user-logged-in', 'App\Http\Controllers\UserController@checkIfUserLoggedIn');
 });
 
+Route::post('/check-if-email-exist', 'App\Http\Controllers\UserController@checkIfEmailExist');
+Route::post('/change-password-now', 'App\Http\Controllers\UserController@changePasswordNow');
+Route::post('/check-if-email-exist-creating-account', 'App\Http\Controllers\UserController@checkIfEmailExistCreatingAccount');
+
 
 

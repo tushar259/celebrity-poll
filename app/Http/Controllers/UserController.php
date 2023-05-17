@@ -43,18 +43,18 @@ class UserController extends Controller
 	    	if($customUser->save()){
 
 	    		return response()->json([
-		    		'message' => 'Account created',
+		    		'message' => 'Account created.',
 		    		'success' => true]);
 	    	}
 	    	else{
 	    		return response()->json([
-		    		'message' => 'Account counld not be created',
+		    		'message' => 'Account counld not be created.',
 		    		'success' => false]);
 	    	}
     	}
     	else{
     		return response()->json([
-	    		'message' => 'Account counld not be created',
+	    		'message' => 'Account counld not be created.',
 	    		'success' => false]);
     	}
     }
@@ -96,7 +96,7 @@ class UserController extends Controller
 	public function loginAccount(Request $request){
 		$request->validate([
 	        'email' => 'required|email',
-	        'password' => 'required|min:5|max:20'
+	        'password' => 'required'
 	    ]);
 
 	    $credentials = $request->only('email', 'password');
@@ -149,6 +149,72 @@ class UserController extends Controller
 		else{
 			return response()->json([
 	    		'message' => 'User is not logged in',
+	    		'success' => false]);
+		}
+	}
+
+	public function checkIfEmailExist(Request $request){
+		$email = $request->input("email");
+		$data = DB::table("custom_users")->where("email", $email)->first();
+
+		if($data !== null){
+			return response()->json([
+				'you_can_find_question_and_ans_here' => $data,
+	    		'message' => 'Email found',
+	    		'success' => true]);
+		}
+		else{
+			return response()->json([
+	    		'message' => 'Email not found',
+	    		'success' => false]);
+		}
+	}
+
+	public function changePasswordNow(Request $request){
+		$email = $request->input("email");
+		$userId = $request->input("userId");
+		$newPassword = $request->input("newPassword");
+
+		if($email == "" || $userId == ""){
+			return response()->json([
+	    		'message' => 'Something went wrong, please reload and try again.',
+	    		'success' => false]);
+		}
+
+		$data = DB::table("custom_users")->where("id", $userId)
+			->where("email", $email)
+			->update(["password" => bcrypt($newPassword)]);
+
+		if($data){
+			return response()->json([
+	    		'message' => 'Password changed.',
+	    		'success' => true]);
+		}
+		else{
+			return response()->json([
+	    		'message' => 'Password could not be changed!',
+	    		'success' => false]);
+		}
+
+	}
+
+	public function checkIfEmailExistCreatingAccount(Request $request){
+		$checkEmail = $request->input("email");
+
+		$request->validate([
+	        'email' => 'required|email|unique:custom_users,email'
+	    ]);
+
+		$data = DB::table("custom_users")->where("email", $checkEmail)->first();
+
+		if($data){
+			return response()->json([
+	    		'message' => 'Email used already.',
+	    		'success' => true]);
+		}
+		else{
+			return response()->json([
+	    		'message' => 'Email available.',
 	    		'success' => false]);
 		}
 	}

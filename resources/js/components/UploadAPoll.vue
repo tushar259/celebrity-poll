@@ -277,6 +277,7 @@
 				winnersName: '',
 				winnersVotes: '',
 				totalVotesInAPoll: '',
+				
         	}
         },
         created() {
