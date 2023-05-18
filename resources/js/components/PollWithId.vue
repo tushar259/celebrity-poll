@@ -83,6 +83,8 @@
                                     ~{{poll.percent}}%({{poll.votes}} votes)
                                     
                                 </label>
+                                <!-- <div style="width: 100%;height: 100%;background-color: rgb(72, 175, 72);" :style="{'width': poll.percent + '%'}" v-if="poll.id == 3"></div> -->
+                                <!-- <span class="bi bi-check"></span> -->
                                 
                             </div>
                             <div class="px-10-gap"></div>
@@ -91,7 +93,8 @@
                     <div class="px-20-gap"></div>
                     <div class="custom-align">
                         <div>Total votes: {{totalVotes}}</div>
-                        <button type="button" class="btn mt-3" @click="voteNow()" :disabled="disableVote">Vote</button>
+                        <h4 v-html="voteMessage" style="height: 30px;"></h4>
+                        <button type="button" class="btn mt-3" @click="preCheckBeforeVote()" :disabled="disableVote">Vote</button>
                     </div>
                 </div>
             </div>
@@ -180,6 +183,7 @@
                 disableVote: false,
                 token: localStorage.getItem('token'),
                 userEmail: '',
+                voteMessage: '',
             }
         },
 
@@ -265,30 +269,133 @@
                 this.idSelectedToVote = id;
             },
 
-            voteNow(){
+            checkIfUserLoggedin(){
+                return new Promise((resolve, reject) => {
+                    const formData = new FormData();
+                    formData.append("token", this.token);
+                    if(localStorage.getItem('token')){
+                        axios.post('/api/auth/check-if-user-logged-in', {
+                            // other data you want to send
+                        }, {
+                            headers: {
+                                'Authorization': `Bearer ${this.token}`
+                            }
+                        })
+                        .then(response =>{
+                            console.log(response.data);
+                            if(response.data.success == true && response.data.message == "User logged in"){
+                                this.userEmail = response.data.userInfoFromTk.email;
+                                resolve(true);
+                                // this.$router.push(`/`);
+                                // this.userId = response.data.userInfoFromTk.id;
+                            }
+                            else{
+                                resolve(false);
+                            }
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            resolve(false);
+                        });
+                    }
+                    else{
+                        //no token means no user logged in
+                        resolve(false);
+                        // console.log("no token in storage");
+                    }
+                });
+            },
+
+            preCheckBeforeVote(){
+                // this.disableVote = true;
+                // this.voteMessage = "";
+                // if(this.token.length > 0){
+                //     let value = await this.checkIfUserLoggedin();
+                //     console.log("is he logged in: "+this.userEmail);
+                //     if(value == true){
+                //         this.voteNow();
+                //     }
+                //     else{
+                //         this.disableVote = false;
+                //         this.voteMessage = "<span style='color:red;'>You need to login.</span>";
+                //         setTimeout(() => {
+                //             this.voteMessage = "";
+                //         }, 2000);
+                        
+                //     }
+                // }
+                // else{
+                //     this.disableVote = false;
+                //     this.voteMessage = "<span style='color:red;'>You need to login.</span>";
+                //     setTimeout(() => {
+                //         this.voteMessage = "";
+                //     }, 2000);
+                // }
+
                 this.disableVote = true;
+                this.voteMessage = "";
+                if (this.token.length > 0) {
+                    this.checkIfUserLoggedin().then((value) => {
+                        console.log("Is he logged in: " + this.userEmail);
+                        if (value === true) {
+                            this.voteNow();
+                        } 
+                        else{
+                            this.disableVote = false;
+                            this.voteMessage = "<span style='color:red;'>You need to login.</span>";
+                            setTimeout(() => {
+                                this.voteMessage = "";
+                            }, 2000);
+                        }
+                    }).catch((error) => {
+                        this.disableVote = false;
+                        this.voteMessage = "<span style='color:red;'>Server went down.</span>";
+                        setTimeout(() => {
+                            this.voteMessage = "";
+                        }, 2000);
+                    });
+                }
+                else{
+                    this.disableVote = false;
+                    this.voteMessage = "<span style='color:red;'>You need to login.</span>";
+                    setTimeout(() => {
+                        this.voteMessage = "";
+                    }, 2000);
+                }
+            },
+
+            voteNow(){
+                
                 if(this.idSelectedToVote == "" || this.idSelectedToVote == null){
                     this.disableVote = false;
+                    this.voteMessage = "<span style='color:red;'>Please select an option.</span>";
+                    setTimeout(() => {
+                        this.voteMessage = "";
+                    }, 2000);
                 }
                 else{
                     const formData = new FormData();
                     formData.append("selected_id", this.idSelectedToVote);
                     formData.append("table_name_starts_with", this.tableNameStartsWith);
+                    formData.append("email", this.userEmail);
                     axios.post('/api/vote-selected-candidate', formData)
                     .then(response => {
                         console.log(response);
                         this.pollsVoted = [];
-                        response.data.new_polls.forEach(item => {
-                            
-                            if(((item.votes / response.data.total_votes) * 100).toFixed(2) > 0){
-                                item.percent = ((item.votes / response.data.total_votes) * 100).toFixed(2);
-                            }
-                            else{
-                                item.percent = 0;
-                            }
-                            this.pollsVoted.push(item);
-                        });
-                        this.totalVotes = response.data.total_votes;
+                        if(response.data.success == true){
+                            response.data.new_polls.forEach(item => {
+                                
+                                if(((item.votes / response.data.total_votes) * 100).toFixed(2) > 0){
+                                    item.percent = ((item.votes / response.data.total_votes) * 100).toFixed(2);
+                                }
+                                else{
+                                    item.percent = 0;
+                                }
+                                this.pollsVoted.push(item);
+                            });
+                            this.totalVotes = response.data.total_votes;
+                            this.voteMessage = "<span style='color:green;'>"+response.data.message+"</span>";
+                        }
                         this.disableVote = false;
                     })
                     .catch(error => {

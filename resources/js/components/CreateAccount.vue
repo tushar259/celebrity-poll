@@ -36,7 +36,7 @@
                 <!-- <input type="checkbox"> <small style="margin-bottom: 5px;">I accept <a href="">terms and conditions</a></small> -->
                 <small style="display: inline-block; vertical-align: middle;">
                     <input type="checkbox" style="vertical-align: middle;" v-model="isChecked">
-                    <span style="margin-left: 5px;">I accept <a href="#">terms and conditions</a></span>
+                    <span style="margin-left: 5px;">I accept <router-link to="/terms-and-conditions">terms and conditions</router-link></span>
                 </small>
                 <div class="px-5-gap"></div>
                 <small v-html="termsNconditionsMessage"></small>
@@ -82,7 +82,8 @@
         },
 
         created(){
-            this.submitFormMessage = "<span style='color:green;'>Account created.</span>";
+            // this.submitFormMessage = "<span style='color:green;'>Account created.</span>";
+            this.checkIfUserLoggedin();
         },
 
         methods: {
@@ -231,6 +232,35 @@
                     // this.isLoading = false;
                 }
             },
+
+            checkIfUserLoggedin(){
+                const formData = new FormData();
+                formData.append("token", this.token);
+                if(localStorage.getItem('token')){
+                    axios.post('/api/auth/check-if-user-logged-in', {
+                        // other data you want to send
+                    }, {
+                        headers: {
+                            'Authorization': `Bearer ${this.token}`
+                        }
+                    })
+                    .then(response =>{
+                        console.log(response.data);
+                        if(response.data.success == true && response.data.message == "User logged in"){
+                            this.userEmail = response.data.userInfoFromTk.email;
+                            this.$router.push(`/`);
+                            // this.userId = response.data.userInfoFromTk.id;
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+                }
+                else{
+                    //no token means no user logged in
+                    console.log("no token in storage");
+                }
+            }
         }
     }
 </script>

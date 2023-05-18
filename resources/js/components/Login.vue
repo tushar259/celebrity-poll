@@ -15,7 +15,7 @@
                     <small v-html="passwordMessage"></small>
                 </div>
                 <div class="form-group">
-                    <router-link to="/forgot-password">Forgot password?</router-link>
+                    <router-link to="/change-password">Forgot password?</router-link>
                 </div>
                 <!-- <div class="px-15-gap"></div> -->
                 <small v-html="submitFormMessage"></small>
@@ -80,14 +80,10 @@
                             this.isLoading = false;
                             this.$emit('class-changed', this.userEmail);
                             if(localStorage.getItem('load-page') && localStorage.getItem('load-page').length > 0){
-                                setTimeout(() => {
-                                    this.$router.push(localStorage.getItem('load-page'));
-                                }, 200);
+                                this.$router.push(localStorage.getItem('load-page'));
                             }
                             else{
-                                setTimeout(() => {
-                                    this.$router.push(`/`);
-                                }, 200);
+                                this.$router.push(`/`);
                             }
                         }
                         else if(response.data.success == false){
@@ -124,6 +120,7 @@
                         console.log(response.data);
                         if(response.data.success == true && response.data.message == "User logged in"){
                             this.userEmail = response.data.userInfoFromTk.email;
+                            this.$router.push(`/`);
                             // this.userId = response.data.userInfoFromTk.id;
                         }
                     })

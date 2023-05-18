@@ -635,25 +635,58 @@ class PollController extends Controller
     	}
     }
 
+    public function checkIfUserVotedBefore(Request $request){
+        $email = $request->input("email");
+        $table_name_starts_with = $request->input("table_name_starts_with");
+
+        $data = DB::table($table_name_starts_with."_users_voted")
+            ->where("email", $email)
+            ->first();
+
+        if($data !== null){
+            return "voted";
+        }
+        else{
+            return "no";
+        }
+    }
+
     public function voteSelectedCandidate(Request $request){
+        $table_name_starts_with = $request->input("table_name_starts_with");
+        if($this->checkIfUserVotedBefore($request) == "voted"){
+            $returnData = DB::table($table_name_starts_with."_polls")->get();
+            $totalVotesGiven = DB::table($table_name_starts_with.'_polls')
+                ->sum('votes');
+            return response()->json([
+                'new_polls' => $returnData,
+                'total_votes' => $totalVotesGiven,
+                'message' => 'You have already voted.',
+                'success' => true]);
+        }
+        $email = $request->input("email");
     	$selected_id = $request->input("selected_id");
-    	$table_name_starts_with = $request->input("table_name_starts_with");
+    	
 
     	$data = DB::table($table_name_starts_with."_polls")
     		->where("id", $selected_id)
     		->increment('votes');
 
+        if($data){
+            DB::table($table_name_starts_with."_users_voted")->insert([
+                'email' => $email
+            ]);
+        }
     	// $data->polls = $data->polls;
     	// $data->votes = $data->votes + 1;
 
     	// if($data->save()){
     		$returnData = DB::table($table_name_starts_with."_polls")->get();
     		$totalVotesGiven = DB::table($table_name_starts_with.'_polls')
-    		->sum('votes');
+    		    ->sum('votes');
     		return response()->json([
     			'new_polls' => $returnData,
     			'total_votes' => $totalVotesGiven,
-    			'message' => 'Polls updated',
+    			'message' => 'Thank you for voting.',
 	    		'success' => true]);
     	// }
     	// else{
@@ -662,5 +695,106 @@ class PollController extends Controller
     	// }
 
 
+    }
+
+    public function getAllRecentUploadedPoll(){
+
+        $currentDate = date('Y-m-d');
+        $allPolls = DB::table('all_tables')->select('which_industry','poll_title','table_name_starts_with','before_poll_description','starting_date','ending_date')
+            ->where('ending_date','>',$currentDate)
+            ->where('winner_added', 'no')
+            ->orderBy('ending_date', 'DESC')
+            ->skip(0)
+            ->take(20)
+            ->get();
+
+        if($allPolls->count() > 0){
+            foreach($allPolls as $value){
+                $pollTags = DB::table($value->table_name_starts_with."_polls")
+                    ->select('id','polls','votes',DB::raw("'".$value->table_name_starts_with."' as table_name_starts_with"))
+                    ->get();
+                $value->poll_tags = $pollTags;
+
+                if(Schema::hasTable($value->table_name_starts_with."_images")){
+                    $pollThumbnail = DB::table($value->table_name_starts_with."_images")
+                        ->select('placeholder')
+                        ->where('id', '>', 1)
+                        ->first();
+                    if($pollThumbnail !== null){
+                        $value->thumbnail_image = $pollThumbnail->placeholder;
+                    }
+                    else{
+                        $value->thumbnail_image = "images/test.jpg";
+                    }
+                }
+                else{
+                    $value->thumbnail_image = "images/test.jpg";
+                }
+            }
+            return response()->json([
+                'all_polls' => $allPolls,
+                'message' => 'Data received',
+                'success' => true]);
+        }
+        else if($allPolls->count() == 0){
+            return response()->json([
+                'message' => 'No polls uploaded yet',
+                'success' => false]);
+        }
+        else{
+            return response()->json([
+                'message' => 'Something went wrong',
+                'success' => false]);
+        }
+    }
+
+    public function getAllRecentUploadedPollIndustryWise(Request $request){
+        $industryName = $request->input("industryName");
+        $currentDate = date('Y-m-d');
+        $allPolls = DB::table('all_tables')->select('which_industry','poll_title','table_name_starts_with','before_poll_description','starting_date','ending_date')
+            ->where('ending_date','>',$currentDate)
+            ->where('winner_added', 'no')
+            ->where('which_industry', $industryName)
+            ->orderBy('ending_date', 'DESC')
+            ->get();
+
+        if($allPolls->count() > 0){
+            foreach($allPolls as $value){
+                $pollTags = DB::table($value->table_name_starts_with."_polls")
+                    ->select('id','polls','votes',DB::raw("'".$value->table_name_starts_with."' as table_name_starts_with"))
+                    ->get();
+                $value->poll_tags = $pollTags;
+
+                if(Schema::hasTable($value->table_name_starts_with."_images")){
+                    $pollThumbnail = DB::table($value->table_name_starts_with."_images")
+                        ->select('placeholder')
+                        ->where('id', '>', 1)
+                        ->first();
+                    if($pollThumbnail !== null){
+                        $value->thumbnail_image = $pollThumbnail->placeholder;
+                    }
+                    else{
+                        $value->thumbnail_image = "images/test.jpg";
+                    }
+                }
+                else{
+                    $value->thumbnail_image = "images/test.jpg";
+                }
+            }
+            return response()->json([
+                'all_polls' => $allPolls,
+                'message' => 'Data received',
+                'success' => true]);
+        }
+        else if($allPolls->count() == 0){
+            return response()->json([
+                'message' => 'No polls uploaded yet',
+                'success' => false]);
+        }
+        else{
+            return response()->json([
+                'message' => 'Something went wrong',
+                'success' => false]);
+        }
     }
 }

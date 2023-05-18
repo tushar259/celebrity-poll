@@ -19,13 +19,17 @@
                 </div>
             </div> -->
             <div class="col-md-6">
-                <div>
-                    <span>Polls ending</span>
-                    <hr>
+                <div class="poll-heads-in-all-poll">
+                    <!-- <hr> -->
+                    <!-- <div class="px-10-gap"></div> -->
+                    <span>New polls</span>
+                    <!-- <div class="px-10-gap"></div> -->
+                    <!-- <hr> -->
                 </div>
-                <div v-if="allPollFound == true">
-                    <div v-for="(poll, index) in allPolls" :key="index">
-                        <div class="card my-3 custom-card-border" @click="endingPollClicked($event, poll.table_name_starts_with)">
+                <div v-if="allRecentPollsFound == true">
+                    <div v-for="(poll, index) in allRecentUploadedPolls" :key="index">
+                        <!-- <router-link class="card my-3 custom-card-border" @click="endingPollClicked($event, poll.table_name_starts_with)" :to="'/poll/'+poll.table_name_starts_with">  -->
+                        <router-link class="card my-3 custom-card-border" :to="'/poll/'+poll.table_name_starts_with"> 
                             <div class="which-industry">{{poll.which_industry}}</div>
                             <div class="card-body d-flex">
                                 <div>
@@ -49,23 +53,26 @@
                                     ..See more
                                 </div>
                             </div>
-                        </div>
+                        </router-link>
                         <div v-if="index%3==0">
                             ad
                         </div>
                     </div>
                     
                 </div>
-            
             </div>
             <div class="col-md-6" >
-                <div>
+                <div class="poll-heads-in-all-poll recent-results-head">
+                    <!-- <hr> -->
+                    <!-- <div class="px-10-gap"></div> -->
                     <span>Recent results</span>
-                    <hr>
+                    <!-- <div class="px-10-gap"></div> -->
+                    <!-- <hr> -->
                 </div>
                 <div v-if="resultPollsFound == true">
                     <div v-for="(poll, index) in resultAllPolls" :key="index">
-                        <div class="card my-3 custom-card-border" @click="resultPollsClicked($event, poll.table_name_starts_with)">
+                        <!-- <router-link class="card my-3 custom-card-border" @click="resultPollsClicked($event, poll.table_name_starts_with)" :to="'/poll-winner/'+poll.table_name_starts_with"> -->
+                        <router-link class="card my-3 custom-card-border" :to="'/poll-winner/'+poll.table_name_starts_with">
                             <div class="which-industry">{{poll.which_industry}}</div>
                             <div class="card-body d-flex">
                                 <div>
@@ -79,8 +86,51 @@
                                     ..See more
                                 </div>
                             </div>
+                        </router-link>
+                    </div>
+                </div>
+                <!-- <div class="poll-heads-in-all-poll ending-poll" @click="showEndingPolls = !showEndingPolls"> -->
+                <div class="poll-heads-in-all-poll ending-poll">
+                    <!-- <hr> -->
+                    <!-- <div class="px-10-gap"></div> -->
+                    <span>Polls ending</span>
+                    <!-- <div class="px-10-gap"></div> -->
+                    <!-- <hr> -->
+                </div>
+                <!-- <div v-if="allPollFound == true" :class="{'d-none': showEndingPolls}"> -->
+                <div v-if="allPollFound == true">
+                    <div v-for="(poll, index) in allPolls" :key="index">
+                        <!-- <router-link class="card my-3 custom-card-border" @click="endingPollClicked($event, poll.table_name_starts_with)" :to="'/poll/'+poll.table_name_starts_with"> -->
+                        <router-link class="card my-3 custom-card-border" :to="'/poll/'+poll.table_name_starts_with">
+                            <div class="which-industry">{{poll.which_industry}}</div>
+                            <div class="card-body d-flex">
+                                <div>
+                                    <img :src="'/../'+poll.thumbnail_image" class="thumbnail-images-in-list-of-polls">
+                                </div>
+                                <div class="thumbnail-texts-in-list-of-polls">
+                                    <h4 class="card-title custom-card-title">
+                                    {{poll.poll_title}} (Closing at <span class="custom-card-ending-date">{{poll.ending_date}}</span>)
+                                    </h4>
+                                    
+                                    <div v-for="(tag, indexT) in poll.poll_tags" :key="indexT" class="card-name-n-votes">
+                                        <div v-if="indexT <= 1">
+                                            <span v-if="indexT !== poll.poll_tags.length - 1">
+                                                <b>{{tag.polls}}</b>({{tag.votes}} votes),&nbsp;
+                                            </span>
+                                            <span v-else>
+                                                <b>{{tag.polls}}</b>({{tag.votes}} votes)
+                                            </span>
+                                        </div>
+                                    </div>
+                                    ..See more
+                                </div>
+                            </div>
+                        </router-link>
+                        <div v-if="index%3==0">
+                            ad
                         </div>
                     </div>
+                    
                 </div>
             </div>
         </div>
@@ -99,16 +149,54 @@
                 resultPollsFound: null,
                 token: localStorage.getItem('token'),
                 userEmail: '',
+                allRecentUploadedPolls: [],
+                allRecentPollsFound: null,
+                // showRecentPolls: false,
+                // showResultPolls: false,
+                // showEndingPolls: false,
             }
         },
 
         created() {
-            this.getAllPolls();
+            this.getAllRecentPolls();
+            this.getAllPollsEnding();
             this.getlistOfResultPolls();
         },
 
         methods: {
-            getAllPolls(){
+            getAllRecentPolls(){
+                axios.get('/api/get-all-recent-uploaded-poll')
+                .then(response => {
+                    
+                    if(response.data.success == true){
+                        this.allRecentPollsFound = true;
+                        
+                        response.data.all_polls.forEach(item => {
+                            // item.all_tags = response.data.all_tags;
+                            item.ending_date = moment(item.ending_date).format('MMM D, YYYY');
+                            this.allRecentUploadedPolls.push(item);
+                        });
+                        // console.log("why");
+                        // console.log(this.allRecentUploadedPolls);
+                        // console.log("why");
+                        
+                    }
+                    else if(response.data.success == false && response.data.message == "No polls uploaded yet"){
+                        this.allRecentPollsFound = false;
+                    }
+                    else{
+                        this.allRecentPollsFound = false;
+                    }
+                    this.pollFound = true;
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.pollFound = true;
+                    this.allRecentPollsFound = false;
+                });
+            },
+
+            getAllPollsEnding(){
                 axios.get('/api/get-all-poll')
                 .then(response => {
                     if(response.data.success == true){

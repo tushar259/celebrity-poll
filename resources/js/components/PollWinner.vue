@@ -17,7 +17,7 @@
                     <h1 class="poll-title texts-under-thumbnail">{{pollTitle}}?</h1>
                     <div class="d-flex align-items-center texts-under-thumbnail">
                         <div class="poll-date">Voting started {{startingDate}}</div>
-                        <div class="distance-between-two"></div>
+                        <div class="distance-between-two custom-align">|</div>
                         <div class="poll-date">Winner published {{publishedDate}}</div>
                     </div>
                 </div>
@@ -28,7 +28,7 @@
         <div class="styling-link font-selected">
             <router-link to="/" class="navigator-link">Home</router-link><i class='fas fa-angle-right'></i>
             <router-link to="" class="navigator-link">{{whichIndustry}}</router-link><i class='fas fa-angle-right'></i>
-            <router-link :to="'/poll/'+pollId" class="navigator-link">{{pollId}}</router-link>
+            <router-link :to="'/poll-winner/'+pollId" class="navigator-link">{{pollId}}</router-link>
         </div>
         <div class="px-10-gap"></div>
         <!-- <div class="custom-details-n-poll-card-area">

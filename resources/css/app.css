@@ -238,7 +238,7 @@ input[type='text'] {
 .total-votes {
     height: 60px;
     width: 100%;
-    max-width: 350px;
+    max-width: 380px;
     background-color: rgba(179, 179, 179, 0.4);
     border-radius: 4px;
     position: relative;
@@ -257,7 +257,7 @@ input[type='text'] {
 .votes-received-here {
     height: 60px;
     background-color: rgba(0, 204, 255, 0.4);
-    max-width: 350px;
+    max-width: 380px;
     border-radius: 4px;
     position: absolute;
 }
@@ -269,6 +269,7 @@ input[type='text'] {
 .custom-align button,
 .custom-align button:hover {
     background-color: burlywood;
+    width: 100px;
 }
 
 .form-check-input:checked {
@@ -322,11 +323,13 @@ input[type='text'] {
     cursor: pointer;
     border-radius: 8px !important;
     box-shadow: 0 0px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.3);
+    text-decoration: none;
 }
 
 .custom-card-border:hover {
     /* border: 2px solid #FFFFFF !important; */
     box-shadow: 0 0px 6px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.6);
+    text-decoration: none;
 }
 
 .custom-card-border:hover .card-name-n-votes span,
@@ -359,7 +362,7 @@ input[type='text'] {
     padding-top: 15px;
     padding-bottom: 15px;
     border-radius: 8px;
-    box-shadow: 0 0px 6px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .thumbnail-images-in-list-of-polls {
@@ -462,4 +465,36 @@ input[type='text'] {
   .nav-link::after {
     content: "";
     display: none;
+    /* background-color: #F0F2F5; */
   }
+
+.poll-heads-in-all-poll {
+    /* background-color: rgba(248, 244, 244, 0.5); */
+    border: 2px solid #476da3;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: rgb(191, 199, 228);
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.recent-results-head {
+    background-color: rgb(202, 226, 202);
+}
+
+.poll-heads-in-all-poll span {
+    margin-left: 2%;
+}
+
+/* .poll-heads-in-all-poll hr {
+    color: rgba(255, 255, 255);
+} */
+
+.ending-poll {
+    background-color: rgb(235, 167, 167);
+}
+
+.navbar {
+    box-shadow: 0 0px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.2);
+}

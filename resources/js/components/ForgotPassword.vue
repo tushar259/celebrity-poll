@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <h2 class="text-center mb-4">Recover password</h2>
+                <h2 class="text-center mb-4">Change password</h2>
                 
                 <div v-if="emailFound == 'second phase'">
                     <div class="form-group">
@@ -15,7 +15,7 @@
                     <small v-html="submitFormMessage"></small>
                     <button class="btn btn-primary btn-block" @click="recoverPasswordSecondTime()" :disabled="isLoading">
                         <span v-if="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        {{ isLoading ? 'Loading...' : 'Recover password' }}
+                        {{ isLoading ? 'Loading...' : 'Change password' }}
                     </button>
                 </div>
                 <div v-else-if="emailFound == 'third phase'">
@@ -74,6 +74,10 @@
                 token: localStorage.getItem('token'),
                 userEmail: '',
             }
+        },
+
+        created(){
+            this.checkIfUserLoggedin();
         },
 
         methods: {
@@ -183,6 +187,40 @@
                             });
                         }
                     }
+                }
+            },
+
+            checkIfUserLoggedin(){
+                const formData = new FormData();
+                formData.append("token", this.token);
+                if(localStorage.getItem('token')){
+                    axios.post('/api/auth/check-if-user-logged-in', {
+                        // other data you want to send
+                    }, {
+                        headers: {
+                            'Authorization': `Bearer ${this.token}`
+                        }
+                    })
+                    .then(response =>{
+                        console.log(response.data);
+                        if(response.data.success == true && response.data.message == "User logged in"){
+                            this.emailFound = "second phase";
+                            this.userEmail = response.data.userInfoFromTk.email;
+                            this.email = this.userEmail;
+                            this.userIdFromDatabase = response.data.userInfoFromTk.id;
+                            this.passwordRecoveryQuestion = response.data.userInfoFromTk.password_recovery_ques;
+                            this.passwordRecoveryAnswer = response.data.userInfoFromTk.password_recovery_ans;
+                            // this.$router.push(`/`);
+                            // this.userId = response.data.userInfoFromTk.id;
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+                }
+                else{
+                    //no token means no user logged in
+                    console.log("no token in storage");
                 }
             }
         }

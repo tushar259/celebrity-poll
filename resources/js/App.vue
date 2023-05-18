@@ -34,7 +34,7 @@
                         {{userEmail}}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <router-link class="dropdown-item" to="#">Change password</router-link>
+                        <router-link class="dropdown-item" to="/change-password">Change password</router-link>
                         <!-- <a class="dropdown-item" href="#">Option 2</a>
                         <a class="dropdown-item" href="#">Option 3</a> -->
                         <div class="dropdown-divider"></div>
@@ -124,12 +124,15 @@ export default {
             localStorage.removeItem('token');
             this.userEmail = null;
             this.foundLoggedinUser = false;
+            if(this.currentPage == "/login" || this.currentPage == "/create-account" || this.currentPage == "/change-password"){
+                this.currentPage = "/";
+            }
             this.$router.push(this.currentPage);
         },
 
         loginClicked(){
             this.currentPage = window.location.pathname;
-            if(this.currentPage == "/login" || this.currentPage == "/create-account" || this.currentPage == "/forgot-password"){
+            if(this.currentPage == "/login" || this.currentPage == "/create-account" || this.currentPage == "/change-password"){
                 this.currentPage = "/";
             }
             localStorage.setItem('load-page', this.currentPage);
@@ -138,7 +141,7 @@ export default {
 
         registrationClicked(){
             this.currentPage = window.location.pathname;
-            if(this.currentPage == "/login" || this.currentPage == "/create-account" || this.currentPage == "/forgot-password"){
+            if(this.currentPage == "/login" || this.currentPage == "/create-account" || this.currentPage == "/change-password"){
                 this.currentPage = "/";
             }
             localStorage.setItem('load-page', this.currentPage);

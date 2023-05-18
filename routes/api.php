@@ -32,6 +32,11 @@ Route::get('/get-result-list-poll', 'App\Http\Controllers\PollController@getResu
 Route::post('/get-result-list-poll-industry-wise', 'App\Http\Controllers\PollController@getResultListPollIndustryWise');
 Route::post('/get-poll-winner-info', 'App\Http\Controllers\PollController@getPollWinnerInfo');
 Route::post('/vote-selected-candidate', 'App\Http\Controllers\PollController@voteSelectedCandidate');
+Route::get('/get-all-recent-uploaded-poll', 'App\Http\Controllers\PollController@getAllRecentUploadedPoll');
+Route::post('/get-all-recent-uploaded-poll-industry-wise', 'App\Http\Controllers\PollController@getAllRecentUploadedPollIndustryWise');
+
+
+
 
 Route::post('/create-custom-account', 'App\Http\Controllers\UserController@createCustomAccount');
 Route::post('/login-custom-user', 'App\Http\Controllers\UserController@loginCustomUser');
