@@ -2,7 +2,7 @@
     <div class="project-size">
     	
         <label for="exampleInputTitle">Title/Headline*</label>
-	    <input class="form-control title" id="exampleInputTitle" v-model="headline" placeholder="Enter a headline" :disabled="disabled" @focus="focusedHeadline()" @blur="checkIfUsed()">
+	    <input class="form-control title" id="exampleInputTitle" v-model="headline" placeholder="Enter a headline" :disabled="disabled" @focus="focusedHeadline()">
 	    <small class="form-text text-muted" v-html="headlineMessage" style="color: red !important;"></small>
 	    <div class="px-20-gap"></div>
 		<label for="exampleFormControlTextarea1">Before details*</label>
@@ -166,14 +166,14 @@
 
 					<div  v-for="(poll, index) in getPollsWinningList[selectedPollIndex].poll_tags" :key="index" class="polls-in-page">
 						<div class="form-check">
-							<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadio1" :value="poll.id">
+							<!-- <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadio1" :value="poll.id"> -->
 							
 							<div class="total-votes">
 								<div class="votes-received-here" :style="{'width': poll.percent + '%'}"></div>
 								<label class="form-check-label d-flex justify-content-between align-items-center" for="exampleRadio1">
 									{{poll.polls}}
 									<div></div>
-									~{{poll.percent}}%({{poll.votes}} votes)
+									~{{poll.percent}}%({{formatNumber(parseInt(poll.votes))}} votes)
 									
 								</label>
 								
@@ -289,6 +289,10 @@
 			// this.deleteThisImage();
 		},
         methods: {
+			formatNumber(number) {
+                return number.toLocaleString();
+            },
+
 			deleteThisImage(){
 				axios.get('/api/test-delete')
 				.then(response => {
@@ -489,80 +493,76 @@
 	        		this.disabledUpload = false;
 	        	}
 	        	else{
-	        		if(this.headlineExist == "headline exist"){
-	        			this.headlineMessage = "Headline exist!";
-						this.uploadPollHideLoading = true;
-	        		}
-	        		else{
-	        			if(this.valueEntered != ""){
-	        				const formData = new FormData();
-	        				formData.append('headline', this.headline);
-	        				formData.append('beforeDetails', this.beforeDetails);
-	        				formData.append('afterDetails', this.afterDetails);
-	        				if(this.image_list.length > 0){
-	        					formData.append('imageExist', "yes");
-	        					for(let i = 0; i < this.image_list.length; i++) {
-							        formData.append('images[]', this.image_list[i]);
-							    }
-	        				}
-	        				else{
-	        					formData.append('imageExist', "no");
-	        				}
-	        				
-						    for(let i = 0; i < this.tags.length; i++) {
-						        formData.append('tags[]', this.tags[i]);
-						    }
-						    formData.append('valueEntered', this.valueEntered);
-						    formData.append('endingDate', this.endingDate);
-						    formData.append('whichIndustry', this.whichIndustry);
-						    
-	        				axios.post('/api/upload-newly-added-poll', formData)
-					        .then(response => {
-					          	console.log(response.data);
-								if(response.data.success == true){
-									this.headline = "";
-									this.beforeDetails = "";
-									this.afterDetails = "";
-									this.image_list.splice(0, this.image_list.length);
-									this.preview_list.splice(0, this.preview_list.length);
-									this.tags.splice(0, this.tags.length);
-									// this.preview_list = [];
-									// this.tags = [];
-									this.valueEntered = "";
-									this.endingDate = "";
-									this.uploadPollHideLoading = true;
-									this.whichIndustry = "Select industry";
-									this.uploadPollMessage = '<span style="color:green">'+response.data.message+'</span>';
-									setTimeout(() => {
-										this.uploadPollMessage = '';
-									}, 20000);
-									this.disabledUpload = false;
-								}
-								else{
-									this.uploadPollMessage = '<span style="color:red">'+response.data.message+'</span>';
-									setTimeout(() => {
-										this.uploadPollMessage = '';
-									}, 20000);
-									this.uploadPollHideLoading = true;
-									this.disabledUpload = false;
-								}
-					          	
-					        })
-					        .catch(error => {
-					          	console.log(error);
-								this.uploadPollMessage = '<span style="color:red">Did not get any success message!</span>';
+	        		
+					if(this.valueEntered != ""){
+						const formData = new FormData();
+						formData.append('headline', this.headline);
+						formData.append('beforeDetails', this.beforeDetails);
+						formData.append('afterDetails', this.afterDetails);
+						if(this.image_list.length > 0){
+							formData.append('imageExist', "yes");
+							for(let i = 0; i < this.image_list.length; i++) {
+								formData.append('images[]', this.image_list[i]);
+							}
+						}
+						else{
+							formData.append('imageExist', "no");
+						}
+						
+						for(let i = 0; i < this.tags.length; i++) {
+							formData.append('tags[]', this.tags[i]);
+						}
+						formData.append('valueEntered', this.valueEntered);
+						formData.append('endingDate', this.endingDate);
+						formData.append('whichIndustry', this.whichIndustry);
+						
+						axios.post('/api/upload-newly-added-poll', formData)
+						.then(response => {
+							console.log(response.data);
+							if(response.data.success == true){
+								this.headline = "";
+								this.beforeDetails = "";
+								this.afterDetails = "";
+								this.image_list.splice(0, this.image_list.length);
+								this.preview_list.splice(0, this.preview_list.length);
+								this.tags.splice(0, this.tags.length);
+								// this.preview_list = [];
+								// this.tags = [];
+								this.valueEntered = "";
+								this.endingDate = "";
+								this.uploadPollHideLoading = true;
+								this.whichIndustry = "Select industry";
+								this.uploadPollMessage = '<span style="color:green">'+response.data.message+'</span>';
+								setTimeout(() => {
+									this.uploadPollMessage = '';
+								}, 20000);
+								this.disabledUpload = false;
+							}
+							else{
+								this.uploadPollMessage = '<span style="color:red">'+response.data.message+'</span>';
 								setTimeout(() => {
 									this.uploadPollMessage = '';
 								}, 20000);
 								this.uploadPollHideLoading = true;
-					          	this.disabledUpload = false;
-					        });
-	        			}
-	        			else{
+								this.disabledUpload = false;
+							}
+							
+						})
+						.catch(error => {
+							console.log(error);
+							this.uploadPollMessage = '<span style="color:red">Did not get any success message!</span>';
+							setTimeout(() => {
+								this.uploadPollMessage = '';
+							}, 20000);
 							this.uploadPollHideLoading = true;
-	        				this.disabledUpload = false;
-	        			}
-	        		}
+							this.disabledUpload = false;
+						});
+					}
+					else{
+						this.uploadPollHideLoading = true;
+						this.disabledUpload = false;
+					}
+	        		
 	        	}
 	        },
 
@@ -640,7 +640,7 @@
 					this.getPollsWinningList[index].poll_tags.forEach(item => {
 						totalVotes += item.votes;
 					});
-					this.totalVotesInAPoll = totalVotes;
+					
 					this.getPollsWinningList[index].poll_tags.forEach(item => {
 						
 						if(((item.votes / totalVotes) * 100).toFixed(2) > 0){
@@ -650,6 +650,7 @@
 							item.percent = 0;
 						}
 					});
+					this.totalVotesInAPoll = this.formatNumber(totalVotes);
 					this.winnerPollIdInAllTables = id;
 					this.winnerPollTitleInAllTables = pollTitle;
 					this.winnerTableNameStartsWith = tableNameStartsWith;

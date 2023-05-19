@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('all_tables', function (Blueprint $table) {
             $table->id();
-            $table->string('poll_title')->unique();
+            $table->string('poll_title');
             $table->string('table_name_starts_with')->unique();
             $table->text('before_poll_description')->nullable();
             $table->text('after_poll_description')->nullable();

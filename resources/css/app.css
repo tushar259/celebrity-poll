@@ -153,7 +153,7 @@ input[type='text'] {
     width: 100%;
     min-height: 350px;
     border-radius: 0px 0px 8px 8px;
-    box-shadow: 0 0px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .custom-details-n-poll-card-area {
@@ -166,7 +166,7 @@ input[type='text'] {
 .custom-details-n-poll-card {
     width: 100%;
     min-height: 100px; 
-    box-shadow: 0 0px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.2);
     border-radius: 8px 8px 8px 8px;
 }
 
@@ -322,13 +322,13 @@ input[type='text'] {
     border: 1px solid #FFFFFF !important;
     cursor: pointer;
     border-radius: 8px !important;
-    box-shadow: 0 0px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.2);
     text-decoration: none;
 }
 
 .custom-card-border:hover {
     /* border: 2px solid #FFFFFF !important; */
-    box-shadow: 0 0px 6px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0px 6px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.4);
     text-decoration: none;
 }
 
@@ -362,7 +362,7 @@ input[type='text'] {
     padding-top: 15px;
     padding-bottom: 15px;
     border-radius: 8px;
-    box-shadow: 0 0px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .thumbnail-images-in-list-of-polls {
@@ -506,3 +506,18 @@ input[type='text'] {
 .odd-row {
     background-color: #e9ecef;
 }
+
+.content {
+    min-height: calc(100vh - 200px); /* Subtract the height of the footer */
+  }
+  
+  .footer {
+    background-color: #333;
+    padding: 20px 0;
+    position: sticky;
+    bottom: 0;
+  }
+
+  .text-white {
+    color: #fff; /* Set the text color */
+  }

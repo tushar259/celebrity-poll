@@ -47,6 +47,20 @@
     <div>
         <router-view @class-changed="updateSpecificDivClass"/>
     </div>
+
+    <div>
+    <!-- Your content goes here -->
+        <div class="content">
+        <!-- Content body -->
+        </div>
+
+        <!-- Sticky footer -->
+        <footer class="footer">
+            <div class="container">
+                <span class="text-white">Your footer content</span>
+            </div>
+        </footer>
+    </div>
 </template>
 
 <script>

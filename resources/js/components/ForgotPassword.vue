@@ -183,12 +183,12 @@
                                     this.userIdFromDatabase = "";
                                     this.changePassword == ""; 
                                     this.confirmPassword == "";
-                                    this.isLoading = false;
-                                    setTimeout(() => {
-                                        // this.submitFormMessage = '';
-                                        this.$router.push(`/login`);
-                                    }, 2000);
                                     
+                                    // setTimeout(() => {
+                                        // this.submitFormMessage = '';
+                                    this.$router.push(`/login`);
+                                    // }, 1000);
+                                    this.isLoading = false;
                                 }
                                 else{
                                     toast.error(response.data.message);
