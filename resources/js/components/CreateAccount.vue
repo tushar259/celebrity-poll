@@ -43,7 +43,7 @@
                 <div class="px-15-gap"></div>
                 <!-- <button class="btn btn-primary btn-block" @click="createAccount()">Create Account</button> -->
                 <div class="d-flex">
-                <h4 v-html="submitFormMessage"></h4>
+                <!-- <h4 v-html="submitFormMessage"></h4> -->
                     <div class="spinner-border text-primary" :class="{'visually-hidden': uploadLoading}" role="status">
                         <span class="visually-hidden">Loading...</span>
                     </div>
@@ -58,6 +58,8 @@
 </template>
 
 <script>
+    import { useToast } from 'vue-toastification';
+    const toast = useToast();
     export default {
         data() {
             return {
@@ -159,19 +161,22 @@
                     axios.post('/api/auth/create-account', formData)
                     .then(response => {
                         if(response.data.success == true){
-                            this.submitFormMessage = "<span style='color:green;'>"+response.data.message+" Please wait..</span>";
+                            toast.success(response.data.message);
+                            // this.submitFormMessage = "<span style='color:green;'>"+response.data.message+" Please wait..</span>";
                             this.uploadLoading = false;
                             this.loginNow();
                         }
                         else{
-                            this.submitFormMessage = "<span style='color:red;'>"+response.data.message+"</span>";
+                            toast.error(response.data.message);
+                            // this.submitFormMessage = "<span style='color:red;'>"+response.data.message+"</span>";
                             this.isLoading = false;
                         }
                         
                         console.log(response.data);
                     })
                     .catch(error => {
-                        this.submitFormMessage = "<span style='color:red;'>Something went wrong</span>";
+                        toast.error("Something went wrong");
+                        // this.submitFormMessage = "<span style='color:red;'>Something went wrong</span>";
                         this.isLoading = false;
                     });
                 }
@@ -215,7 +220,8 @@
                             }, 2000);
                         }
                         else if(response.data.success == false){
-                            this.submitFormMessage = "<span style='color:red;'>Email or password did not match.</span>"
+                            toast.error("Email or password did not match.");
+                            // this.submitFormMessage = "<span style='color:red;'>Email or password did not match.</span>"
                             this.isLoading = false;
                         }
                     })

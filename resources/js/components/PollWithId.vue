@@ -80,7 +80,7 @@
                                 <label class="form-check-label d-flex justify-content-between align-items-center" for="exampleRadio1">
                                     {{poll.polls}}
                                     <div></div>
-                                    ~{{poll.percent}}%({{poll.votes}} votes)
+                                    ~{{poll.percent}}%({{formatNumber(poll.votes)}} votes)
                                     
                                 </label>
                                 <!-- <div style="width: 100%;height: 100%;background-color: rgb(72, 175, 72);" :style="{'width': poll.percent + '%'}" v-if="poll.id == 3"></div> -->
@@ -90,10 +90,10 @@
                             <div class="px-10-gap"></div>
                         </div>
                     </div>
-                    <div class="px-20-gap"></div>
+                    
                     <div class="custom-align">
-                        <div>Total votes: {{totalVotes}}</div>
-                        <h4 v-html="voteMessage" style="height: 30px;"></h4>
+                        <div>Total votes: {{formatNumber(totalVotes)}}</div>
+                        <!-- <h4 v-html="voteMessage" style="height: 30px;"></h4> -->
                         <button type="button" class="btn mt-3" @click="preCheckBeforeVote()" :disabled="disableVote">Vote</button>
                     </div>
                 </div>
@@ -163,6 +163,8 @@
 
 <script>
     import moment from 'moment';
+    import { useToast } from 'vue-toastification';
+    const toast = useToast();
     export default {
         data() {
             return{
@@ -176,7 +178,7 @@
                 endingDate: '',
                 pollsVoted: [],
                 imagesFound: [],
-                totalVotes: '',
+                totalVotes: 0,
                 thumbnail: '',
                 idSelectedToVote: '',
                 tableNameStartsWith: '',
@@ -193,6 +195,10 @@
         },
 
         methods: {
+            formatNumber(number) {
+                return number.toLocaleString();
+            },
+
             getPollInfo(){
                 const formData = new FormData();
                 this.pollId = this.pollId.replace(":", "");
@@ -216,6 +222,7 @@
                         //     "percent": 0
                         // };
                         console.log(this.beforePollDescription);
+                        
                         response.data.polls_n_counts.forEach(item => {
                             // pollObject.polls = item.polls;
                             // pollObject.votes = item.votes;
@@ -234,9 +241,14 @@
                             }
                             this.pollsVoted.push(item);
                         });
+
+                        this.totalVotes = parseInt(response.data.total_votes);
                         
-                        this.totalVotes = response.data.total_votes;
-                        this.thumbnail = response.data.images_uploaded[0].placeholder;
+                        if(response.data.images_uploaded[0]){
+                            this.thumbnail = response.data.images_uploaded[0].placeholder;
+                        }
+                        
+                        
                         // response.data.images_uploaded.forEach(item => {
                         //     this.imagesFound.push(item);
                         // });
@@ -333,34 +345,43 @@
                 // }
 
                 this.disableVote = true;
-                this.voteMessage = "";
-                if (this.token.length > 0) {
-                    this.checkIfUserLoggedin().then((value) => {
-                        console.log("Is he logged in: " + this.userEmail);
-                        if (value === true) {
-                            this.voteNow();
-                        } 
-                        else{
+                // this.voteMessage = "";
+                if(localStorage.getItem('token')){
+                    if (this.token.length > 0) {
+                        this.checkIfUserLoggedin().then((value) => {
+                            console.log("Is he logged in: " + this.userEmail);
+                            if (value === true) {
+                                this.voteNow();
+                            } 
+                            else{
+                                this.disableVote = false;
+                                toast.error("You need to login.");
+                                // this.voteMessage = "<span style='color:red;'>You need to login.</span>";
+                                // setTimeout(() => {
+                                //     this.voteMessage = "";
+                                // }, 2000);
+                            }
+                        }).catch((error) => {
                             this.disableVote = false;
-                            this.voteMessage = "<span style='color:red;'>You need to login.</span>";
-                            setTimeout(() => {
-                                this.voteMessage = "";
-                            }, 2000);
-                        }
-                    }).catch((error) => {
+                            toast.error("You need to login.");
+                            // this.voteMessage = "<span style='color:red;'>Server went down.</span>";
+                            // setTimeout(() => {
+                            //     this.voteMessage = "";
+                            // }, 2000);
+                        });
+                    }
+                    else{
                         this.disableVote = false;
-                        this.voteMessage = "<span style='color:red;'>Server went down.</span>";
-                        setTimeout(() => {
-                            this.voteMessage = "";
-                        }, 2000);
-                    });
+                        toast.error("You need to login.");
+                        // this.voteMessage = "<span style='color:red;'>You need to login.</span>";
+                        // setTimeout(() => {
+                        //     this.voteMessage = "";
+                        // }, 2000);
+                    }
                 }
                 else{
                     this.disableVote = false;
-                    this.voteMessage = "<span style='color:red;'>You need to login.</span>";
-                    setTimeout(() => {
-                        this.voteMessage = "";
-                    }, 2000);
+                    toast.error("You need to login.");
                 }
             },
 
@@ -368,10 +389,11 @@
                 
                 if(this.idSelectedToVote == "" || this.idSelectedToVote == null){
                     this.disableVote = false;
-                    this.voteMessage = "<span style='color:red;'>Please select an option.</span>";
-                    setTimeout(() => {
-                        this.voteMessage = "";
-                    }, 2000);
+                    toast.warning("Please select an option.")
+                    // this.voteMessage = "<span style='color:red;'>Please select an option.</span>";
+                    // setTimeout(() => {
+                    //     this.voteMessage = "";
+                    // }, 2000);
                 }
                 else{
                     const formData = new FormData();
@@ -393,8 +415,9 @@
                                 }
                                 this.pollsVoted.push(item);
                             });
-                            this.totalVotes = response.data.total_votes;
-                            this.voteMessage = "<span style='color:green;'>"+response.data.message+"</span>";
+                            this.totalVotes = parseInt(response.data.total_votes);
+                            toast.success(response.data.message);
+                            // this.voteMessage = "<span style='color:green;'>"+response.data.message+"</span>";
                         }
                         this.disableVote = false;
                     })

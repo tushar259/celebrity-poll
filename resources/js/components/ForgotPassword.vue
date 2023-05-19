@@ -12,7 +12,7 @@
                     <div class="form-group">
                         <input class="form-control" id="answer" v-model="selectedAnswer" @keyup.enter="recoverPasswordSecondTime()" placeholder="Enter answer">
                     </div>
-                    <small v-html="submitFormMessage"></small>
+                    <!-- <small v-html="submitFormMessage"></small> -->
                     <button class="btn btn-primary btn-block" @click="recoverPasswordSecondTime()" :disabled="isLoading">
                         <span v-if="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         {{ isLoading ? 'Loading...' : 'Change password' }}
@@ -20,7 +20,7 @@
                 </div>
                 <div v-else-if="emailFound == 'third phase'">
                     <div class="form-group">
-                        <label for="password">New password</label>
+                        <label for="password">New password (at least 5 or at most 20 characters)</label>
                         <input type="password" class="form-control" v-model="changePassword" @keyup.enter="recoverPasswordFinalStep()" placeholder="Password">
                         <small v-html="changePasswordMessage"></small>
                     </div>
@@ -29,7 +29,7 @@
                         <input type="password" class="form-control" v-model="confirmPassword" @keyup.enter="recoverPasswordFinalStep()" placeholder="Password">
                         <small v-html="confirmPasswordMessage"></small>
                     </div>
-                    <small v-html="submitFormMessage"></small>
+                    <!-- <small v-html="submitFormMessage"></small> -->
                     <button class="btn btn-primary btn-block" @click="recoverPasswordFinalStep()" :disabled="isLoading">
                         <span v-if="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         {{ isLoading ? 'Loading...' : 'Change password' }}
@@ -41,7 +41,7 @@
                         <input type="email" class="form-control" id="email" v-model="email" @keyup.enter="recoverPassword()" placeholder="Enter email">
                         <small v-html="emailMessage"></small>
                     </div>
-                    <small v-html="submitFormMessage"></small>
+                    <!-- <small v-html="submitFormMessage"></small> -->
                     <button class="btn btn-primary btn-block" @click="recoverPassword()" :disabled="isLoading">
                         <span v-if="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         {{ isLoading ? 'Loading...' : 'Recover password' }}
@@ -55,6 +55,8 @@
 </template>
 
 <script>
+    import { useToast } from 'vue-toastification';
+    const toast = useToast();
     export default {
         data() {
             return {
@@ -84,7 +86,7 @@
             recoverPassword(){
                 this.isLoading = true;
                 this.emailMessage = "";
-                this.submitFormMessage = "";
+                // this.submitFormMessage = "";
                 if(this.email == ""){
                     this.emailMessage = "<span style='color:red;'>Please enter your email.</span>";
                     this.isLoading = false;
@@ -103,13 +105,15 @@
                         }
                         else if(response.data.success == false){
                             this.emailFound = "first phase";
-                            this.submitFormMessage = "<span style='color:red;'>"+response.data.message+"</span>";
+                            toast.error(response.data.message);
+                            // this.submitFormMessage = "<span style='color:red;'>"+response.data.message+"</span>";
                             this.isLoading = false;
                         }
                         console.log(response.data);
                     })
                     .catch(error => {
-                        this.submitFormMessage = "<span style='color:red;'>Something went wrong!</span>";
+                        toast.error("Something went wrong!");
+                        // this.submitFormMessage = "<span style='color:red;'>Something went wrong!</span>";
                         this.isLoading = false;
                     });
                 }
@@ -117,42 +121,52 @@
 
             recoverPasswordSecondTime(){
                 this.isLoading = true;
-                this.submitFormMessage = "";
+                // this.submitFormMessage = "";
                 if(this.passwordRecoveryAnswer == this.selectedAnswer){
                     this.emailFound = "third phase";
                     this.isLoading = false;
                 }
                 else{
-                    this.submitFormMessage = "<span style='color:red;'>Answer did not match!</span>";
-                    setTimeout(() => {
-                    	this.submitFormMessage = '';
-                    }, 2000);
+                    toast.error("Answer did not match!");
+                    // this.submitFormMessage = "<span style='color:red;'>Answer did not match!</span>";
+                    // setTimeout(() => {
+                    // 	this.submitFormMessage = '';
+                    // }, 2000);
                     this.isLoading = false;
                 }
             },
 
             recoverPasswordFinalStep(){
                 this.isLoading = true;
-                this.submitFormMessage = "";
+                // this.submitFormMessage = "";
                 this.changePasswordMessage = "";
                 this.confirmPasswordMessage = "";
-                if(this.changePassword == "" || this.confirmPassword == ""){
+                console.log(this.changePassword.length);
+                if(this.changePassword == "" || this.confirmPassword == "" || this.changePassword.length < 5 || this.changePassword.length > 20){
                     if(this.changePassword == ""){
                         this.changePasswordMessage = "<span style='color:red;'>Password cannot be empty.</span>";
                     }
                     if(this.confirmPassword == ""){
                         this.confirmPasswordMessage = "<span style='color:red;'>Password cannot be empty.</span>";
                     }
+                    if(this.changePassword.length < 5){
+                        this.changePasswordMessage = "<span style='color:red;'>At least 5 characters need to be used.</span>";
+                    }
+                    if(this.changePassword.length > 20){
+                        this.changePasswordMessage = "<span style='color:red;'>At most 20 characters can be used.</span>";
+                    }
                     this.isLoading = false;
                 }
                 else{
                     if(this.changePassword !== this.confirmPassword){
-                        this.submitFormMessage = "<span style='color:red;'>Password did not match.</span>";
+                        toast.error("Password did not match.");
+                        // this.submitFormMessage = "<span style='color:red;'>Password did not match.</span>";
                         this.isLoading = false;
                     }
                     else{
                         if(this.email == "" || this.userIdFromDatabase == ""){
-                            this.submitFormMessage = "<span style='color:red;'>Something went wrong, please reload and try again.</span>";
+                            toast.error("Something went wrong, please reload and try again.");
+                            // this.submitFormMessage = "<span style='color:red;'>Something went wrong, please reload and try again.</span>";
                             this.isLoading = false;
                         }
                         else{
@@ -163,27 +177,30 @@
                             axios.post('/api/change-password-now',formData)
                             .then(response =>{
                                 if(response.data.success == true){
-                                    this.submitFormMessage = "<span style='color:green;'>"+response.data.message+"</span>";
+                                    toast.success(response.data.message);
+                                    // this.submitFormMessage = "<span style='color:green;'>"+response.data.message+"</span>";
                                     this.email = "";
                                     this.userIdFromDatabase = "";
                                     this.changePassword == ""; 
                                     this.confirmPassword == "";
                                     this.isLoading = false;
                                     setTimeout(() => {
-                                        this.submitFormMessage = '';
+                                        // this.submitFormMessage = '';
                                         this.$router.push(`/login`);
                                     }, 2000);
                                     
                                 }
                                 else{
-                                    this.submitFormMessage = response.data.message;
+                                    toast.error(response.data.message);
+                                    // this.submitFormMessage = response.data.message;
                                     this.isLoading = false;
                                 }
                                 
                             })
                             .catch(error => {
                                 this.isLoading = false;
-                                this.submitFormMessage = "<span style='color:red;'>Something went wrong, please reload and try again.</span>";
+                                toast.error("Something went wrong, please reload and try again.");
+                                // this.submitFormMessage = "<span style='color:red;'>Something went wrong, please reload and try again.</span>";
                             });
                         }
                     }

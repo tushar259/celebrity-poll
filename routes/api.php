@@ -53,4 +53,7 @@ Route::post('/change-password-now', 'App\Http\Controllers\UserController@changeP
 Route::post('/check-if-email-exist-creating-account', 'App\Http\Controllers\UserController@checkIfEmailExistCreatingAccount');
 
 
+Route::get('/show-country-list', 'App\Http\Controllers\CountryController@insertDataIntoCountryTable');
+
+
 

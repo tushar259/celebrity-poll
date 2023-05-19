@@ -29,6 +29,8 @@
 </template>
 
 <script>
+    import { useToast } from 'vue-toastification';
+    const toast = useToast();
     export default {
         data() {
             return {
@@ -52,6 +54,7 @@
 
         methods: {
             loginNow(){
+                // toast.success('Hello, Vue Toast!');
                 this.isLoading = true;
                 this.emailMessage = "";
                 this.passwordMessage = "";
@@ -87,7 +90,8 @@
                             }
                         }
                         else if(response.data.success == false){
-                            this.submitFormMessage = "<span style='color:red;'>Email or password did not match.</span>"
+                            toast.error('Email or password did not match!');
+                            // this.submitFormMessage = "<span style='color:red;'>Email or password did not match.</span>"
                             this.isLoading = false;
                         }
                     })

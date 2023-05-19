@@ -175,9 +175,9 @@ class UserController extends Controller
 		$userId = $request->input("userId");
 		$newPassword = $request->input("newPassword");
 
-		if($email == "" || $userId == ""){
+		if($email == "" || $userId == "" || strlen($newPassword) < 5 || strlen($newPassword) > 20){
 			return response()->json([
-	    		'message' => 'Something went wrong, please reload and try again.',
+	    		'message' => 'Please check password requirements',
 	    		'success' => false]);
 		}
 

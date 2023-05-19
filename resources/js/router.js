@@ -14,6 +14,7 @@ export const router = createRouter({
         {path: '/create-account', component: () => import('./components/CreateAccount.vue')},
         {path: '/change-password', component: () => import('./components/ForgotPassword.vue')},
         {path: '/terms-and-conditions', component: () => import('./components/TermsAndConditions.vue')},
+        {path: '/countries', component: () => import('./components/CountriesWithPopulations.vue')},
         
 
 

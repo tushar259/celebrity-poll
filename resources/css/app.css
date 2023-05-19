@@ -498,3 +498,11 @@ input[type='text'] {
 .navbar {
     box-shadow: 0 0px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.2);
 }
+
+.even-row {
+    background-color: #f8f9fa;
+}
+
+.odd-row {
+    background-color: #e9ecef;
+}
