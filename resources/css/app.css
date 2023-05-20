@@ -1,6 +1,9 @@
 .show-nav {
 	display: show;
 }
+.hide-navbar-now {
+    display: none;
+}
 .project-size {
 	margin-left: 30px;
 }
@@ -443,11 +446,11 @@ input[type='text'] {
     color: black;
 }
 
-.nav-link {
+.nav-link-show-text {
     position: relative; /* create a stacking context for tooltip */
   }
   
-  .nav-link:hover::after {
+  .nav-link-show-text:hover::after {
     content: attr(data-tooltip); /* set the tooltip text */
     position: absolute;
     bottom: 100%;
@@ -462,7 +465,7 @@ input[type='text'] {
   }
   
   /* hide the tooltip by default */
-  .nav-link::after {
+  .nav-link-show-text::after {
     content: "";
     display: none;
     /* background-color: #F0F2F5; */
@@ -521,3 +524,16 @@ input[type='text'] {
   .text-white {
     color: #fff; /* Set the text color */
   }
+
+.dropdown-toggle {
+    width: 100%;
+    min-width: 20px;
+}
+
+.nav-link.active {
+    border-bottom: 2px solid red;
+}
+
+.nav-item {
+    margin-left: 10px;
+}

@@ -2,30 +2,38 @@
     
     <nav class="navbar navbar-expand-lg navbar-light bg-light" style="width: 100% !important">
         <a class="navbar-brand" href="#">Home Image</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" @click="collapse = !collapse">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" @click="collapse = false">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="navbar-collapse collapse" :class="{'show': collapse}" id="navbarNav">
+        <div class="navbar-collapse collapse" :class="{'hide-navbar-now': collapse}" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <router-link class="nav-link" to="#">Home <span class="sr-only">(current)</span></router-link>
+                    <router-link class="nav-link" to="/" :class="{ 'active': activeLink === 'home' }" @click="collapse = true,activeLink = 'home'">Home</router-link>
                 </li>
-                <li class="nav-item">
-                    <router-link class="nav-link" to="#">Features</router-link>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-truncate" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Industry
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <router-link class="dropdown-item" to="" :class="{ 'active': activeLink === 'hollywood' }" @click="collapse = true,activeLink = 'hollywood'">Hollywood</router-link>
+                        <router-link class="dropdown-item" to="" :class="{ 'active': activeLink === 'football' }" @click="collapse = true,activeLink = 'football'">Football</router-link>
+                        
+                        <!-- <div class="dropdown-divider"></div> -->
+                    </div>
                 </li>
-                <li class="nav-item">
-                    <router-link class="nav-link" to="#" title="Pricing">Pricing</router-link>
+                <li class="nav-item active">
+                    <router-link class="nav-link" to="/countries" :class="{ 'active': activeLink === 'countries' }" @click="collapse = true,activeLink = 'countries'">Countries</router-link>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <router-link class="nav-link disabled" to="#">Disabled</router-link>
-                </li>
+                </li> -->
             </ul>
             <ul class="navbar-nav ml-auto" :class="{'d-none': foundLoggedinUser}"> <!-- d-none -->
                 <li class="nav-item">
-                    <router-link class="nav-link" to="" @click="loginClicked()">Login</router-link>
+                    <router-link class="nav-link" :class="{ 'active': activeLink === 'login' }" to="" @click="loginClicked()">Login</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link class="nav-link" to="" @click="registrationClicked()">Registration</router-link>
+                    <router-link class="nav-link" :class="{ 'active': activeLink === 'registration' }" to="" @click="registrationClicked()">Registration</router-link>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto" :class="{'d-none': !foundLoggedinUser}">
@@ -34,7 +42,7 @@
                         {{userEmail}}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <router-link class="dropdown-item" to="/change-password">Change password</router-link>
+                        <router-link class="dropdown-item" to="/change-password" :class="{ 'active': activeLink === 'changePassword' }" @click="collapse = true,activeLink = 'changePassword'">Change password</router-link>
                         <!-- <a class="dropdown-item" href="#">Option 2</a>
                         <a class="dropdown-item" href="#">Option 3</a> -->
                         <div class="dropdown-divider"></div>
@@ -73,6 +81,7 @@ export default {
             userEmail: '',
             token: localStorage.getItem('token'),
             currentPage: '',
+            activeLink: ''
         }
     },
 
@@ -86,6 +95,10 @@ export default {
     },
 
     methods:{
+        setActiveLink(link) {
+            this.collapse = true;
+            this.activeLink = link;
+        },
         updateSpecificDivClass(usersEmailFromComponent){
             console.log("ifUser: "+usersEmailFromComponent);
             if(usersEmailFromComponent != ""){
@@ -132,6 +145,7 @@ export default {
         },
 
         logoutClicked(){
+            this.collapse = true;
             // localStorage.setItem('logout', 'clicked');
             this.currentPage = window.location.pathname;
             console.log("what is currentpage: "+this.currentPage);
@@ -145,6 +159,9 @@ export default {
         },
 
         loginClicked(){
+            
+            this.collapse = true;
+            this.activeLink = 'login';
             this.currentPage = window.location.pathname;
             if(this.currentPage == "/login" || this.currentPage == "/create-account" || this.currentPage == "/change-password"){
                 this.currentPage = "/";
@@ -154,6 +171,8 @@ export default {
         },
 
         registrationClicked(){
+            this.collapse = true;
+            this.activeLink = 'registration';
             this.currentPage = window.location.pathname;
             if(this.currentPage == "/login" || this.currentPage == "/create-account" || this.currentPage == "/change-password"){
                 this.currentPage = "/";
