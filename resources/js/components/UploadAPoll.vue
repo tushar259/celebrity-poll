@@ -112,7 +112,7 @@
     	</div> -->
 		<div class="px-20-gap"></div>
 		<div class="dropdown">
-			<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<button class="btn btn-secondary dropdown-toggle in-upload-a-poll" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				{{whichIndustry}}
 			</button>
 			<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -137,7 +137,12 @@
 		</div>
 		
 		<hr>
-    	<div class="px-30-gap"></div>
+		<hr>
+
+		<button class="btn btn-success" id="refresh" @click="refreshClicked()" :disabled="disabledRefresh">Refresh</button>
+		<br>
+		<hr>
+		<hr>
 
 	    ######## Polls finished ######## ({{numberOfNewFinishedPolls}})
 		<div>
@@ -237,6 +242,8 @@
 </template>
 
 <script>
+	import { useToast } from 'vue-toastification';
+    const toast = useToast();
     export default {
 		data() {
         	return{
@@ -277,7 +284,7 @@
 				winnersName: '',
 				winnersVotes: '',
 				totalVotesInAPoll: '',
-				
+				disabledRefresh: false,
         	}
         },
         created() {
@@ -661,6 +668,26 @@
 					this.winnerPollTitleInAllTables = null;
 					this.winnerTableNameStartsWith = null;
 				}
+			},
+
+			refreshClicked(){
+				this.disabledRefresh = true;
+				axios.get('/api/delete-all-junk-files')
+				.then(response =>{
+					console.log(response);
+					if(response.data.success == true){
+						toast.success(response.data.message);
+						this.disabledRefresh = false;
+					}
+					else{
+						toast.error("Server returned false.");
+						this.disabledRefresh = false;
+					}
+				})
+				.catch(error =>{
+					toast.error("Server error occurred.");
+					this.disabledRefresh = false;
+				});
 			}
         }
     }

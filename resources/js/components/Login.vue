@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <h2 class="text-center mb-4">Login</h2>
+                <h2 class="text-center mb-4 font-weight-bold">Login</h2>
                 
                 <div class="form-group">
                     <label for="email">Email address</label>
@@ -14,8 +14,8 @@
                     <input type="password" class="form-control" id="password" v-model="password" @keyup.enter="loginNow()" placeholder="Enter password">
                     <small v-html="passwordMessage"></small>
                 </div>
-                <div class="form-group">
-                    <router-link to="/change-password">Forgot password?</router-link>
+                <div class="form-group text-right">
+                    <router-link to="/change-password" class="forgot-password-link">Forgot password?</router-link>
                 </div>
                 <!-- <div class="px-15-gap"></div> -->
                 <small v-html="submitFormMessage"></small>

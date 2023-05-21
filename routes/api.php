@@ -54,6 +54,8 @@ Route::post('/check-if-email-exist-creating-account', 'App\Http\Controllers\User
 
 
 Route::get('/show-country-list', 'App\Http\Controllers\CountryController@insertDataIntoCountryTable');
+Route::get('/get-list-of-industries', 'App\Http\Controllers\PollController@getListOfIndustries');
+Route::get('/delete-all-junk-files', 'App\Http\Controllers\PollController@deleteAllJunkFiles');
 
 
 

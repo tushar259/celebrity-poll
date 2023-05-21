@@ -18,6 +18,10 @@
                     </div>
                 </div>
             </div> -->
+            <div class="styling-link-for-home font-selected">
+                <router-link to="/" class="navigator-link">Home</router-link><i class='fas fa-angle-right'></i>
+                <router-link to="" class="navigator-link capitalized">{{industryName}}</router-link>
+            </div>
             <div class="col-md-6">
                 <div class="poll-heads-in-all-poll">
                     <!-- <hr> -->
@@ -174,7 +178,7 @@
                         
                         response.data.all_polls.forEach(item => {
                             // item.all_tags = response.data.all_tags;
-                            item.ending_date = moment(item.ending_date).format('MMM D, YYYY');
+                            item.ending_date = moment(item.ending_date).format('D MMM YYYY');
                             this.allRecentUploadedPolls.push(item);
                         });
                         // console.log("why");
@@ -208,7 +212,7 @@
                         
                         response.data.all_polls.forEach(item => {
                             // item.all_tags = response.data.all_tags;
-                            item.ending_date = moment(item.ending_date).format('MMM D, YYYY');
+                            item.ending_date = moment(item.ending_date).format('D MMM YYYY');
                             this.allPolls.push(item);
                         });
                         console.log(this.allPolls);

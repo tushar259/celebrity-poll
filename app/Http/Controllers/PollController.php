@@ -225,14 +225,21 @@ class PollController extends Controller
     			
     		}
 
-    		$pollsFromTable = DB::table($tableNameStartsWith["table_name_starts_with"].'_polls')
-    		->select('id','polls', 'votes')
-    		->get();
+            $pollsFromTable = "";
+            $totalVotesGiven = "";
 
-    		$totalVotesGiven = DB::table($tableNameStartsWith["table_name_starts_with"].'_polls')
-    		->sum('votes');
+            if(Schema::hasTable($tableNameStartsWith["table_name_starts_with"].'_polls')){
+                $pollsFromTable = DB::table($tableNameStartsWith["table_name_starts_with"].'_polls')
+                    ->select('id','polls', 'votes')
+                    ->orderBy('polls')
+                    ->get();
 
-    		if($pollsFromTable->count() > 0){
+                $totalVotesGiven = DB::table($tableNameStartsWith["table_name_starts_with"].'_polls')
+                    ->sum('votes');
+            }
+    		
+
+    		if($pollsFromTable != "" && $pollsFromTable->count() > 0){
     			return response()->json([
     				'title_n_other_info' => $tableNameStartsWith,
     				'polls_n_counts' => $pollsFromTable,
@@ -266,9 +273,12 @@ class PollController extends Controller
 
     	if($allPolls->count() > 0){
     		foreach($allPolls as $value){
-    			$pollTags = DB::table($value->table_name_starts_with."_polls")
-    				->select('id','polls','votes',DB::raw("'".$value->table_name_starts_with."' as table_name_starts_with"))
-    				->get();
+    			$pollTags = "";
+                if(Schema::hasTable($value->table_name_starts_with."_polls")){
+                    $pollTags = DB::table($value->table_name_starts_with."_polls")
+        				->select('id','polls','votes',DB::raw("'".$value->table_name_starts_with."' as table_name_starts_with"))
+        				->get();
+                }
     			$value->poll_tags = $pollTags;
 
     			if(Schema::hasTable($value->table_name_starts_with."_images")){
@@ -316,9 +326,12 @@ class PollController extends Controller
 
     	if($allPolls->count() > 0){
     		foreach($allPolls as $value){
-    			$pollTags = DB::table($value->table_name_starts_with."_polls")
-    				->select('id','polls','votes',DB::raw("'".$value->table_name_starts_with."' as table_name_starts_with"))
-    				->get();
+    			$pollTags = "";
+                if(Schema::hasTable($value->table_name_starts_with."_polls")){
+                    $pollTags = DB::table($value->table_name_starts_with."_polls")
+        				->select('id','polls','votes',DB::raw("'".$value->table_name_starts_with."' as table_name_starts_with"))
+        				->get();
+                }
     			$value->poll_tags = $pollTags;
 
     			if(Schema::hasTable($value->table_name_starts_with."_images")){
@@ -639,9 +652,13 @@ class PollController extends Controller
         $email = $request->input("email");
         $table_name_starts_with = $request->input("table_name_starts_with");
 
-        $data = DB::table($table_name_starts_with."_users_voted")
-            ->where("email", $email)
-            ->first();
+        $data = null;
+        
+        if(Schema::hasTable($table_name_starts_with."_users_voted")){
+            $data = DB::table($table_name_starts_with."_users_voted")
+                ->where("email", $email)
+                ->first();
+        }
 
         if($data !== null){
             return "voted";
@@ -654,9 +671,17 @@ class PollController extends Controller
     public function voteSelectedCandidate(Request $request){
         $table_name_starts_with = $request->input("table_name_starts_with");
         if($this->checkIfUserVotedBefore($request) == "voted"){
-            $returnData = DB::table($table_name_starts_with."_polls")->get();
-            $totalVotesGiven = DB::table($table_name_starts_with.'_polls')
-                ->sum('votes');
+            $returnData = "";
+            $totalVotesGiven = "";
+            if(Schema::hasTable($table_name_starts_with."_polls")){
+                $returnData = DB::table($table_name_starts_with."_polls")
+                    ->orderBy("polls")
+                    ->get();
+
+                $totalVotesGiven = DB::table($table_name_starts_with.'_polls')
+                    ->sum('votes');
+            }
+            
             return response()->json([
                 'new_polls' => $returnData,
                 'total_votes' => $totalVotesGiven,
@@ -666,23 +691,37 @@ class PollController extends Controller
         $email = $request->input("email");
     	$selected_id = $request->input("selected_id");
     	
-
-    	$data = DB::table($table_name_starts_with."_polls")
-    		->where("id", $selected_id)
-    		->increment('votes');
+        $data = null;
+        if(Schema::hasTable($table_name_starts_with."_polls")){
+        	$data = DB::table($table_name_starts_with."_polls")
+        		->where("id", $selected_id)
+        		->increment('votes');
+        }
 
         if($data){
-            DB::table($table_name_starts_with."_users_voted")->insert([
-                'email' => $email
-            ]);
+            if(Schema::hasTable($table_name_starts_with."_users_voted")){
+                DB::table($table_name_starts_with."_users_voted")->insert([
+                    'email' => $email
+                ]);
+            }
+            else{
+                // create a table named $table_name_starts_with."_users_voted"
+            }
         }
     	// $data->polls = $data->polls;
     	// $data->votes = $data->votes + 1;
 
     	// if($data->save()){
-    		$returnData = DB::table($table_name_starts_with."_polls")->get();
-    		$totalVotesGiven = DB::table($table_name_starts_with.'_polls')
-    		    ->sum('votes');
+            $returnData = "";
+            $totalVotesGiven = "";
+
+            if(Schema::hasTable($table_name_starts_with."_polls")){
+        		$returnData = DB::table($table_name_starts_with."_polls")
+                    ->orderBy("polls")
+                    ->get();
+        		$totalVotesGiven = DB::table($table_name_starts_with.'_polls')
+        		    ->sum('votes');
+            }
     		return response()->json([
     			'new_polls' => $returnData,
     			'total_votes' => $totalVotesGiven,
@@ -710,9 +749,12 @@ class PollController extends Controller
 
         if($allPolls->count() > 0){
             foreach($allPolls as $value){
-                $pollTags = DB::table($value->table_name_starts_with."_polls")
-                    ->select('id','polls','votes',DB::raw("'".$value->table_name_starts_with."' as table_name_starts_with"))
-                    ->get();
+                $pollTags = "";
+                if(Schema::hasTable($value->table_name_starts_with."_polls")){
+                    $pollTags = DB::table($value->table_name_starts_with."_polls")
+                        ->select('id','polls','votes',DB::raw("'".$value->table_name_starts_with."' as table_name_starts_with"))
+                        ->get();
+                }
                 $value->poll_tags = $pollTags;
 
                 if(Schema::hasTable($value->table_name_starts_with."_images")){
@@ -760,9 +802,12 @@ class PollController extends Controller
 
         if($allPolls->count() > 0){
             foreach($allPolls as $value){
-                $pollTags = DB::table($value->table_name_starts_with."_polls")
-                    ->select('id','polls','votes',DB::raw("'".$value->table_name_starts_with."' as table_name_starts_with"))
-                    ->get();
+                $pollTags = "";
+                if(Schema::hasTable($value->table_name_starts_with."_polls")){
+                    $pollTags = DB::table($value->table_name_starts_with."_polls")
+                        ->select('id','polls','votes',DB::raw("'".$value->table_name_starts_with."' as table_name_starts_with"))
+                        ->get();
+                }
                 $value->poll_tags = $pollTags;
 
                 if(Schema::hasTable($value->table_name_starts_with."_images")){
@@ -796,5 +841,88 @@ class PollController extends Controller
                 'message' => 'Something went wrong',
                 'success' => false]);
         }
+    }
+
+    public function getListOfIndustries(){
+        $data = DB::table("all_tables")
+            ->distinct()
+            ->select("which_industry")
+            ->orderBy("which_industry")
+            ->get();
+
+        if($data->count() > 0){
+            return response()->json([
+                'all_industry' => $data,
+                'message' => 'Data received',
+                'success' => true]);
+        }
+        else{
+            return response()->json([
+                'message' => 'Data not received',
+                'success' => false]);
+        }
+    }
+
+    public function deleteAllJunkFiles(){
+        $sixtyDaysAgo = Carbon::now()->subDays(60)->toDateTimeString();
+        // $sixtyDaysAgo = Carbon::now()->addDays(80)->toDateTimeString();
+        $data = DB::table("all_tables")
+            ->select("table_name_starts_with")
+            ->where("updated_at", "<", $sixtyDaysAgo)
+            ->where("updated_at" , "<>", null)
+            ->where("updated_at", "<>", "")
+            ->get();
+
+        if($data->count() > 0){
+            foreach ($data as $value) {
+
+                if (Schema::hasTable($value->table_name_starts_with."_polls")) {
+                    Schema::dropIfExists($value->table_name_starts_with."_polls");
+                }
+                if (Schema::hasTable($value->table_name_starts_with."_users_voted")) {
+                    Schema::dropIfExists($value->table_name_starts_with."_users_voted");
+                }
+                if (Schema::hasTable($value->table_name_starts_with."_win")) {
+                    Schema::dropIfExists($value->table_name_starts_with."_win");
+                }
+                if (Schema::hasTable($value->table_name_starts_with."_images")) {
+                    $allImages = DB::table($value->table_name_starts_with."_images")
+                        ->select("placeholder")
+                        ->get();
+
+                    if($allImages->count() > 0){
+                        foreach ($allImages as $image) {
+                            $absolutePath = public_path($image->placeholder);
+                            if (file_exists($absolutePath)) {
+                                unlink($absolutePath);
+                            }
+                        }
+                        
+                    }
+                    
+                    Schema::dropIfExists($value->table_name_starts_with."_images");
+                }
+
+                DB::table("all_tables")
+                    ->where("table_name_starts_with", $value->table_name_starts_with)
+                    ->delete();
+                
+            }
+            return response()->json([
+                'message' => 'Successfully deleted.',
+                'success' => true]);
+        }
+        else{
+            return response()->json([
+                'message' => 'Already deleted.',
+                'success' => true]);
+        }
+
+
+
+        // $absolutePath = public_path($imagePath);
+        //             if (file_exists($absolutePath)) {
+        //                 unlink($absolutePath);
+        //             }
     }
 }

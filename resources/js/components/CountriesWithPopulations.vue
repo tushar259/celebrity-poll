@@ -1,27 +1,34 @@
 <template>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Country</th>
-                            <th>Population</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(country, index) in countries" :key="index" :class="index % 2 === 0 ? 'even-row' : 'odd-row'">
-                            <td>{{ country.name }}</td>
-                            <td>{{ formatNumber(country.population) }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+    <div class="country-page">
+        <div class="container">
+            <div class="styling-link-for-countries font-selected">
+                <router-link to="/" class="navigator-link">Home</router-link><i class='fas fa-angle-right'></i>
+                <router-link to="" class="navigator-link capitalized">Countries</router-link>
             </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Total Population</h5>
-                        <p class="card-text">{{ formatNumber(totalPopulation) }}</p>
+            <div class="row">
+                
+                <div class="col-md-8">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Country</th>
+                                <th>Population</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(country, index) in countries" :key="index" :class="index % 2 === 0 ? 'even-row' : 'odd-row'">
+                                <td>{{ country.name }}</td>
+                                <td>{{ formatNumber(country.population) }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Population</h5>
+                            <p class="card-text">{{ formatNumber(totalPopulation) }}</p>
+                        </div>
                     </div>
                 </div>
             </div>

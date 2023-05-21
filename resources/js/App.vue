@@ -15,14 +15,15 @@
                         Industry
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <router-link class="dropdown-item" to="" :class="{ 'active': activeLink === 'hollywood' }" @click="collapse = true,activeLink = 'hollywood'">Hollywood</router-link>
-                        <router-link class="dropdown-item" to="" :class="{ 'active': activeLink === 'football' }" @click="collapse = true,activeLink = 'football'">Football</router-link>
+                        <!-- <router-link class="dropdown-item" to="" :class="{ 'active': activeLink === 'hollywood' }" @click="collapse = true,activeLink = 'hollywood'">Hollywood</router-link>
+                        <router-link class="dropdown-item" to="" :class="{ 'active': activeLink === 'football' }" @click="collapse = true,activeLink = 'football'">Football</router-link> -->
+                        <a class="dropdown-item capitalized" v-for="(industryName, index) in allIndustry" :key="index" :class="{ 'active': activeLink === industryName.which_industry }" :href="'/polls/'+industryName.which_industry" @click="transferIndustryTo(industryName.which_industry)">{{industryName.which_industry}}</a>
                         
                         <!-- <div class="dropdown-divider"></div> -->
                     </div>
                 </li>
                 <li class="nav-item active">
-                    <router-link class="nav-link" to="/countries" :class="{ 'active': activeLink === 'countries' }" @click="collapse = true,activeLink = 'countries'">Countries</router-link>
+                    <router-link class="nav-link" to="/countries" :class="{ 'active': activeLink === 'countries' }" @click="collapse = true,activeLink = 'countries'">List of country</router-link>
                 </li>
                 <!-- <li class="nav-item">
                     <router-link class="nav-link disabled" to="#">Disabled</router-link>
@@ -52,16 +53,10 @@
             </ul>
         </div>
     </nav>
-    <div>
+    <div class="content">
         <router-view @class-changed="updateSpecificDivClass"/>
     </div>
-
     <div>
-    <!-- Your content goes here -->
-        <div class="content">
-        <!-- Content body -->
-        </div>
-
         <!-- Sticky footer -->
         <footer class="footer">
             <div class="container">
@@ -81,7 +76,9 @@ export default {
             userEmail: '',
             token: localStorage.getItem('token'),
             currentPage: '',
-            activeLink: ''
+            activeLink: '',
+            allIndustry: [],
+            currentLocation: window.location.pathname,
         }
     },
 
@@ -92,9 +89,53 @@ export default {
         // console.log("window.location.hash: "+window.location.hash); // anchor part of the current URL
         // console.log("window.location.search: "+window.location.search); // query string part of the current URL
         this.checkIfUserLoggedin();
+        this.getListOfIndustries();
+        this.getCurrentWindowLocation();
     },
 
     methods:{
+        getCurrentWindowLocation(){
+            const parts = this.currentLocation.split('/');
+            if((parts[1] == "" || parts[1] == "polls") && !parts[2]){
+                this.activeLink = 'home';
+            }
+            else if(parts[1] == "polls" && parts[2] && parts[2].length > 0){
+                this.activeLink = parts[2];
+            }
+            else if(parts[1] == "countries"){
+                this.activeLink = 'countries';
+            }
+            else if(parts[1] == "change-password"){
+                this.activeLink = 'changePassword';
+            }
+            else if(parts[1] == "login"){
+                this.activeLink = 'login';
+            }
+            else if(parts[1] == "create-account"){
+                this.activeLink = 'registration';
+            }
+        },
+        transferIndustryTo(industry){
+            this.collapse = true;
+            this.activeLink = industry;
+            this.$router.push('/polls/'+industry);
+            // '/polls/'+industyName
+        },
+        getListOfIndustries(){
+            axios.get('/api/get-list-of-industries')
+            .then(response =>{
+                console.log(response);
+                if(response.data.success == true){
+                    response.data.all_industry.forEach(item =>{
+                        this.allIndustry.push(item);
+                    })
+                }
+
+            })
+            .catch(error =>{
+
+            })
+        },
         setActiveLink(link) {
             this.collapse = true;
             this.activeLink = link;
@@ -154,8 +195,28 @@ export default {
             this.foundLoggedinUser = false;
             if(this.currentPage == "/login" || this.currentPage == "/create-account" || this.currentPage == "/change-password"){
                 this.currentPage = "/";
+                this.activeLink = 'home';
             }
             this.$router.push(this.currentPage);
+            const parts = this.currentPage.split('/');
+            if((parts[1] == "" || parts[1] == "polls") && !parts[2]){
+                this.activeLink = 'home';
+            }
+            else if(parts[1] == "polls" && parts[2] && parts[2].length > 0){
+                this.activeLink = parts[2];
+            }
+            else if(parts[1] == "countries"){
+                this.activeLink = 'countries';
+            }
+            else if(parts[1] == "change-password"){
+                this.activeLink = 'changePassword';
+            }
+            else if(parts[1] == "login"){
+                this.activeLink = 'login';
+            }
+            else if(parts[1] == "create-account"){
+                this.activeLink = 'registration';
+            }
         },
 
         loginClicked(){

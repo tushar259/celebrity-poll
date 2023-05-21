@@ -16,9 +16,9 @@
                     <p class="texts-under-thumbnail">image courtesy</p>
                     <h1 class="poll-title texts-under-thumbnail">{{pollTitle}}?</h1>
                     <div class="d-flex align-items-center texts-under-thumbnail">
-                        <div class="poll-date">Uploaded {{startingDate}}</div>
+                        <div class="poll-date">Uploaded - {{startingDate}}</div>
                         <div class="distance-between-two custom-align">|</div>
-                        <div class="poll-date">Closing {{endingDate}}</div>
+                        <div class="poll-date">Closing - {{endingDate}}</div>
                     </div>
                 </div>
                 <div class="px-15-gap"></div>
@@ -27,7 +27,7 @@
         <div class="px-10-gap"></div>
         <div class="styling-link font-selected">
             <router-link to="/" class="navigator-link">Home</router-link><i class='fas fa-angle-right'></i>
-            <router-link to="" class="navigator-link">{{whichIndustry}}</router-link><i class='fas fa-angle-right'></i>
+            <router-link :to="'/polls/'+whichIndustry" class="navigator-link capitalized">{{whichIndustry}}</router-link><i class='fas fa-angle-right'></i>
             <router-link :to="'/poll/'+pollId" class="navigator-link">{{pollId}}</router-link>
         </div>
         <div class="px-10-gap"></div>
@@ -211,8 +211,8 @@
                         this.beforePollDescription = response.data.title_n_other_info.before_poll_description;
                         this.afterPollDescription = response.data.title_n_other_info.after_poll_description;
                         this.whichIndustry = response.data.title_n_other_info.which_industry;
-                        this.startingDate = moment(response.data.title_n_other_info.starting_date).format('MMM D, YYYY h:mm A');
-                        this.endingDate = moment(response.data.title_n_other_info.ending_date).format('MMM D, YYYY');
+                        this.startingDate = moment(response.data.title_n_other_info.starting_date).format('D MMM YYYY h:mm A');
+                        this.endingDate = moment(response.data.title_n_other_info.ending_date).format('D MMM YYYY');
                         this.tableNameStartsWith = response.data.title_n_other_info.table_name_starts_with;
 
                         console.log(response.data );

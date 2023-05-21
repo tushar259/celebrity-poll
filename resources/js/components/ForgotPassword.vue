@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <h2 class="text-center mb-4">Change password</h2>
+                <h2 class="text-center mb-4 font-weight-bold">Change password</h2>
                 
                 <div v-if="emailFound == 'second phase'">
                     <div class="form-group">
@@ -10,12 +10,12 @@
                     </div>
                     {{passwordRecoveryQuestion}}
                     <div class="form-group">
-                        <input class="form-control" id="answer" v-model="selectedAnswer" @keyup.enter="recoverPasswordSecondTime()" placeholder="Enter answer">
+                        <input class="form-control" id="answer" v-model="selectedAnswer" @keyup.enter="recoverPasswordSecondTime()" placeholder="Answer">
                     </div>
                     <!-- <small v-html="submitFormMessage"></small> -->
                     <button class="btn btn-primary btn-block" @click="recoverPasswordSecondTime()" :disabled="isLoading">
                         <span v-if="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        {{ isLoading ? 'Loading...' : 'Change password' }}
+                        {{ isLoading ? 'Loading...' : 'Submit' }}
                     </button>
                 </div>
                 <div v-else-if="emailFound == 'third phase'">
@@ -38,7 +38,7 @@
                 <div v-else>
                     <div class="form-group">
                         <label for="email">Email address</label>
-                        <input type="email" class="form-control" id="email" v-model="email" @keyup.enter="recoverPassword()" placeholder="Enter email">
+                        <input type="email" class="form-control" id="email" v-model="email" @keyup.enter="recoverPassword()" placeholder="Email">
                         <small v-html="emailMessage"></small>
                     </div>
                     <!-- <small v-html="submitFormMessage"></small> -->
