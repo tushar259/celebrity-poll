@@ -171,9 +171,9 @@ class UserController extends Controller
 	}
 
 	public function changePasswordNow(Request $request){
-		$email = $request->input("email");
+		$email = trim($request->input("email"));
 		$userId = $request->input("userId");
-		$newPassword = $request->input("newPassword");
+		$newPassword = trim($request->input("newPassword"));
 
 		if($email == "" || $userId == "" || strlen($newPassword) < 5 || strlen($newPassword) > 20){
 			return response()->json([

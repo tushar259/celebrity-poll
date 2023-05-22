@@ -113,7 +113,7 @@ input[type='text'] {
 
 .poll-details {
     text-align: left;
-    text-align: justify;
+    /* text-align: justify; */
 }
 
 .poll-details img {
@@ -124,8 +124,8 @@ input[type='text'] {
 }
 
 .poll-page-background {
-    margin-left: 5%;
-    margin-right: 5%;
+    margin-left: 1% !important;
+    margin-right: 1% !important;
     padding-top: 30px;
 }
 
@@ -157,7 +157,7 @@ input[type='text'] {
 .image-card {
     width: 100%;
     min-height: 350px;
-    border-radius: 0px 0px 8px 8px;
+    border-radius: 0px 0px 4px 4px;
     box-shadow: 0 0px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
@@ -209,7 +209,7 @@ input[type='text'] {
 .texts-under-thumbnail {
     color: #707070;
     text-align: left;
-    text-align: justify;
+    /* text-align: justify; */
     padding-left: 20px;
     padding-right: 20px;
 }
@@ -289,7 +289,6 @@ input[type='text'] {
 .styling-link-for-home {
     display: flex;
     align-items: center;
-    margin-left: 20px;
     margin-top: -20px !important;
     margin-bottom: 10px;
 }
@@ -348,16 +347,17 @@ input[type='text'] {
 }
 
 .custom-card-border {
-    border: 1px solid #FFFFFF !important;
+    /* border: 1px solid #FFFFFF !important; */
+    border: 1px solid #ccc9c9 !important;
     cursor: pointer;
-    border-radius: 8px !important;
-    box-shadow: 0 0px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.2);
+    border-radius: 4px !important;
+    /* box-shadow: 0 0px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.2); */
     text-decoration: none;
 }
 
 .custom-card-border:hover {
     /* border: 2px solid #FFFFFF !important; */
-    box-shadow: 0 0px 6px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.2);
     text-decoration: none;
 }
 
@@ -367,15 +367,16 @@ input[type='text'] {
 }
 
 .col-md-6 {
-    padding-left: 30px !important;
-    padding-right: 30px !important;
+    /* padding-left: 1% !important;
+    padding-right: 1% !important; */
+    /* border: 12px solid white; */
 }
 
 .custom-column {
     padding-left: 0px !important;
     padding-right: 0px !important;
     border: 4px solid #FFFFFF;
-    text-align: justify;
+    /* text-align: justify; */
 }
 
 .poll-page-row {
@@ -390,8 +391,9 @@ input[type='text'] {
     padding-right: 20px;
     padding-top: 15px;
     padding-bottom: 15px;
-    border-radius: 8px;
-    box-shadow: 0 0px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    border: 1px solid #ccc9c9;
+    /* box-shadow: 0 0px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.2); */
 }
 
 .poll-page-custom-card h5 {
@@ -401,7 +403,7 @@ input[type='text'] {
 .thumbnail-images-in-list-of-polls {
     height: 100px;
     width: 100px;
-    border-radius: 8px;
+    border-radius: 4px;
 }
 
 .thumbnail-texts-in-list-of-polls {
@@ -566,7 +568,7 @@ input[type='text'] {
 }
 
 .nav-link.active {
-    border-bottom: 2px solid red;
+    /* border-bottom: 2px solid red; */
 }
 
 .nav-item {
@@ -584,10 +586,14 @@ input[type='text'] {
 .navbar-logo-custom {
     height: 45px; 
     width: 70px;
-    padding-left: 10px;
+    padding-left: 20px;
     cursor: pointer;
 }
 
 .terms-n-conditions-page {
     margin: 20px;
+}
+
+.footer .container {
+    max-width: 98%;
 }

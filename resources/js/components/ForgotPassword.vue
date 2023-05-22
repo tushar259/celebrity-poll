@@ -8,7 +8,10 @@
                     <div class="form-group">
                         Email: <b>{{email}}</b>
                     </div>
-                    {{passwordRecoveryQuestion}}
+                    <div class="px-10-gap"></div>
+                    <div class="form-group">
+                        {{passwordRecoveryQuestion}}
+                    </div>
                     <div class="form-group">
                         <input class="form-control" id="answer" v-model="selectedAnswer" @keyup.enter="recoverPasswordSecondTime()" placeholder="Answer">
                     </div>

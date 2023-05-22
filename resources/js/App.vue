@@ -25,7 +25,7 @@
                     </div>
                 </li>
                 <li class="nav-item active">
-                    <router-link class="nav-link" to="/countries" :class="{ 'active': activeLink === 'countries' }" @click="collapse = true,activeLink = 'countries'">List of country</router-link>
+                    <router-link class="nav-link" to="/countries" :class="{ 'active': activeLink === 'countries' }" @click="collapse = true,activeLink = 'countries'">Countries</router-link>
                 </li>
                 <!-- <li class="nav-item">
                     <router-link class="nav-link disabled" to="#">Disabled</router-link>
@@ -64,14 +64,14 @@
         <footer class="footer">
             <div class="container text-white">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-7">
                         <h5>Contact Information</h5>
                         <ul>
                             <li>Email: <a href="mailto:contact@example.com">contact@example.com</a></li>
                             <li>Phone: <a href="tel:+11234567890">+1 123-456-7890</a></li>
                         </ul>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <h5>Connect with Us</h5>
                         <ul>
                             <li><a href="https://www.facebook.com/YourWebsiteName">Facebook</a></li>
@@ -87,7 +87,7 @@
                             All content, including text, images, and logos displayed on [Your Website Name], is protected by copyright laws.
                         </p>
                         <p>
-                            <a href="/privacy-policy">Privacy Policy</a> | <a href="/terms-and-conditions">Terms and Conditions</a> | <!-- <a href="/copyright">Copyright Notice</a> |--> <a href="/about-us">About us</a>
+                            <a href="/privacy-policy">Privacy Policy</a> | <a href="/terms-and-conditions">Terms and Conditions</a> | <!-- <a href="/copyright">Copyright Notice</a> |--> <a href="/about-us">About us</a> | <a href="/report-a-problem">Report a Problem</a>
                         </p>
                         <p>&copy; [Year] [Your Website Name]. All rights reserved. | Designed and developed by [Your Name].
 

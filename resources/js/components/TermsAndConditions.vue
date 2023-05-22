@@ -95,6 +95,22 @@
 
 <p>We shall not be hold responsible for any content that appears on your Website. You agree to protect and defend us against all claims that is rising on your Website. No link(s) should appear on any Website that may be interpreted as libelous, obscene or criminal, or which infringes, otherwise violates, or advocates the infringement or other violation of, any third party rights.</p>
 
+<h3><strong>Collection of User Information</strong></h3>
+<p>In some cases, we may collect user information on this website. This information will only be collected if necessary and will be handled in accordance with our Privacy Policy. By using this website, you consent to the collection and use of your information as described in the Privacy Policy.
+    </p>
+<h3><strong>Storage of Information</strong></h3>
+<p>Certain information may be stored on this website for the purpose of providing the services and functionality offered. This may include user preferences, account details, or other relevant data. We take appropriate measures to ensure the security and confidentiality of the stored information, as outlined in our Privacy Policy.
+    </p>
+<h3><strong>Poll for Stars</strong></h3>
+<p>This website serves as a platform for conducting polls related to stars and celebrities. The purpose of these polls is to gather opinions and preferences from users. The results of the polls may be displayed publicly on the website but will not disclose any personally identifiable information of individual users.
+    </p>
+<h3><strong>Non-intentional Harm</strong></h3>
+<p>We strive to provide a safe and enjoyable experience on this website. However, we cannot guarantee that all aspects of the website will be error-free or free from harm. Any harm or inconvenience caused by the use of this website is not intentional, and we will make reasonable efforts to address and resolve any issues that may arise.
+    </p>
+<h3><strong>Use of Pictures</strong></h3>
+<p>The pictures used on this website are collected from various sources on the internet. We make every effort to ensure that proper attribution is given to the original sources, where applicable. If you believe any picture infringes upon your copyright or intellectual property rights, please contact us immediately, and we will take appropriate action.
+    </p>
+
 <h3><strong>Reservation of Rights</strong></h3>
 
 <p>We reserve the right to request that you remove all links or any particular link to our Website. You approve to immediately remove all links to our Website upon request. We also reserve the right to amen these terms and conditions and it's linking policy at any time. By continuously linking to our Website, you agree to be bound to and follow these linking terms and conditions.</p>

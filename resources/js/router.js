@@ -17,6 +17,7 @@ export const router = createRouter({
         {path: '/countries', component: () => import('./components/CountriesWithPopulations.vue')},
         {path: '/about-us', component: () => import('./components/AboutUs.vue')},
         {path: '/privacy-policy', component: () => import('./components/PrivacyPolicy.vue')},
+        {path: '/report-a-problem', component: () => import('./components/ReportProblem.vue')},
         
 
 

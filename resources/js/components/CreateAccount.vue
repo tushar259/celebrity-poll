@@ -18,9 +18,16 @@
                     <label for="question">Password Recovery Question*</label>
                     <select class="form-control" id="question" v-model="selectedQuestion">
                         <option value="">Select a question</option>
-                        <option value="question1">Question 1</option>
-                        <option value="question2">Question 2</option>
-                        <option value="question3">Question 3</option>
+                        <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
+                        <option value="What is the name of your favorite pet?">What is the name of your favorite pet?</option>
+                        <option value="In which city were you born?">In which city were you born?</option>
+                        <option value="What is your favorite movie?">What is your favorite movie?</option>
+                        <option value="What is the name of your elementary school?">What is the name of your elementary school?</option>
+                        <option value="What is your favorite book?">What is your favorite book?</option>
+                        <option value="What is the model of your first car?">What is the model of your first car?</option>
+                        <option value="What is your favorite food?">What is your favorite food?</option>
+                        <option value="What is the name of your best friend?">What is the name of your best friend?</option>
+                        <option value="What is your favorite vacation destination?">What is your favorite vacation destination?</option>
                     </select>
                     <small>*Your selected question will be asked if you forget password*</small>
                     <div class="px-5-gap"></div>
@@ -44,6 +51,7 @@
                 <!-- <button class="btn btn-primary btn-block" @click="createAccount()">Create Account</button> -->
                 <div class="d-flex">
                 <!-- <h4 v-html="submitFormMessage"></h4> -->
+                    <span :class="{'visually-hidden': uploadLoading}">Please Wait..</span>
                     <div class="spinner-border text-primary" :class="{'visually-hidden': uploadLoading}" role="status">
                         <span class="visually-hidden">Loading...</span>
                     </div>
@@ -127,7 +135,7 @@
                 this.recoveryQueMessage = "";
                 this.recoveryAnsMessage = "";
                 this.termsNconditionsMessage = "";
-                if(this.email == "" || this.password == "" || this.selectedQuestion == "" || this.selectedAnswer == "" || this.isChecked == false || this.checkIfEmailUsed == true || this.checkIfEmailValid != ""){
+                if(this.email == "" || this.password == "" || this.password.length < 5 || this.selectedQuestion == "" || this.selectedAnswer == "" || this.isChecked == false || this.checkIfEmailUsed == true || this.checkIfEmailValid != ""){
                     if(this.email == ""){
                         this.emailMessage = "<span style='color:red;'>Email cannot be empty.</span>";
                     }
@@ -148,6 +156,9 @@
                     }
                     if(this.checkIfEmailValid != ""){
                         this.emailMessage = "<span style='color:red;'>"+this.checkIfEmailValid+"</span>";
+                    }
+                    if(this.password.length < 5){
+                        this.passwordMessage = "<span style='color:red;'>At least 5 characters need to be used.</span>";
                     }
                     this.isLoading = false;
                 }
