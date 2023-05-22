@@ -1,7 +1,9 @@
 <template>
     
-    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="width: 100% !important">
-        <a class="navbar-brand" href="#">Home Image</a>
+    <nav class="navbar navbar-expand-lg navbar-light" style="width: 100% !important">
+        <!-- <a class="navbar-brand" href="#"> -->
+        <img class="navbar-brand navbar-logo-custom" src="/logo/favicon2.png" alt="logo" @click="gotoHome()">
+        <!-- </a> -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" @click="collapse = false">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -29,6 +31,7 @@
                     <router-link class="nav-link disabled" to="#">Disabled</router-link>
                 </li> -->
             </ul>
+            <hr class="my-1">
             <ul class="navbar-nav ml-auto" :class="{'d-none': foundLoggedinUser}"> <!-- d-none -->
                 <li class="nav-item">
                     <router-link class="nav-link" :class="{ 'active': activeLink === 'login' }" to="" @click="loginClicked()">Login</router-link>
@@ -59,8 +62,38 @@
     <div>
         <!-- Sticky footer -->
         <footer class="footer">
-            <div class="container">
-                <span class="text-white">Your footer content</span>
+            <div class="container text-white">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Contact Information</h5>
+                        <ul>
+                            <li>Email: <a href="mailto:contact@example.com">contact@example.com</a></li>
+                            <li>Phone: <a href="tel:+11234567890">+1 123-456-7890</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Connect with Us</h5>
+                        <ul>
+                            <li><a href="https://www.facebook.com/YourWebsiteName">Facebook</a></li>
+                            <li><a href="https://twitter.com/YourWebsiteName">Twitter</a></li>
+                            <li><a href="https://www.instagram.com/YourWebsiteName">Instagram</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>
+                            Disclaimer: [Your Website Name] is an independent platform and is not affiliated with any particular star or celebrity.
+                            All content, including text, images, and logos displayed on [Your Website Name], is protected by copyright laws.
+                        </p>
+                        <p>
+                            <a href="/privacy-policy">Privacy Policy</a> | <a href="/terms-and-conditions">Terms and Conditions</a> | <!-- <a href="/copyright">Copyright Notice</a> |--> <a href="/about-us">About us</a>
+                        </p>
+                        <p>&copy; [Year] [Your Website Name]. All rights reserved. | Designed and developed by [Your Name].
+
+                        </p>
+                    </div>
+                </div>
             </div>
         </footer>
     </div>
@@ -94,6 +127,12 @@ export default {
     },
 
     methods:{
+        gotoHome(){
+            this.collapse = true;
+            this.activeLink = 'home';
+            this.$router.push('/');
+        },
+        
         getCurrentWindowLocation(){
             const parts = this.currentLocation.split('/');
             if((parts[1] == "" || parts[1] == "polls") && !parts[2]){

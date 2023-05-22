@@ -6,12 +6,12 @@
                 
                 <div class="form-group">
                     <label for="email">Email address*</label>
-                    <input type="email" class="form-control" id="email" v-model="email" @keyup.enter="createAccount()" @blur="checkIfEmailExist()" placeholder="Enter email">
+                    <input type="email" class="form-control" id="email" v-model="email" @keyup.enter="createAccount()" @blur="checkIfEmailExist()" placeholder="Email">
                     <small v-html="emailMessage"></small>
                 </div>
                 <div class="form-group">
                     <label for="password">Password*</label>
-                    <input type="password" class="form-control" id="password" v-model="password" @keyup.enter="createAccount()" placeholder="Enter password">
+                    <input type="password" class="form-control" id="password" v-model="password" @keyup.enter="createAccount()" placeholder="Password">
                     <small v-html="passwordMessage"></small>
                 </div>
                 <div class="form-group">
@@ -28,7 +28,7 @@
                 </div>
                 <div class="form-group">
                     <label for="answer">Password Recovery Answer*</label>
-                    <input class="form-control" id="answer" v-model="selectedAnswer" @keyup.enter="createAccount()" placeholder="Enter answer">
+                    <input class="form-control" id="answer" v-model="selectedAnswer" @keyup.enter="createAccount()" placeholder="Answer">
                     <small>*Remember your answer to recover your password*</small>
                     <div class="px-5-gap"></div>
                     <small v-html="recoveryAnsMessage"></small>
@@ -36,7 +36,7 @@
                 <!-- <input type="checkbox"> <small style="margin-bottom: 5px;">I accept <a href="">terms and conditions</a></small> -->
                 <small style="display: inline-block; vertical-align: middle;">
                     <input type="checkbox" style="vertical-align: middle;" v-model="isChecked">
-                    <span style="margin-left: 5px;">I accept <router-link to="/terms-and-conditions">terms and conditions</router-link></span>
+                    <span style="margin-left: 5px;">I accept <router-link to="/terms-and-conditions" target="_blank">terms and conditions</router-link></span>
                 </small>
                 <div class="px-5-gap"></div>
                 <small v-html="termsNconditionsMessage"></small>

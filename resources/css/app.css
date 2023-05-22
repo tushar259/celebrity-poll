@@ -247,14 +247,14 @@ input[type='text'] {
     height: 60px;
     width: 100%;
     max-width: 380px;
-    background-color: rgba(179, 179, 179, 0.2);
+    background-color: rgba(133, 127, 127, 0.2);
     border-radius: 4px;
     position: relative;
     bottom: 18px;
 }
 
 .form-check-label {
-    color: #707070;
+    color: #000;
     position: absolute;
     top: 25%;
     bottom: 25%;
@@ -265,7 +265,7 @@ input[type='text'] {
 
 .votes-received-here {
     height: 60px;
-    background-color: rgba(52, 151, 175, 0.3);
+    background-color: rgba(34, 54, 59, 0.3);
     max-width: 380px;
     border-radius: 4px;
     position: absolute;
@@ -579,4 +579,15 @@ input[type='text'] {
 
 #refresh {
     width: 400px;
+}
+
+.navbar-logo-custom {
+    height: 45px; 
+    width: 70px;
+    padding-left: 10px;
+    cursor: pointer;
+}
+
+.terms-n-conditions-page {
+    margin: 20px;
 }
