@@ -25,10 +25,32 @@
             </div>
         </div>
         <div class="px-10-gap"></div>
-        <div class="styling-link font-selected">
+        <!-- <div class="styling-link font-selected">
             <router-link to="/" class="navigator-link">Home</router-link><i class='fas fa-angle-right'></i>
             <router-link :to="'/polls/'+whichIndustry" class="navigator-link capitalized">{{whichIndustry}}</router-link><i class='fas fa-angle-right'></i>
             <router-link :to="'/poll/'+pollId" class="navigator-link">{{pollId}}</router-link>
+        </div> -->
+        <div class="row poll-page-row">
+            <div class="col-md-6">
+                <div class="styling-link font-selected">
+                    <router-link to="/" class="navigator-link">Home</router-link><i class='fas fa-angle-right'></i>
+                    <router-link :to="'/polls/'+whichIndustry" class="navigator-link capitalized">{{whichIndustry}}</router-link><i class='fas fa-angle-right'></i>
+                    <router-link :to="'/poll/'+pollId" class="navigator-link">{{pollId}}</router-link>
+                </div>
+            </div>
+            <div class="col-md-6" style="text-align: right;">
+                Share:
+                <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" title="facebook" style="margin-right: 0px;" @click="shareOnFacebook">
+                    <img src="/logo/Facebook-logo.png" alt="Facebook Share" style="height: 32px;width: 51px;">
+                </a>
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" title="twitter" style="margin-right: 8px;" @click="shareOnTwitter">
+                    <img src="/logo/Twitter-logo.svg.png" alt="Twitter Share" style="height: 26px;width: 33px;">
+                </a>
+
+                <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" title="instagram" @click="shareOnInstagram">
+                    <img src="/logo/Instagram_logo_2016.svg.webp" alt="LinkedIn Share" style="height: 27px;width: 27px;">
+                </a>
+            </div>
         </div>
         <div class="px-10-gap"></div>
         <!-- <div class="custom-details-n-poll-card-area">
@@ -190,11 +212,73 @@
         },
 
         created() {
+            const protocol = window.location.protocol; // e.g., "http:" or "https:"
+            const hostname = window.location.hostname; // e.g., "www.example.com"
+            const port = window.location.port; // e.g., "8080" (if exists)
+            const url = `${protocol}//${hostname}${port ? `:${port}` : ''}`;
+            // console.log(url);
             this.getPollInfo();
             window.scrollTo(0, 0);
         },
 
         methods: {
+            shareOnFacebook() {
+                const protocol = window.location.protocol; // e.g., "http:" or "https:"
+                const hostname = window.location.hostname; // e.g., "www.example.com"
+                const port = window.location.port; // e.g., "8080" (if exists)
+                const url = `${protocol}//${hostname}${port ? `:${port}` : ''}`;
+
+                const currentLink = window.location.href;
+                const title = this.pollTitle;
+                const description = 'Your Description';
+                const imageUrl = url+'/'+this.thumbnail;
+                const pageUrl = currentLink;
+
+                const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}&quote=${encodeURIComponent(description)}&hashtag=${encodeURIComponent(title)}&picture=${encodeURIComponent(imageUrl)}`;
+                // const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentLink)}`;
+                window.open(shareUrl, '_blank');
+            },
+
+            shareOnTwitter() {
+                const protocol = window.location.protocol; // e.g., "http:" or "https:"
+                const hostname = window.location.hostname; // e.g., "www.example.com"
+                const port = window.location.port; // e.g., "8080" (if exists)
+                const url = `${protocol}//${hostname}${port ? `:${port}` : ''}`;
+
+                const currentLink = window.location.href;
+                const title = this.pollTitle+'\r\n';
+                const description = 'Your Description, Check out this link! ';
+                const imageUrl = url+'/'+this.thumbnail;
+                const pageUrl = currentLink;
+                const twitterUsername = 'Company_UserName';
+
+                const text = `${title} ${description} ${imageUrl}`;
+
+                const shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(pageUrl)}&text=${encodeURIComponent(text)}&via=${twitterUsername}`;
+                // const text = "Check out this link!";
+                // const shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(currentLink)}&text=${encodeURIComponent(text)}`;
+                // const shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(currentLink)}`;
+                window.open(shareUrl, '_blank');
+            },
+
+            shareOnInstagram() {
+                const protocol = window.location.protocol; // e.g., "http:" or "https:"
+                const hostname = window.location.hostname; // e.g., "www.example.com"
+                const port = window.location.port; // e.g., "8080" (if exists)
+                const url = `${protocol}//${hostname}${port ? `:${port}` : ''}`;
+
+                const currentLink = window.location.href;
+                const title = this.pollTitle;
+                const description = 'Your Description';
+                const imageUrl = url+'/'+this.thumbnail;
+                const pageUrl = currentLink;
+                const text = `Check out this link! ${imageUrl} ${title} ${description} ${pageUrl}`;
+                const shareText = encodeURIComponent(text);
+                const shareUrl = `https://www.instagram.com/?text=${shareText}`;
+                // const shareText = encodeURIComponent(`Check out this link: ${currentLink}`);
+                // const shareUrl = `https://www.instagram.com/?text=${shareText}`;
+                window.open(shareUrl, '_blank');
+            },
             formatNumber(number) {
                 return number.toLocaleString();
             },

@@ -5,15 +5,15 @@
             
             <div class="form-group">
                 <label for="name">Your Name:</label>
-                <input type="text" class="form-control" id="name" v-model="name" required>
+                <input class="form-control" id="name" v-model="name" required>
             </div>
             <div class="form-group">
                 <label for="subject">Subject:</label>
-                <input type="text" class="form-control" id="subject" v-model="subject" required>
+                <input class="form-control" id="subject" v-model="subject" required>
             </div>
             <div class="form-group">
                 <label for="description">Problem Description:</label>
-                <textarea class="form-control" id="description" v-model="description" rows="4" required></textarea>
+                <textarea class="form-control" id="description" v-model="description" rows="5" required></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
             

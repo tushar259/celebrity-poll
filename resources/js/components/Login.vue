@@ -1,17 +1,17 @@
 <template>
-    <div class="container">
+    <div class="container log-reg-pas-container">
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <h2 class="text-center mb-4 font-weight-bold">Login</h2>
                 
                 <div class="form-group">
                     <label for="email">Email address</label>
-                    <input type="email" class="form-control" id="email" v-model="email" @keyup.enter="loginNow()" placeholder="Enter email">
+                    <input type="email" class="form-control" id="email" v-model="email" @keyup.enter="loginNow()" placeholder="Email address">
                     <small v-html="emailMessage"></small>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" v-model="password" @keyup.enter="loginNow()" placeholder="Enter password">
+                    <input type="password" class="form-control" id="password" v-model="password" @keyup.enter="loginNow()" placeholder="Password">
                     <small v-html="passwordMessage"></small>
                 </div>
                 <div class="form-group text-right">
