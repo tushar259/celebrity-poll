@@ -139,7 +139,7 @@
 		<hr>
 		<hr>
 
-		<button class="btn btn-success" id="refresh" @click="refreshClicked()" :disabled="disabledRefresh">Refresh</button>
+		<button class="btn btn-danger" id="refresh" @click="refreshClicked()" :disabled="disabledRefresh">Refresh</button> <span class="text-danger">(This button will delete all the winning polls that were announced 2 months ago).</span>
 		<br>
 		<hr>
 		<hr>

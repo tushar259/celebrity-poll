@@ -128,6 +128,8 @@
 
             createAccount(){
                 this.isLoading = true;
+                this.email = this.email.replace("<", "");
+                this.selectedAnswer = this.selectedAnswer.replace("<", "");
                 this.uploadLoading = true;
                 this.emailMessage = "";
                 this.emailMessage = "";

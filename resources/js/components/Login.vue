@@ -56,6 +56,7 @@
             loginNow(){
                 // toast.success('Hello, Vue Toast!');
                 this.isLoading = true;
+                this.email = this.email.replace("<", "");
                 this.emailMessage = "";
                 this.passwordMessage = "";
                 this.submitFormMessage = "";

@@ -39,8 +39,30 @@
                 </div>
             </div>
             <div class="col-md-6" style="text-align: right;">
-                Share:
-                <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" title="facebook" style="margin-right: 0px;" @click="shareOnFacebook">
+                <!-- <button type="button" class="btn btn-primary">
+                    <i class="fas fa-share"></i> Share
+                </button> -->
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary share-button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span><i class="fas fa-share-alt"></i> Share</span>
+                    </button>
+                    <ul class="dropdown-menu share-dropdown-button">
+                        <li>
+                            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" title="facebook" style="margin-right: 0px;" @click="shareOnFacebook">
+                                <img src="/logo/Facebook-logo.png" alt="Facebook Share" style="height: 32px;width: 51px;">
+                            </a>
+                        
+                            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" title="twitter" style="margin-right: 8px;" @click="shareOnTwitter">
+                                <img src="/logo/Twitter-logo.svg.png" alt="Twitter Share" style="height: 26px;width: 33px;">
+                            </a>
+                        
+                            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" title="instagram" @click="shareOnInstagram">
+                                <img src="/logo/Instagram_logo_2016.svg.webp" alt="LinkedIn Share" style="height: 27px;width: 27px;">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" title="facebook" style="margin-right: 0px;" @click="shareOnFacebook">
                     <img src="/logo/Facebook-logo.png" alt="Facebook Share" style="height: 32px;width: 51px;">
                 </a>
                 <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" title="twitter" style="margin-right: 8px;" @click="shareOnTwitter">
@@ -49,7 +71,7 @@
 
                 <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" title="instagram" @click="shareOnInstagram">
                     <img src="/logo/Instagram_logo_2016.svg.webp" alt="LinkedIn Share" style="height: 27px;width: 27px;">
-                </a>
+                </a> -->
             </div>
         </div>
         <div class="px-10-gap"></div>

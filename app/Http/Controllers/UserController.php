@@ -218,4 +218,17 @@ class UserController extends Controller
 	    		'success' => false]);
 		}
 	}
+
+	public function reportAProblem(Request $request){
+		$name = $request->input("name");
+		$subject = $request->input("subject");
+		$description = $request->input("description");
+
+		// now send it to email
+
+		//if email sent
+		return response()->json([
+    		'message' => 'Report sent! Thank you.',
+    		'success' => true]);
+	}
 }

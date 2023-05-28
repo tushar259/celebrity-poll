@@ -602,3 +602,15 @@ input[type='text'] {
 .log-reg-pas-container {
     margin-top: 10px;
 }
+
+.share-button {
+    border-radius: 4px !important;
+}
+
+.share-dropdown-button {
+    min-width: 134px !important;
+}
+
+.share-dropdown-button li {
+    width:fit-content;
+}

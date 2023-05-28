@@ -59,3 +59,7 @@ Route::get('/delete-all-junk-files', 'App\Http\Controllers\PollController@delete
 
 
 
+Route::post('/report-a-problem', 'App\Http\Controllers\UserController@reportAProblem');
+
+
+

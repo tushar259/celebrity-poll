@@ -8,6 +8,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 
 class CountryController extends Controller
 {
@@ -19,27 +20,41 @@ class CountryController extends Controller
     		$checkIfInsertOrUpdate = $this->checkIfLastUpdatedInAWeek();
     		if($checkIfInsertOrUpdate == "insertNow" || $checkIfInsertOrUpdate == "updateNow"){
 
-	    		$client = new Client();
-		        $response = $client->get('https://restcountries.com/v3.1/all');
-		        $data = json_decode($response->getBody(), true);
+    			try{
+		    		$client = new Client();
+			        $response = $client->get('https://restcountries.com/v3.1/all');
+			        $data = json_decode($response->getBody(), true);
 
-		        $value = [];
-				foreach ($data as $countryData) {
-				    $value[] = [
-				        'name' => $countryData['name']['common'],
-				        'population' => $countryData['population'],
-				        'updated_at' => $currentDate
-				    ];
+			        $value = [];
+					foreach ($data as $countryData) {
+					    $value[] = [
+					        'name' => $countryData['name']['common'],
+					        'population' => $countryData['population'],
+					        'updated_at' => $currentDate
+					    ];
+					}
+					if($checkIfInsertOrUpdate == "insertNow"){
+						DB::table('countries')->insert($value);
+					}
+					else if($checkIfInsertOrUpdate == "updateNow"){
+						foreach ($value as $row) {
+					        DB::table('countries')
+					            ->where('name', $row['name'])
+					            ->update($row);
+					    }
+					}
 				}
-				if($checkIfInsertOrUpdate == "insertNow"){
-					DB::table('countries')->insert($value);
-				}
-				else if($checkIfInsertOrUpdate == "updateNow"){
-					foreach ($value as $row) {
-				        DB::table('countries')
-				            ->where('name', $row['name'])
-				            ->update($row);
-				    }
+				catch(RequestException $e){
+					$statusCode = $e->getResponse()->getStatusCode();
+    				$message = $e->getMessage();
+
+					$data = DB::table("countries")->select("name","population")
+	    				->orderBy("name")
+	    				->get();
+	    			return response()->json([
+		    			'countries_list' => $data,
+		                'message' => $message,
+		                'success' => true]);
 				}
 
 	    	}
