@@ -614,3 +614,11 @@ input[type='text'] {
 .share-dropdown-button li {
     width:fit-content;
 }
+
+.poll-votes-color{
+	color: #0011ff;
+}
+
+.font-weight-in-poll{
+	font-weight: bold;
+}

@@ -121,16 +121,18 @@
                             
                             <div class="total-votes">
                                 <div class="votes-received-here" :style="{'width': poll.percent + '%'}"></div>
-                                <label class="form-check-label d-flex justify-content-between align-items-center" for="exampleRadio1">
+                                <label class="form-check-label font-weight-in-poll d-flex justify-content-between align-items-center" for="exampleRadio1">
                                     {{poll.polls}}
                                     <div></div>
-                                    ~{{poll.percent}}%({{formatNumber(poll.votes)}} votes)
+                                    <span class="poll-votes-color">{{poll.percent}}% ({{formatNumber(poll.votes)}} votes)</span>
                                     
                                 </label>
+								
                                 <!-- <div style="width: 100%;height: 100%;background-color: rgb(72, 175, 72);" :style="{'width': poll.percent + '%'}" v-if="poll.id == 3"></div> -->
                                 <!-- <span class="bi bi-check"></span> -->
                                 
                             </div>
+							
                             <div class="px-10-gap"></div>
                         </div>
                     </div>
