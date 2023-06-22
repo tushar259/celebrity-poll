@@ -25,10 +25,12 @@
             </div>
         </div>
         <div class="px-10-gap"></div>
-        <div class="styling-link font-selected">
-            <router-link to="/" class="navigator-link">Home</router-link><i class='fas fa-angle-right'></i>
-            <router-link to="" class="navigator-link">{{whichIndustry}}</router-link><i class='fas fa-angle-right'></i>
-            <router-link :to="'/poll-winner/'+pollId" class="navigator-link">{{pollId}}</router-link>
+        <div class="row poll-page-row">
+            <div class="styling-link font-selected">
+                <router-link to="/" class="navigator-link">Home</router-link><i class='fas fa-angle-right'></i>
+                <router-link to="" class="navigator-link">{{whichIndustry}}</router-link><i class='fas fa-angle-right'></i>
+                <router-link :to="'/poll-winner/'+pollId" class="navigator-link">{{pollId}}</router-link>
+            </div>
         </div>
         <div class="px-10-gap"></div>
         <!-- <div class="custom-details-n-poll-card-area">
