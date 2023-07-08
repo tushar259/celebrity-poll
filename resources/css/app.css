@@ -144,8 +144,8 @@ input[type='text'] {
     height: 100%;
     width: 100%;
     min-height: 900px;
-    /* background-color: #F0F2F5; */
-    background-color: #FFFFFF;
+    background-color: #F0F2F5;
+    /* background-color: #FFFFFF; */
 }
 
 .parent-background .custom-thumbnail {
@@ -319,20 +319,22 @@ input[type='text'] {
 
 .custom-card-title {
     font-family: "Segoe UI Historic", "Segoe UI", Helvetica, Arial, sans-serif; 
-    color: #007bff; 
+    color: #333333; 
     font-size: 16px;
 }
 
 .which-industry {
     font-family: "Segoe UI Historic", "Segoe UI", Helvetica, Arial, sans-serif; 
     text-transform: uppercase;
-    margin-top: 10px;
-    margin-left: 15px;
+    /* margin-top: 10px; */
+    /* margin-left: 15px; */
     color: #A9AAAC;
 }
 
 .custom-card-ending-date {
-    color:red;
+    /* color:red; */
+    color: #A9AAAC;
+    font-size: 13px;
 }
 
 .card-name-n-votes {
@@ -342,17 +344,20 @@ input[type='text'] {
 .card-name-n-votes span {
     font-family: "Segoe UI Historic", "Segoe UI", Helvetica, Arial, sans-serif; 
     /* color: #65676B;  */
-    color: #A9AAAC;
+    /* color: #A9AAAC; */
     font-size: 13px;
 }
 
 .custom-card-border {
     /* border: 1px solid #FFFFFF !important; */
-    border: 1px solid #ccc9c9 !important;
+    border: 1px solid #F0F2F5 !important;
     cursor: pointer;
     border-radius: 4px !important;
     /* box-shadow: 0 0px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.2); */
     text-decoration: none;
+    background-color: #F0F2F5 !important;
+    /* background-color: #eeeeee !important; */
+    background: linear-gradient(to right, rgb(243, 233, 233), rgb(226, 226, 233), rgb(243, 233, 233));
 }
 
 .custom-card-border:hover {
@@ -362,7 +367,7 @@ input[type='text'] {
 }
 
 .custom-card-border:hover .card-name-n-votes span,
-.custom-card-border:hover .which-industry {
+.custom-card-border:hover {
     color: #65676B;
 }
 
@@ -409,6 +414,7 @@ input[type='text'] {
 
 .thumbnail-texts-in-list-of-polls {
     margin-left: 20px;
+    color: #333333;
 }
 
 .winner-animation {
@@ -534,7 +540,8 @@ input[type='text'] {
 }
 
 .navbar {
-    box-shadow: 0 0px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.2);
+    /* background-color: #F0F2F5; */
+    /* box-shadow: 0 0px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.2); */
 }
 
 .even-row {
@@ -548,10 +555,11 @@ input[type='text'] {
 .content {
     min-height: 600px; /*Subtract the height of the footer */
     /* min-height: 500px; */
+    background-color: #F0F2F5;
   }
   
   .footer {
-    margin-top: 30px;
+    /* margin-top: 30px; */
     background-color: #333;
     padding: 20px 0;
     bottom: 0;
@@ -623,4 +631,19 @@ input[type='text'] {
 
 .font-weight-in-poll{
 	font-weight: bold;
+}
+
+.poll-heads-in-all-poll-new{
+    width: 100%; 
+   text-align: left; 
+   border-bottom: 1px solid #000; 
+   line-height: 0.1em;
+   margin: 10px 0 20px;
+}
+
+.poll-heads-in-all-poll-new span { 
+    background:#F0F2F5; 
+    /* padding:0 10px;  */
+    padding-right: 5px;
+    color: rgb(175, 22, 22);
 }
