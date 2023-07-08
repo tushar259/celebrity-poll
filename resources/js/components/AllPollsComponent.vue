@@ -23,7 +23,7 @@
                 <router-link to="" class="navigator-link">Home</router-link>
             </div>
             
-            <div class="col-md-6">
+            <div class="col-md-6 list-of-anything">
                 <!-- <div class="poll-heads-in-all-poll">
                     
                     <span>New polls</span>

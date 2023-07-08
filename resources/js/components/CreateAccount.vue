@@ -1,8 +1,9 @@
 <template>
-    <div class="container log-reg-pas-container">
+    <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-6">
-                <h2 class="text-center mb-4 font-weight-bold">Create Account</h2>
+            <div class="col-md-6 log-reg-pas-container">
+                <!-- <h2 class="text-center mb-4 font-weight-bold">Create Account</h2> -->
+                <h2 class="mb-4 font-weight-bold">Create Account</h2>
                 
                 <div class="form-group">
                     <label for="email">Email address*</label>

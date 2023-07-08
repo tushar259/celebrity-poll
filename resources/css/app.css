@@ -347,7 +347,9 @@ input[type='text'] {
     /* color: #A9AAAC; */
     font-size: 13px;
 }
-
+.list-of-anything{
+    /* background-color: #ffffff; */
+}
 .custom-card-border {
     /* border: 1px solid #FFFFFF !important; */
     border: 1px solid #F0F2F5 !important;
@@ -357,7 +359,7 @@ input[type='text'] {
     text-decoration: none;
     background-color: #F0F2F5 !important;
     /* background-color: #eeeeee !important; */
-    background: linear-gradient(to right, rgb(243, 233, 233), rgb(226, 226, 233), rgb(243, 233, 233));
+    /* background: linear-gradient(to right, rgb(243, 233, 233), rgb(226, 226, 233), rgb(243, 233, 233)); */
 }
 
 .custom-card-border:hover {
@@ -610,7 +612,8 @@ input[type='text'] {
 }
 
 .log-reg-pas-container {
-    margin-top: 10px;
+    background:#F0F2F5 !important; 
+    margin-top: 20px !important;
 }
 
 .share-button {
