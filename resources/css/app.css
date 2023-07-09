@@ -247,7 +247,7 @@ input[type='text'] {
     height: 60px;
     width: 100%;
     max-width: 380px;
-    background-color: rgba(133, 127, 127, 0.2);
+    background-color: rgba(204, 201, 201, 0.2);
     border-radius: 4px;
     position: relative;
     bottom: 18px;
@@ -352,13 +352,14 @@ input[type='text'] {
 }
 .custom-card-border {
     /* border: 1px solid #FFFFFF !important; */
-    border: 1px solid #F0F2F5 !important;
+    /* border: 1px solid #a7bee0 !important; */
+    /* border: none !important; */
     cursor: pointer;
     border-radius: 4px !important;
     /* box-shadow: 0 0px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.2); */
     text-decoration: none;
     background-color: #F0F2F5 !important;
-    /* background-color: #eeeeee !important; */
+    /* background-color: #ffffff !important; */
     /* background: linear-gradient(to right, rgb(243, 233, 233), rgb(226, 226, 233), rgb(243, 233, 233)); */
 }
 
@@ -542,8 +543,9 @@ input[type='text'] {
 }
 
 .navbar {
+    /* background: linear-gradient(to right, rgb(240, 240, 240), rgb(245, 245, 250), rgb(255, 255, 255)); */
     /* background-color: #F0F2F5; */
-    /* box-shadow: 0 0px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.2); */
+    box-shadow: 0 0px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .even-row {
@@ -581,7 +583,7 @@ input[type='text'] {
 }
 
 .nav-link.active {
-    /* border-bottom: 2px solid red; */
+    border-bottom: 2px solid rgb(175, 22, 22);
 }
 
 .nav-item {
@@ -629,11 +631,11 @@ input[type='text'] {
 }
 
 .poll-votes-color{
-	color: #0011ff;
+	color: rgb(182, 114, 114);
 }
 
 .font-weight-in-poll{
-	font-weight: bold;
+	/* font-weight: bold; */
 }
 
 .poll-heads-in-all-poll-new{
@@ -649,4 +651,9 @@ input[type='text'] {
     /* padding:0 10px;  */
     padding-right: 5px;
     color: rgb(175, 22, 22);
+}
+
+#exampleRadio1:checked{
+    background-color: rgb(175, 22, 22) !important;
+    border-color: rgb(175, 22, 22) !important;
 }

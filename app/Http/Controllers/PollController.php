@@ -193,6 +193,7 @@ class PollController extends Controller
     	$imageSrc = "";
     	if($tableNameStartsWith = All_Tables::select('poll_title','table_name_starts_with','before_poll_description','after_poll_description','which_industry','starting_date','ending_date')
     		->where('table_name_starts_with', $pollId)
+            ->orWhere('poll_title', $pollId)
     		->where('ending_date','>',$currentDate)
     		->first()){
     		// return $tableNameStartsWith["table_name_starts_with"];
@@ -605,6 +606,10 @@ class PollController extends Controller
     		->where('table_name_starts_with', $pollId)
     		->where('ending_date','<',$currentDate)
     		->where('winner_added', 'yes')
+            ->orWhere(function ($query) use ($pollId) {
+                $query->where('poll_title', $pollId);
+                // You can add additional OR conditions here
+            })
     		->first()){
     		// return $tableNameStartsWith["table_name_starts_with"];
     		if(Schema::hasTable($tableNameStartsWith["table_name_starts_with"].'_images')){

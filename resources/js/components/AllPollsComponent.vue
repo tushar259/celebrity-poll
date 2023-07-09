@@ -60,7 +60,7 @@
                                 </div>
                             </div>
                         </router-link>
-                        <div v-if="index%3==0">
+                        <div v-if="index%6==0">
                             ad
                         </div>
                     </div>
@@ -134,7 +134,7 @@
                             </div>
                         </router-link>
                         <div v-if="index%3==0">
-                            ad
+                            <!-- ad -->
                         </div>
                     </div>
                     

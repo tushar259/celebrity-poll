@@ -43,7 +43,7 @@
                     <i class="fas fa-share"></i> Share
                 </button> -->
                 <div class="btn-group">
-                    <button type="button" class="btn btn-secondary share-button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button type="button" class="btn btn-primary share-button" data-bs-toggle="dropdown" aria-expanded="false">
                         <span><i class="fas fa-share-alt"></i> Share</span>
                     </button>
                     <ul class="dropdown-menu share-dropdown-button">

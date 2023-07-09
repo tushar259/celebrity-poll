@@ -16,9 +16,9 @@
                     <p class="texts-under-thumbnail">image courtesy</p>
                     <h1 class="poll-title texts-under-thumbnail">{{pollTitle}}?</h1>
                     <div class="d-flex align-items-center texts-under-thumbnail">
-                        <div class="poll-date">Voting started {{startingDate}}</div>
+                        <div class="poll-date">Started {{startingDate}}</div>
                         <div class="distance-between-two custom-align">|</div>
-                        <div class="poll-date">Winner published {{publishedDate}}</div>
+                        <div class="poll-date">Published {{publishedDate}}</div>
                     </div>
                 </div>
                 <div class="px-10-gap"></div>

@@ -3,7 +3,7 @@
         <div class="row justify-content-center">
             <div class="col-md-6 log-reg-pas-container">
                 <h2 class="mb-4 font-weight-bold">Login</h2>
-                
+                <span>Login to continue with us</span>
                 <div class="form-group">
                     <label for="email">Email address</label>
                     <input type="email" class="form-control" id="email" v-model="email" @keyup.enter="loginNow()" placeholder="Email address">
