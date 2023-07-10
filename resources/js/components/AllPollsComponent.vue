@@ -44,7 +44,7 @@
                                     <h4 class="card-title custom-card-title">
                                     <strong>{{poll.poll_title}}</strong>
                                     </h4>
-                                    <span class="custom-card-ending-date"><span class="which-industry">{{poll.which_industry}}</span> | Closing {{poll.ending_date}}</span>
+                                    <span class="custom-card-ending-date"><span class="which-industry">{{poll.which_industry}}</span> &bull; Closing {{poll.ending_date}}</span>
                                     <div class="px-20-gap"></div>
                                     <div v-for="(tag, indexT) in poll.poll_tags" :key="indexT" class="card-name-n-votes">
                                         <div v-if="indexT <= 1">
@@ -87,7 +87,7 @@
                                     <h4 class="card-title custom-card-title">
                                     <strong>{{poll.poll_title}}</strong> <!-- <span class="custom-card-winning-date">(Published {{poll.updated_at}})</span> -->
                                     </h4>
-                                    <span class="custom-card-ending-date"><span class="which-industry">{{poll.which_industry}}</span> | Published {{poll.updated_at}}</span>
+                                    <span class="custom-card-ending-date"><span class="which-industry">{{poll.which_industry}}</span> &bull; Published {{poll.updated_at}}</span>
                                     <div class="px-20-gap"></div>
                                     ..See more
                                 </div>
@@ -117,7 +117,7 @@
                                     <h4 class="card-title custom-card-title">
                                     <strong>{{poll.poll_title}}</strong> <!-- (Closing at <span class="custom-card-ending-date">{{poll.ending_date}}</span>) -->
                                     </h4>
-                                    <span class="custom-card-ending-date"><span class="which-industry">{{poll.which_industry}}</span> | Closing {{poll.ending_date}}</span>
+                                    <span class="custom-card-ending-date"><span class="which-industry">{{poll.which_industry}}</span> &bull; Closing {{poll.ending_date}}</span>
                                     <div class="px-20-gap"></div>
                                     <div v-for="(tag, indexT) in poll.poll_tags" :key="indexT" class="card-name-n-votes">
                                         <div v-if="indexT <= 1">

@@ -2,7 +2,7 @@
     <div class="country-page">
         <div class="container">
             <div class="styling-link-for-countries font-selected">
-                <router-link to="/" class="navigator-link">Home</router-link><i class='fas fa-angle-right'></i>
+                <router-link to="/" class="navigator-link">Home</router-link> <div class="navigator-link-divider">/</div> 
                 <router-link to="" class="navigator-link capitalized">Countries</router-link>
             </div>
             <div class="row">

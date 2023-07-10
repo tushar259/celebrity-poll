@@ -2,8 +2,10 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6 log-reg-pas-container">
-                <h2 class="mb-4 font-weight-bold">Login</h2>
-                <span>Login to continue with us</span>
+                <img class="log-reg-logo-image mx-auto d-block" src="/logo/favicon2.png" alt="logo">
+                <h2 class="font-weight-bold">Login</h2>
+                <span class="lite-color-in-project">Login to continue with us</span>
+                <div class="px-20-gap"></div>
                 <div class="form-group">
                     <label for="email">Email address</label>
                     <input type="email" class="form-control" id="email" v-model="email" @keyup.enter="loginNow()" placeholder="Email address">
@@ -23,6 +25,14 @@
                     <span v-if="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     {{ isLoading ? 'Logging in...' : 'Login' }}
                 </button>
+                <div class="px-20-gap"></div>
+                <div class="log-reg-or-sign"><span>or</span></div>
+                <div class="px-5-gap"></div>
+                <div class="text-center">
+                    <span>Don't have account?</span>
+                </div>
+                <div class="px-5-gap"></div>
+                <router-link class="btn btn-primary btn-block" to="/create-account" :disabled="isLoading">Create an account</router-link>
             </div>
         </div>
     </div>

@@ -27,8 +27,8 @@
         <div class="px-10-gap"></div>
         <div class="row poll-page-row">
             <div class="styling-link font-selected">
-                <router-link to="/" class="navigator-link">Home</router-link><i class='fas fa-angle-right'></i>
-                <router-link to="" class="navigator-link">{{whichIndustry}}</router-link><i class='fas fa-angle-right'></i>
+                <router-link to="/" class="navigator-link">Home</router-link><div class="navigator-link-divider">/</div> <!-- <i class='fas fa-angle-right'></i> -->
+                <router-link to="" class="navigator-link">{{whichIndustry}}</router-link><div class="navigator-link-divider">/</div>
                 <router-link :to="'/poll-winner/'+pollId" class="navigator-link">{{pollId}}</router-link>
             </div>
         </div>
@@ -83,6 +83,10 @@
                     
                 </div>
             </div>
+
+
+
+
             <div class="col-md-7 custom-column" v-if="afterPollDescription !== ''">
                 <div class="poll-page-custom-card">
                     <div v-html="afterPollDescription" class="poll-details"></div>
@@ -236,3 +240,7 @@
         }
     }
 </script>
+
+<style scoped>
+
+</style>

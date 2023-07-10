@@ -19,7 +19,8 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <!-- <router-link class="dropdown-item" to="" :class="{ 'active': activeLink === 'hollywood' }" @click="collapse = true,activeLink = 'hollywood'">Hollywood</router-link>
                         <router-link class="dropdown-item" to="" :class="{ 'active': activeLink === 'football' }" @click="collapse = true,activeLink = 'football'">Football</router-link> -->
-                        <a class="dropdown-item capitalized" v-for="(industryName, index) in allIndustry" :key="index" :class="{ 'active': activeLink === industryName.which_industry }" :href="'/polls/'+industryName.which_industry" @click="transferIndustryTo(industryName.which_industry)">{{industryName.which_industry}}</a>
+                        <!-- <a class="dropdown-item capitalized" v-for="(industryName, index) in allIndustry" :key="index" :class="{ 'active': activeLink === industryName.which_industry }" :href="'/polls/'+industryName.which_industry" @click="transferIndustryTo(industryName.which_industry)">{{industryName.which_industry}}</a> -->
+                        <router-link class="dropdown-item capitalized" v-for="industryName in allIndustry" :key="`/polls/${industryName.which_industry}`" :class="{ 'active': activeLink === industryName.which_industry }" :to="`/polls/${industryName.which_industry}`">{{industryName.which_industry}}</router-link>
                         
                         <!-- <div class="dropdown-divider"></div> -->
                     </div>

@@ -17,7 +17,7 @@
                     <h1 class="poll-title texts-under-thumbnail">{{pollTitle}}?</h1>
                     <div class="d-flex align-items-center texts-under-thumbnail">
                         <div class="poll-date">Uploaded - {{startingDate}}</div>
-                        <div class="distance-between-two custom-align">|</div>
+                        <div class="distance-between-two custom-align">&bull;</div>
                         <div class="poll-date">Closing - {{endingDate}}</div>
                     </div>
                 </div>
@@ -33,8 +33,8 @@
         <div class="row poll-page-row">
             <div class="col-md-6">
                 <div class="styling-link font-selected">
-                    <router-link to="/" class="navigator-link">Home</router-link><i class='fas fa-angle-right'></i>
-                    <router-link :to="'/polls/'+whichIndustry" class="navigator-link capitalized">{{whichIndustry}}</router-link><i class='fas fa-angle-right'></i>
+                    <router-link to="/" class="navigator-link">Home</router-link><div class="navigator-link-divider">/</div>
+                    <router-link :to="'/polls/'+whichIndustry" class="navigator-link capitalized">{{whichIndustry}}</router-link><div class="navigator-link-divider">/</div>
                     <router-link :to="'/poll/'+pollId" class="navigator-link">{{pollId}}</router-link>
                 </div>
             </div>
@@ -114,6 +114,7 @@
             <div class="col-md-5 custom-column">
                 <div class="poll-page-custom-card">
                     <h5>{{ pollTitle }}?</h5>
+                    <span class="lite-color-in-project">Participate in Poll, Choose Your Answer.</span>
                     <div class="px-30-gap"></div>
                     <div  v-for="(poll, index) in pollsVoted" :key="index" class="polls-in-page">
                         <div class="form-check">
