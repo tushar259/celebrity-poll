@@ -4,8 +4,8 @@
             <div class="col-md-6 log-reg-pas-container">
                 <!-- <h2 class="text-center mb-4 font-weight-bold">Create Account</h2> -->
                 <img class="log-reg-logo-image mx-auto d-block" src="/logo/favicon2.png" alt="logo">
-                <h2 class="font-weight-bold">Create Account</h2>
-                <span class="lite-color-in-project">Create an account to continue with us</span>
+                <h2 class="text-center font-weight-bold">Create Account</h2>
+                <div class="text-center lite-color-in-project">Create an account to continue with us</div>
                 <div class="px-20-gap"></div>
                 <div class="form-group">
                     <label for="email">Email address*</label>

@@ -118,11 +118,11 @@
                     <div class="px-30-gap"></div>
                     <div  v-for="(poll, index) in pollsVoted" :key="index" class="polls-in-page">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadio1" @change="selectedOptionToVote(poll.id)" :value="poll.id">
+                            <input class="form-check-input exampleRadios-in-poll" type="radio" name="exampleRadios" :id="`exampleRadios${index}`" @change="selectedOptionToVote(poll.id)" :value="poll.id">
                             
                             <div class="total-votes">
                                 <div class="votes-received-here" :style="{'width': poll.percent + '%'}"></div>
-                                <label class="form-check-label font-weight-in-poll d-flex justify-content-between align-items-center" for="exampleRadio1">
+                                <label class="form-check-label font-weight-in-poll d-flex justify-content-between align-items-center" :for="`exampleRadios${index}`">
                                     {{poll.polls}}
                                     <div></div>
                                     <span class="poll-votes-color">{{poll.percent}}% ({{formatNumber(poll.votes)}} votes)</span>

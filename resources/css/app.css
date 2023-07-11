@@ -442,8 +442,12 @@ input[type='text'] {
 }
 
 .winner-animation {
-    background: linear-gradient(-45deg, #ff00cc, #3333ff, #ff6600);
-    animation: rainbow 10s ease-in-out infinite;
+    /* background: linear-gradient(-45deg, #ff00cc, #3333ff, #ff6600);
+    animation: rainbow 10s ease-in-out infinite; */
+    background-image: url('/public/winner/winnerCelebration.gif');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 @keyframes rainbow {
@@ -626,10 +630,14 @@ input[type='text'] {
     width: 400px;
 }
 
+.navbar-collapse{
+    padding-right: 18px;
+}
+
 .navbar-logo-custom {
     height: 45px; 
     width: 70px;
-    padding-left: 20px;
+    padding-left: 25px;
     cursor: pointer;
 }
 
@@ -644,6 +652,8 @@ input[type='text'] {
 .log-reg-pas-container {
     background:#F0F2F5 !important; 
     margin-top: 20px !important;
+    /* border: 1px solid #ccc9c9;
+    border-radius: 4px; */
 }
 
 .share-button {
@@ -696,7 +706,11 @@ input[type='text'] {
     color: rgb(175, 22, 22);
 }
 
-#exampleRadio1:checked{
+.exampleRadios-in-poll:checked{
     background-color: rgb(175, 22, 22) !important;
     border-color: rgb(175, 22, 22) !important;
+}
+
+.exampleRadios-in-poll:focus{
+    box-shadow: 0 0 0 0.25rem rgba(175, 22, 22, 0.25) !important;
 }

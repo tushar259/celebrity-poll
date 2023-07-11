@@ -3,6 +3,12 @@
     <nav class="navbar navbar-expand-lg navbar-light" style="width: 100% !important">
         <!-- <a class="navbar-brand" href="#"> -->
         <img class="navbar-brand navbar-logo-custom" src="/logo/favicon2.png" alt="logo" @click="gotoHome()">
+        <!-- <span>
+            
+                Galaxy of Fandom<br>
+                Behind the stars
+            
+        </span> -->
         <!-- </a> -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" @click="collapse = false">
             <span class="navbar-toggler-icon"></span>
@@ -12,6 +18,7 @@
                 <li class="nav-item active">
                     <router-link class="nav-link" to="/" :class="{ 'active': activeLink === 'home' }" @click="collapse = true,activeLink = 'home'">Home</router-link>
                 </li>
+                
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-truncate" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Industry
@@ -19,8 +26,8 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <!-- <router-link class="dropdown-item" to="" :class="{ 'active': activeLink === 'hollywood' }" @click="collapse = true,activeLink = 'hollywood'">Hollywood</router-link>
                         <router-link class="dropdown-item" to="" :class="{ 'active': activeLink === 'football' }" @click="collapse = true,activeLink = 'football'">Football</router-link> -->
-                        <!-- <a class="dropdown-item capitalized" v-for="(industryName, index) in allIndustry" :key="index" :class="{ 'active': activeLink === industryName.which_industry }" :href="'/polls/'+industryName.which_industry" @click="transferIndustryTo(industryName.which_industry)">{{industryName.which_industry}}</a> -->
-                        <router-link class="dropdown-item capitalized" v-for="industryName in allIndustry" :key="`/polls/${industryName.which_industry}`" :class="{ 'active': activeLink === industryName.which_industry }" :to="`/polls/${industryName.which_industry}`">{{industryName.which_industry}}</router-link>
+                        <a class="dropdown-item capitalized" v-for="(industryName, index) in allIndustry" :key="index" :class="{ 'active': activeLink === industryName.which_industry }" :href="'/polls/'+industryName.which_industry" @click="transferIndustryTo(industryName.which_industry)">{{industryName.which_industry}}</a>
+                        <!-- <router-link class="dropdown-item capitalized" v-for="industryName in allIndustry" :key="`/polls/${industryName.which_industry}`" :class="{ 'active': activeLink === industryName.which_industry }" :to="`/polls/${industryName.which_industry}`">{{industryName.which_industry}}</router-link> -->
                         
                         <!-- <div class="dropdown-divider"></div> -->
                     </div>
@@ -158,7 +165,7 @@ export default {
         transferIndustryTo(industry){
             this.collapse = true;
             this.activeLink = industry;
-            this.$router.push('/polls/'+industry);
+            this.$router.push(`/polls/${industry}`);
             // '/polls/'+industyName
         },
         getListOfIndustries(){

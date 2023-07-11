@@ -86,6 +86,11 @@
 
 
 
+            
+  
+
+
+
 
             <div class="col-md-7 custom-column" v-if="afterPollDescription !== ''">
                 <div class="poll-page-custom-card">
