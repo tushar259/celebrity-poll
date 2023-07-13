@@ -67,10 +67,10 @@
                 <div class="log-reg-or-sign"><span>or</span></div>
                 <div class="px-5-gap"></div>
                 <div class="text-center">
-                    <span>Already have account?</span>
+                    <span>Already have account? </span><router-link to="/login" :disabled="isLoading">Login</router-link>
                 </div>
                 <div class="px-5-gap"></div>
-                <router-link class="btn btn-primary btn-block" to="/login" :disabled="isLoading">Login</router-link>
+                
             </div>
         </div>
     </div>

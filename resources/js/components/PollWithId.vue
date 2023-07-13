@@ -125,7 +125,7 @@
                                 <label class="form-check-label font-weight-in-poll d-flex justify-content-between align-items-center" :for="`exampleRadios${index}`">
                                     {{poll.polls}}
                                     <div></div>
-                                    <span class="poll-votes-color">{{poll.percent}}% ({{formatNumber(poll.votes)}} votes)</span>
+                                    <span class="poll-votes-color">{{poll.percent}}%</span>
                                     
                                 </label>
 								
@@ -133,8 +133,9 @@
                                 <!-- <span class="bi bi-check"></span> -->
                                 
                             </div>
-							
+                            <span class="lite-color-in-project">{{formatNumber(poll.votes)}} votes</span>
                             <div class="px-10-gap"></div>
+                            
                         </div>
                     </div>
                     
@@ -246,6 +247,14 @@
             window.scrollTo(0, 0);
         },
 
+        mounted(){
+            const metaTag = document.getElementById('abcd234');
+            if (metaTag) {
+                metaTag.setAttribute('name', 'description');
+                metaTag.setAttribute('content', 'Your meta description');
+            }
+        },
+
         methods: {
             shareOnFacebook() {
                 const protocol = window.location.protocol; // e.g., "http:" or "https:"
@@ -320,7 +329,7 @@
                         this.beforePollDescription = response.data.title_n_other_info.before_poll_description;
                         this.afterPollDescription = response.data.title_n_other_info.after_poll_description;
                         this.whichIndustry = response.data.title_n_other_info.which_industry;
-                        this.startingDate = moment(response.data.title_n_other_info.starting_date).format('D MMM YYYY h:mm A');
+                        this.startingDate = moment(response.data.title_n_other_info.starting_date).format('D MMM YYYY');
                         this.endingDate = moment(response.data.title_n_other_info.ending_date).format('D MMM YYYY');
                         this.tableNameStartsWith = response.data.title_n_other_info.table_name_starts_with;
 

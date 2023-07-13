@@ -29,10 +29,10 @@
                 <div class="log-reg-or-sign"><span>or</span></div>
                 <div class="px-5-gap"></div>
                 <div class="text-center">
-                    <span>Don't have account?</span>
+                    <span>Don't have account? </span><router-link to="/create-account" :disabled="isLoading">Create an account</router-link>
                 </div>
                 <div class="px-5-gap"></div>
-                <router-link class="btn btn-primary btn-block" to="/create-account" :disabled="isLoading">Create an account</router-link>
+                
             </div>
         </div>
     </div>
